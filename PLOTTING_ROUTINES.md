@@ -1,21 +1,21 @@
 # Routines to be developed
 
-## Clear pixel/clear region
+- Clear pixel/clear region
 
 
-## Plot pixel
+- Plot pixel
 
-## Plot horizontal line
+- Plot horizontal line
 
-## Plot Vertical line
+- Plot Vertical line
 
-## Plot shape
+- Plot shape
 
-## Plot bitmap
+- Plot bitmap
 
 **We will need plot bitmap functions of 16,24,32,64**
 
-### Object Sizes
+## Object Sizes
 - Plot Score
 
 - Plot Character
