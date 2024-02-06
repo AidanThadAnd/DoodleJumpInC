@@ -1,8 +1,8 @@
 ### VisualStudioCode ###
-.vscode/*      # Maybe .vscode/**/* instead - see comments
+.vscode/**/*      # Maybe .vscode/**/* instead - see comments
 
 #MacOS file structure
-.DS_Store/*
+*.DS_Store
 
 # Prerequisites
 *.d
@@ -56,3 +56,4 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+.vscode/settings.json
