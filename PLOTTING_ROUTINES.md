@@ -2,7 +2,6 @@
 
 - Clear pixel/clear region
 
-
 - Plot pixel
 
 - Plot horizontal line
@@ -16,6 +15,7 @@
 **We will need plot bitmap functions of 16,24,32,64**
 
 ## Object Sizes
+
 - Plot Score
 
 - Plot Character
@@ -29,4 +29,3 @@
 - Plot Platforms
   - Height:16
   - Width:32
-
