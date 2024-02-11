@@ -11,7 +11,7 @@ int main()
     int start_y = (SCREEN_HEIGHT - INVADER_HEIGHT) / 2;
 
     /* Plot the new bitmap at the calculated position */
-    plot_bitmap_16(base, start_x, start_y, new_bitmap, INVADER_WIDTH, INVADER_HEIGHT);
+    plot_bitmap_16(base, start_x, start_y, new_bitmap, INVADER_WIDTH);
     
     return 0;
 }
