@@ -27,10 +27,13 @@ int main()
 		0x0FF0,
 	};
 
-	/*Plots "Space" in the top left corner*/
-	plot_bitmap_8(base, 0, 0, font, FONT_HEIGHT);
 
-	plot_bitmap_16(base, 320, 200, testBitmap, TEST_BITMAP_HEIGHT);
+
+	plot_bitmap_16(base, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, testBitmap, TEST_BITMAP_HEIGHT);
+
+	plot_bitmap_8(base, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, font, FONT_HEIGHT);
+
+
 
 	return 0;
 }
