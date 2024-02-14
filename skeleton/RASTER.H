@@ -9,5 +9,8 @@
 
 void plot_bitmap_1(UINT16 *base, int x, int y, ...);
 void plot_bitmap_2(UINT32 *base, int x, int y, ...);
+void plotHorizontalLine(UINT8 *base, int x, int y, int length);
+void clearHorizontalLine8(UINT8* base, int x, int y, int length);
+void clearScreen(UINT8 *base);
 
 #endif
