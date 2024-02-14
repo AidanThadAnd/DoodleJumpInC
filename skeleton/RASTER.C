@@ -1,13 +1,33 @@
 #include "raster.h"
 
-void plot_bitmap_1(UINT16 *base, int x, int y, ...)
+void plot_pixel(char *base, int x, int y, const unsigned int SCREEN_HEIGHT, const unsigned int SCREEN_WIDTH)
 {
-	/* [TO DO] delete this example function */
+	if (x >= 0 && x < SCREEN_WIDTH && y >= 0 && y < SCREEN_HEIGHT) 
+		*(base + y * 80 + (x >>3)) |= 1 << (7 - (x & 7));
 }
 
-void plot_bitmap_2(UINT16 *base, int x, int y, ...)
+void plot_bitmap_8(UINT16 *base, int x, int y, const UINT8 *bitmap, unsigned int height)
 {
-	/* [TO DO] delete this example function */
+    UINT16 *loc = base + (y * 40) + (x >> 4);
+    int row;
+    
+    for (row = 0; row < height; row++)
+    {
+        *loc |= bitmap[row];     /* danger (no bounds checking!) */
+        loc += 40;
+    }
+}
+
+void plot_bitmap_16(UINT16 *base, int x, int y, const UINT16 *bitmap, unsigned int height)
+{
+    UINT16 *loc = base + (y * 40) + (x >> 4);
+    int row;
+    
+    for (row = 0; row < height; row++)
+    {
+        *loc |= bitmap[row];     /* danger (no bounds checking!) */
+        loc += 40;
+    }
 }
 
 void plotHorizontalLine(UINT8 *base, int y) {
@@ -18,8 +38,6 @@ void plotHorizontalLine(UINT8 *base, int y) {
 		*(drawLine++) = 0xFFFF;
 	} 
 }
-
-
 
 void clearScreen(UINT8 *base) {
 	int row;
