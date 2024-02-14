@@ -9,6 +9,8 @@
 int main()
 {
 	UINT16 *base = Physbase();
+	const UINT8* glyph_A = GLYPH_START('A');
+
 
 	int testBitmap[TEST_BITMAP_HEIGHT] =
 	{
@@ -29,11 +31,11 @@ int main()
 
 
 
-	plot_bitmap_16(base, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, testBitmap, TEST_BITMAP_HEIGHT);
+	/* Plots a little invader in the top right of the screen*/
+	plot_bitmap_16(base, SCREEN_WIDTH/4, SCREEN_HEIGHT/4, testBitmap, TEST_BITMAP_HEIGHT);
 
-	plot_bitmap_8(base, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, font, FONT_HEIGHT);
-
-
+	/*Plots an 'A' in the centre of the screen*/
+	plot_bitmap_8(base, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, glyph_A, FONT_HEIGHT);
 
 	return 0;
 }
