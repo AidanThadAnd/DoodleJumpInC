@@ -33,7 +33,7 @@ int main()
     
   /* Calculate the starting position to center the invader */
   int start_x = (SCREEN_WIDTH - sizeof(UINT16)) / 2;
-  int start_y = (SCREEN_HEIGHT - INVADER_HEIGHT) / 2;
+  int start_y = (SCREEN_HEIGHT - TEST_BITMAP_HEIGHT) / 2;
 
 	/* Plots a little invader in the top right of the screen*/
 	plot_bitmap_16(base, SCREEN_WIDTH/4, SCREEN_HEIGHT/4, testBitmap, TEST_BITMAP_HEIGHT);

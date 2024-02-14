@@ -39,7 +39,7 @@ void plotHorizontalLine(UINT8 *base, int y) {
 	} 
 }
 
-void clearScreen(UINT8 *base) {
+void clearScreen(UINT8 *base, const unsigned int SCREEN_HEIGHT, const unsigned int SCREEN_WIDTH) {
 	int row;
 
 	UINT8 *newBase = base;
