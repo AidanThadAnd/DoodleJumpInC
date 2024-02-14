@@ -30,7 +30,7 @@ void plot_bitmap_16(UINT16 *base, int x, int y, const UINT16 *bitmap, unsigned i
     }
 }
 
-void plotHorizontalLine(UINT8 *base, int y) {
+void plot_horizontal_line(UINT8 *base, int y) {
 	int row= 0;
 	UINT8 *drawLine = base + (y*80);
 
@@ -39,19 +39,19 @@ void plotHorizontalLine(UINT8 *base, int y) {
 	} 
 }
 
-void clearScreen(UINT8 *base, const unsigned int SCREEN_HEIGHT, const unsigned int SCREEN_WIDTH) {
+void clear_screen(UINT8 *base, const unsigned int SCREEN_HEIGHT, const unsigned int SCREEN_WIDTH) {
 	int row;
 
 	UINT8 *newBase = base;
 
 	for (row = 0; row < SCREEN_HEIGHT; row++) {
-		clearHorizontalLine8(newBase, 0, 0, SCREEN_WIDTH);
+		clear_horizontal_line_8(newBase, 0, 0, SCREEN_WIDTH);
 		
 		newBase += 80;
 	}
 }
 
-void clearHorizontalLine8(UINT8* base, int x, int y, int length) {
+void clear_horizontal_line_8(UINT8* base, int x, int y, int length) {
 	int row;
 	int counter = length >> 3;
 
