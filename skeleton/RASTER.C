@@ -1,6 +1,6 @@
 #include "raster.h"
 
-void plot_pixel(char *base, int x, int y, const unsigned int SCREEN_HEIGHT, const unsigned int SCREEN_WIDTH)
+void plot_pixel(char *base, int x, int y)
 {
 	if (x >= 0 && x < SCREEN_WIDTH && y >= 0 && y < SCREEN_HEIGHT) 
 		*(base + y * 80 + (x >>3)) |= 1 << (7 - (x & 7));
@@ -39,7 +39,7 @@ void plot_horizontal_line(UINT8 *base, int y) {
 	} 
 }
 
-void clear_screen(UINT8 *base);
+void clear_screen(UINT8 *base)
 	int row;
 
 	UINT8 *newBase = base;
