@@ -39,7 +39,7 @@ void plot_horizontal_line(UINT8 *base, int y) {
 	} 
 }
 
-void clear_screen(UINT8 *base, const unsigned int SCREEN_HEIGHT, const unsigned int SCREEN_WIDTH) {
+void clear_screen(UINT8 *base);
 	int row;
 
 	UINT8 *newBase = base;
