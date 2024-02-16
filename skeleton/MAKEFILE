@@ -1,5 +1,5 @@
-tst_rast: tst_rast.o raster.o rast_asm.o font.o
-	cc68x -g tst_rast.o raster.o rast_asm.o font.o -o tst_rast
+tst_rast: tst_rast.o raster.o rast_asm.o font.o bitmap.o
+	cc68x -g tst_rast.o raster.o rast_asm.o font.o bitmap.o -o tst_rast
 
 tst_rast.o: tst_rast.c raster.h font.h
 	cc68x -g -c tst_rast.c
@@ -12,3 +12,6 @@ font.o: font.c font.h
 
 rast_asm.o: rast_asm.s
 	gen -D -L2 rast_asm.s
+
+bitmap.o: bitmap.c bitmap.h font.h
+	cc68x -g -c bitmap.c
