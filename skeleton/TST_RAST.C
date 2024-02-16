@@ -1,4 +1,5 @@
 #include <osbind.h>
+#include <stdio.h>
 #include "raster.h"
 #include "font.h"
 
