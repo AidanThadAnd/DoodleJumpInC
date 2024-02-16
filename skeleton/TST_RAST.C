@@ -31,7 +31,7 @@ int main()
 
 	return 0;
 }
-
+/**/
 void test_plot_bitmap_8(UINT16 *base, const UINT8 *bitmap, const unsigned int height)
 {
 	int i;
