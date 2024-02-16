@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "raster.h"
 #include "font.h"
+#include "bitmap.h"
 
 #define SCREEN_HEIGHT 400
 #define SCREEN_WIDTH 640
@@ -9,6 +10,7 @@
 
 void fill_screen_test_8(UINT16 *base, const UINT8 *bitmap);
 void fill_screen_test_16(UINT16 *base, const UINT16 *bitmap);
+void doodle_chracter_test(UINT32 *base, const UINT32 *bitmap);
 
 int main()
 {
@@ -25,11 +27,25 @@ int main()
 	fill_screen_test_8(base, glyph_A);*/
 
 	clear_screen(base, SCREEN_HEIGHT, SCREEN_WIDTH);
-	plot_bitmap_64(base, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, doodle_character, 64);
+        doodle_chracter_test(base, doodle_bitmap);
 	/*Plots an 'A' in the centre of the screen*/
 	/*plot_bitmap_8(base, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, glyph_A, FONT_HEIGHT);*/
 
 	return 0;
+}
+
+void doodle_chracter_test(UINT32 *base, const UINT32 *bitmap)
+{
+       	int i;
+	int j;
+
+	for(i = 0; i < SCREEN_WIDTH; i+=1)
+        {
+		plot_bitmap_64(base, i, j, bitmap, 64);
+                clear_screen(base, SCREEN_HEIGHT, SCREEN_WIDTH); 
+        }
+
+	clear_screen(base, SCREEN_HEIGHT, SCREEN_WIDTH); 
 }
 
 void fill_screen_test_8(UINT16 *base, const UINT8 *bitmap)
@@ -53,7 +69,7 @@ void fill_screen_test_16(UINT16 *base, const UINT16 *bitmap)
 
 	for(i = 0; i < SCREEN_WIDTH; i+=16)
 		for(j = 0; j < SCREEN_HEIGHT; j+=16)
-			plot_bitmap_16(base, i, j, bitmap, TEST_BITMAP_HEIGHT);
+			plot_bitmap_16(base, i, j, bitmap, 12);
 
 
 	clear_screen(base, SCREEN_HEIGHT, SCREEN_WIDTH);

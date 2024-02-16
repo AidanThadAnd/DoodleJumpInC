@@ -1,5 +1,4 @@
 #include "bitmap.h"
-
 const UINT32 doodle_bitmap[] =
 {
         ~0x00000000, ~0x00000000, ~0x00000000,
@@ -92,7 +91,7 @@ const UINT32 monster_bitmap[]=
         0xffffffff, 0xffffffff, 0xffffffff,
         0xffffffff, 0xffffffff, 0xffffffff,
         0xffffffff, 0xffffffff
-}
+};
 
 const UINT32 platform_bitmap[]=
 {
@@ -112,7 +111,7 @@ const UINT32 platform_bitmap[]=
         0x000000ff, 0xffc00000, 0x000007ff,
         0xfffdfe3f, 0xffffffff, 0xffffffff,
         0xffffffff, 0xffffffff, 0xffffffff
-}
+  };
 
 const UINT32 broken_platform_bitmap[]=
 {
