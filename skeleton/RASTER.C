@@ -31,23 +31,11 @@ void plot_bitmap_16(UINT16 *base, int x, int y, const UINT16 *bitmap, unsigned i
 
 void plot_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, unsigned int height)
 {
-    UINT16 *loc = base + (y * 20) + (x >> 5);
-
-    int row;    
-
-    for (row = 0; row < height; row++)
-    {
-        *loc |= bitmap[row];     
-        loc += 20;
-    }
-}
-
-void plot_bitmap_64(UINT32 *base, int x, int y, const UINT32 *bitmap, unsigned int height)
-{
 	int rows;
 	int cols;
 
 	UINT32 *loc = base + (y * 20) + (x>>5);
+	
 	for (rows = 0; rows < height; rows++) {
 		for(cols = 0; cols < 2; cols++) {
 			*loc |= *(bitmap)++;
@@ -57,6 +45,7 @@ void plot_bitmap_64(UINT32 *base, int x, int y, const UINT32 *bitmap, unsigned i
 		loc += 18;
 	}
 }
+
 
 void plot_horizontal_line(UINT8 *base, int y) {
 	int row= 0;

@@ -8,9 +8,9 @@
 #define SCREEN_WIDTH 640
 #define CHARACTER_HEIGHT 64
 
-void fill_screen_test_8(UINT16 *base, const UINT8 *bitmap);
-void fill_screen_test_16(UINT16 *base, const UINT16 *bitmap);
-void doodle_chracter_test(UINT32 *base, const UINT32 *bitmap);
+void test_plot_bitmap_8(UINT16 *base, const UINT8 *bitmap, const unsigned int height);
+void test_plot_bitmap16(UINT16 *base, const UINT16 *bitmap, const unsigned int height);
+void test_plot_bitmap_64(UINT32 *base, const UINT32 *bitmap, const unsigned int height);
 
 int main()
 {
@@ -22,55 +22,66 @@ int main()
  	int start_x = (SCREEN_WIDTH - sizeof(UINT16)) / 2;
   	int start_y = (SCREEN_HEIGHT - CHARACTER_HEIGHT) / 2;
 
+        clear_screen(base, SCREEN_HEIGHT, SCREEN_WIDTH);
 
-	/*fill_screen_test_16(base, testBitmap);
-	fill_screen_test_8(base, glyph_A);*/
-
-	clear_screen(base, SCREEN_HEIGHT, SCREEN_WIDTH);
-        doodle_chracter_test(base, doodle_bitmap);
-	/*Plots an 'A' in the centre of the screen*/
-	/*plot_bitmap_8(base, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, glyph_A, FONT_HEIGHT);*/
+        test_plot_bitmap_8(base, glyph_A, 8);
+	test_plot_bitmap_32(base, monster_bitmap, 64);
+        test_plot_bitmap_32(base, platform_bitmap, 24);
+        test_plot_bitmap_32(base, broken_platform_bitmap, 24);
+        test_plot_bitmap_32(base, doodle_bitmap, 64);
 
 	return 0;
 }
 
-void doodle_chracter_test(UINT32 *base, const UINT32 *bitmap)
-{
-       	int i;
-	int j;
 
-	for(i = 0; i < SCREEN_WIDTH; i+=1)
-        {
-		plot_bitmap_64(base, i, j, bitmap, 64);
-                clear_screen(base, SCREEN_HEIGHT, SCREEN_WIDTH); 
-        }
 
-	clear_screen(base, SCREEN_HEIGHT, SCREEN_WIDTH); 
-}
-
-void fill_screen_test_8(UINT16 *base, const UINT8 *bitmap)
+void test_plot_bitmap_8(UINT16 *base, const UINT8 *bitmap, const unsigned int height)
 {
 	int i;
 	int j;
 
 	for(i = 0; i < SCREEN_WIDTH; i+=8)
 		for(j = 0; j < SCREEN_HEIGHT; j+=8)
-			plot_bitmap_8(base, i, j, bitmap, 8);
+			plot_bitmap_8(base, i, j, bitmap, height);
 
 	clear_screen(base, SCREEN_HEIGHT, SCREEN_WIDTH);
 
 }
 
 /*Test for plot_bitmap_16 and clear_screen*/
-void fill_screen_test_16(UINT16 *base, const UINT16 *bitmap)
+void test_plot_bitmap16(UINT16 *base, const UINT16 *bitmap, const unsigned int height)
 {
 	int i;
 	int j;
 
 	for(i = 0; i < SCREEN_WIDTH; i+=16)
 		for(j = 0; j < SCREEN_HEIGHT; j+=16)
-			plot_bitmap_16(base, i, j, bitmap, 12);
+			plot_bitmap_16(base, i, j, bitmap, height);
 
 
 	clear_screen(base, SCREEN_HEIGHT, SCREEN_WIDTH);
+}
+
+void test_plot_bitmap_32(UINT32 *base, const UINT32 *bitmap, const unsigned int height)
+{
+       	int i;
+	for(i = 0; i < SCREEN_WIDTH; i+=16)
+        {
+		plot_bitmap_32(base, i, SCREEN_HEIGHT/2, bitmap, height);
+                clear_screen(base, SCREEN_HEIGHT, SCREEN_WIDTH); 
+        }
+
+	clear_screen(base, SCREEN_HEIGHT, SCREEN_WIDTH); 
+}
+
+void test_plot_bitmap_64(UINT32 *base, const UINT32 *bitmap, const unsigned int height)
+{
+       	int i;
+	for(i = 0; i < SCREEN_WIDTH; i+=32)
+        {
+		plot_bitmap_64(base, i, SCREEN_HEIGHT/2, bitmap, height);
+                clear_screen(base, SCREEN_HEIGHT, SCREEN_WIDTH); 
+        }
+
+	clear_screen(base, SCREEN_HEIGHT, SCREEN_WIDTH); 
 }
