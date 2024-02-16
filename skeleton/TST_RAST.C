@@ -5,7 +5,7 @@
 
 #define SCREEN_HEIGHT 400
 #define SCREEN_WIDTH 640
-#define TEST_BITMAP_HEIGHT 64
+#define CHARACTER_HEIGHT 64
 
 void fill_screen_test_8(UINT16 *base, const UINT8 *bitmap);
 void fill_screen_test_16(UINT16 *base, const UINT16 *bitmap);
@@ -65,7 +65,7 @@ int main()
     
   	/* Calculate the starting position to center the invader */
  	int start_x = (SCREEN_WIDTH - sizeof(UINT16)) / 2;
-  	int start_y = (SCREEN_HEIGHT - TEST_BITMAP_HEIGHT) / 2;
+  	int start_y = (SCREEN_HEIGHT - CHARACTER_HEIGHT) / 2;
 
 
 	/*fill_screen_test_16(base, testBitmap);
