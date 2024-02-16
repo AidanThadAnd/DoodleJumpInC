@@ -8,8 +8,7 @@ void move_doodle(Doodle *doodle)
 
 void move_platform(Platform *platform)
 {
-    pla->y += doodle->delta_y;
-    doodle->x += doodle->delta_x;
+    platform->x += platform->delta_x;
 }
 int check_collision_doodle_platform(Doodle *d, Platform *p)
 {
@@ -20,5 +19,5 @@ int check_collision_doodle_platform(Doodle *d, Platform *p)
     {
         return 1;
     }
-    return 0;
+        return 0;
 }
