@@ -16,21 +16,52 @@ int main()
 	const UINT8* glyph_A = GLYPH_START('A');
 
 
-	int testBitmap[TEST_BITMAP_HEIGHT] =
+	const UINT32 testBitmap[] =
 	{
-		0x0000,
-		0x0810,
-		0x0810,
-		0x0420,
-		0x0240,
-		0x1FF8,
-		0x2004,
-		0x4662,
-		0x4002,
-		0x43C2,
-		0x2424,
-		0x1008,
-		0x0FF0,
+		~0x00000000, ~0x00000000, ~0x00000000,
+        ~0x00000000, ~0x00000000, ~0x00000000,
+        ~0x00000000, ~0x00000000, ~0x00000000,
+        ~0x00000000, ~0x00000000, ~0x00000000,
+        ~0x00000000, ~0x00000000, ~0x00001f80,
+        ~0x00000000, ~0x00007ff0, ~0x00000000,
+        ~0x0001fffc, ~0x00000000, ~0x0007fffe,
+        ~0x00000000, ~0x000fffff, ~0x80000000,
+        ~0x001fffff, ~0xc0000000, ~0x003fffff,
+        ~0xc0000000, ~0x007fffff, ~0xe0000000,
+        ~0x007fffff, ~0xf0000000, ~0x00ffffff,
+        ~0xf0000000, ~0x00ffffff, ~0xf8000000,
+        ~0x01ffffff, ~0xf8000000, ~0x01ffffff,
+        ~0xfc000000, ~0x01fffff9, ~0xfc000000,
+        ~0x03fffff9, ~0xce000000, ~0x03fffff9,
+        ~0xce000000, ~0x03fffff9, ~0xcf000000,
+        ~0x03ffffff, ~0xff800000, ~0x03ffffff,
+        ~0xffe00100, ~0x03ffffff, ~0xfffe1380,
+        ~0x03ffffff, ~0xffffff80, ~0x03ffffff,
+        ~0xffffffc0, ~0x03ffffff, ~0xffe0ffc0,
+        ~0x03ffffff, ~0xff001fc0, ~0x03ffffff,
+        ~0xfe000080, ~0x03ffffff, ~0xfc000000,
+        ~0x03ffffff, ~0xf8000000, ~0x01ffffff,
+        ~0xf8000000, ~0x000003ff, ~0xf8000000,
+        ~0x00000000, ~0x00000000, ~0x01fff800,
+        ~0x00000000, ~0x01ffffff, ~0xf8000000,
+        ~0x01ffffff, ~0xf8000000, ~0x01ffffff,
+        ~0xf8000000, ~0x00000000, ~0x00000000,
+        ~0x00000000, ~0x00000000, ~0x01ffffff,
+        ~0xf8000000, ~0x00ffffff, ~0xf8000000,
+        ~0x00ffffff, ~0xf8000000, ~0x00000000,
+        ~0x00000000, ~0x00000000, ~0x00000000,
+        ~0x00ffffff, ~0xe0000000, ~0x000c000c,
+        ~0x00000000, ~0x000c000c, ~0x00000000,
+
+        ~0x000c000c, ~0x00000000, ~0x000c000c,
+        ~0x00000000, ~0x000ff80f, ~0xf8000000,
+        ~0x00000000, ~0x00000000, ~0x00000000,
+        ~0x00000000, ~0x00000000, ~0x00000000,
+        ~0x00000000, ~0x00000000, ~0x00000000,
+        ~0x00000000, ~0x00000000, ~0x00000000,
+        ~0x00000000, ~0x00000000, ~0x00000000,
+        ~0x00000000, ~0x00000000, ~0x00000000,
+        ~0x00000000, ~0x00000000, ~0x00000000,
 	};
 
 	int x, y;
@@ -40,14 +71,17 @@ int main()
   	int start_y = (SCREEN_HEIGHT - TEST_BITMAP_HEIGHT) / 2;
 
 
-	fill_screen_test_16(base, testBitmap);
-	fill_screen_test_8(base, glyph_A);
+	/*fill_screen_test_16(base, testBitmap);
+	fill_screen_test_8(base, glyph_A);*/
 
+	clear_screen(base, SCREEN_HEIGHT, SCREEN_WIDTH);
+	plot_bitmap_64(base, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, testBitmap, 64);
 	/*Plots an 'A' in the centre of the screen*/
-	plot_bitmap_8(base, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, glyph_A, FONT_HEIGHT);
+	/*plot_bitmap_8(base, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, glyph_A, FONT_HEIGHT);*/
 
 	return 0;
 }
+
 
 void fill_screen_test_8(UINT16 *base, const UINT8 *bitmap)
 {
