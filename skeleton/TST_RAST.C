@@ -9,9 +9,10 @@
 
 void fill_screen_test_8(UINT16 *base, const UINT8 *bitmap);
 void fill_screen_test_16(UINT16 *base, const UINT16 *bitmap);
-const UINT32 testBitmap[] =
+
+const UINT32 doodle_character[] =
 	{
-		    ~0x00000000, ~0x00000000, ~0x00000000,
+        ~0x00000000, ~0x00000000, ~0x00000000,
         ~0x00000000, ~0x00000000, ~0x00000000,
         ~0x00000000, ~0x00000000, ~0x00000000,
         ~0x00000000, ~0x00000000, ~0x00000000,
@@ -71,7 +72,7 @@ int main()
 	fill_screen_test_8(base, glyph_A);*/
 
 	clear_screen(base, SCREEN_HEIGHT, SCREEN_WIDTH);
-	plot_bitmap_64(base, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, testBitmap, 64);
+	plot_bitmap_64(base, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, doodle_character, 64);
 	/*Plots an 'A' in the centre of the screen*/
 	/*plot_bitmap_8(base, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, glyph_A, FONT_HEIGHT);*/
 
