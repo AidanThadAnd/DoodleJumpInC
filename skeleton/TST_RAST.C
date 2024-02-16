@@ -5,20 +5,13 @@
 
 #define SCREEN_HEIGHT 400
 #define SCREEN_WIDTH 640
-#define TEST_BITMAP_HEIGHT 13
+#define TEST_BITMAP_HEIGHT 128
 
 void fill_screen_test_8(UINT16 *base, const UINT8 *bitmap);
 void fill_screen_test_16(UINT16 *base, const UINT16 *bitmap);
-
-int main()
-{
-	UINT16 *base = Physbase();
-	const UINT8* glyph_A = GLYPH_START('A');
-
-
-	const UINT32 testBitmap[] =
+const UINT32 testBitmap[] =
 	{
-		~0x00000000, ~0x00000000, ~0x00000000,
+		    ~0x00000000, ~0x00000000, ~0x00000000,
         ~0x00000000, ~0x00000000, ~0x00000000,
         ~0x00000000, ~0x00000000, ~0x00000000,
         ~0x00000000, ~0x00000000, ~0x00000000,
@@ -63,7 +56,10 @@ int main()
         ~0x00000000, ~0x00000000, ~0x00000000,
         ~0x00000000, ~0x00000000, ~0x00000000,
 	};
-
+int main()
+{
+	UINT16 *base = Physbase();
+	const UINT8* glyph_A = GLYPH_START('A');
 	int x, y;
     
   	/* Calculate the starting position to center the invader */
