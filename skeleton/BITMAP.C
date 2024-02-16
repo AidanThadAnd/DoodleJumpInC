@@ -1,4 +1,4 @@
-#include "TYPES.h"
+#include "types.h"
 
 const UINT32 doodle_bitmap[] =
 {
