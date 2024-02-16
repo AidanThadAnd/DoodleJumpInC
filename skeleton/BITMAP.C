@@ -114,7 +114,7 @@ const UINT32 platform_bitmap[]=
         0xffffffff, 0xffffffff, 0xffffffff
 }
 
-const UINT broken_platform_bitmap[]=
+const UINT32 broken_platform_bitmap[]=
 {
  	0xffffffff, 0xffffffff,
         0xffffffff, 0xffffffff,
