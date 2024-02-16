@@ -18,10 +18,5 @@ typedef struct
   int delta_x;
 } platform;
 
-typedef struct 
-{
-  unsigned int x, y; 
-} broken_platform;
-
 #endif
 
