@@ -30,6 +30,22 @@ void plot_bitmap_16(UINT16 *base, int x, int y, const UINT16 *bitmap, unsigned i
     }
 }
 
+void plot_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, unsigned int height)
+{
+    UINT16 *loc = base + (y * 20) + (x >> 5);
+    int row;
+	if(x < 0 || y < 0 || y + height > 400 || x/32 >=640)
+	{
+		printf(ERROR: bitmap out of bounds);
+	}    
+
+    for (row = 0; row < height; row++)
+    {
+        *loc |= bitmap[row];     /* danger (no bounds checking!) */
+        loc += 20;
+    }
+}
+
 void plot_bitmap_64(UINT32 *base, int x, int y, UINT32 *bitmap, int height)
 {
 	int rows;
