@@ -57,4 +57,7 @@ Module.symvers
 Mkfile.old
 dkms.conf
 .vscode/settings.json
+
+#Manually Added
 TUT41.c
+skeleton/TST_RAST
