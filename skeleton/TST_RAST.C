@@ -5,7 +5,7 @@
 
 #define SCREEN_HEIGHT 400
 #define SCREEN_WIDTH 640
-#define TEST_BITMAP_HEIGHT 128
+#define TEST_BITMAP_HEIGHT 64
 
 void fill_screen_test_8(UINT16 *base, const UINT8 *bitmap);
 void fill_screen_test_16(UINT16 *base, const UINT16 *bitmap);
