@@ -9,7 +9,7 @@
 #define CHARACTER_HEIGHT 64
 
 void test_plot_bitmap_8(UINT16 *base, const UINT8 *bitmap, const unsigned int height);
-void test_plot_bitmap16(UINT16 *base, const UINT16 *bitmap, const unsigned int height);
+void test_plot_bitmap_16(UINT16 *base, const UINT16 *bitmap, const unsigned int height);
 void test_plot_bitmap_32(UINT32 *base, const UINT32 *bitmap, const unsigned int height);
 
 int main()
@@ -17,16 +17,17 @@ int main()
         UINT8  *base8  = Physbase();
 	UINT16 *base16 = Physbase();
         UINT32 *base32 = Physbase();
+        
 	const UINT8* glyph_A = GLYPH_START('A');
 
 
         clear_screen(base8, SCREEN_HEIGHT, SCREEN_WIDTH);
 
-        test_plot_bitmap_8(base16, glyph_A, 8);
-	test_plot_bitmap_32(base32, monster_bitmap, 64);
-        test_plot_bitmap_32(base32, platform_bitmap, 24);
-        test_plot_bitmap_32(base32, broken_platform_bitmap, 24);
-        test_plot_bitmap_32(base32, doodle_bitmap, 64);
+        test_plot_bitmap_8(base16, glyph_A, FONT_HEIGHT);
+	test_plot_bitmap_32(base32, monster_bitmap, MONSTER_BITMAP_HEIGHT);
+        test_plot_bitmap_32(base32, platform_bitmap, PLATFORM_BITMAP_HEIGHT);
+        test_plot_bitmap_32(base32, broken_platform_bitmap, PLATFORM_BITMAP_HEIGHT);
+        test_plot_bitmap_32(base32, doodle_bitmap, DOODLE_BITMAP_HEIGHT);
 
 	return 0;
 }
@@ -45,7 +46,7 @@ void test_plot_bitmap_8(UINT16 *base, const UINT8 *bitmap, const unsigned int he
 }
 
 /*Test for plot_bitmap_16 and clear_screen*/
-void test_plot_bitmap16(UINT16 *base, const UINT16 *bitmap, const unsigned int height)
+void test_plot_bitmap_16(UINT16 *base, const UINT16 *bitmap, const unsigned int height)
 {
 	int i;
 	int j;
