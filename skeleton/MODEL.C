@@ -1,5 +1,4 @@
 #include "model.h"
-#include "raster.h"
 
 void move_doodle(Doodle *doodle)
 {
