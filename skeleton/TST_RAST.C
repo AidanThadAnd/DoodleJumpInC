@@ -46,7 +46,6 @@ const UINT32 doodle_character[] =
         ~0x00000000, ~0x00000000, ~0x00000000,
         ~0x00ffffff, ~0xe0000000, ~0x000c000c,
         ~0x00000000, ~0x000c000c, ~0x00000000,
-
         ~0x000c000c, ~0x00000000, ~0x000c000c,
         ~0x00000000, ~0x000ff80f, ~0xf8000000,
         ~0x00000000, ~0x00000000, ~0x00000000,
@@ -57,6 +56,7 @@ const UINT32 doodle_character[] =
         ~0x00000000, ~0x00000000, ~0x00000000,
         ~0x00000000, ~0x00000000, ~0x00000000,
 	};
+
 int main()
 {
 	UINT16 *base = Physbase();
@@ -78,7 +78,6 @@ int main()
 
 	return 0;
 }
-
 
 void fill_screen_test_8(UINT16 *base, const UINT8 *bitmap)
 {
