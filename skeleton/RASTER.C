@@ -55,7 +55,7 @@ void plot_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, unsigned i
     }
 }
 
-void plot_bitmap_64(UINT32 *base, int x, int y, UINT32 *bitmap, int height)
+void plot_bitmap_64(UINT32 *base, int x, int y, const UINT32 *bitmap, unsigned int height)
 {
 	int rows;
 	int cols;
