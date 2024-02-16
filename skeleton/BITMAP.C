@@ -1,3 +1,5 @@
+#include "bitmap.h"
+
 const UINT32 doodle_bitmap[] =
 {
         ~0x00000000, ~0x00000000, ~0x00000000,
@@ -92,7 +94,7 @@ const UINT32 monster_bitmap[]=
         0xffffffff, 0xffffffff
 }
 
-const UINT16 platform_bitmap[]=
+const UINT32 platform_bitmap[]=
 {
 	0xffffffff, 0xffffffff, 0xffffffff,
         0xffffffff, 0xffc00000, 0x000d019f,
