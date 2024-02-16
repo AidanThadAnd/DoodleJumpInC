@@ -1,3 +1,5 @@
+#include "TYPES.h"
+
 const UINT32 doodle_bitmap[] =
 {
         ~0x00000000, ~0x00000000, ~0x00000000,
