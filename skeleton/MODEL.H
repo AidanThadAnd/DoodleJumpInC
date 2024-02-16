@@ -5,8 +5,23 @@ typedef struct
 {
   unsigned int x, y; 
   int delta_x, delta_y; 
-} Doodle;
+} doodle;
 
+typedef struct 
+{
+  unsigned int x, y; 
+} monster;
+
+typedef struct 
+{
+  unsigned int x, y; 
+  int delta_x;
+} platform;
+
+typedef struct 
+{
+  unsigned int x, y; 
+} broken_platform;
 
 #endif
 
