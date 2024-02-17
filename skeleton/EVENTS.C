@@ -1,19 +1,21 @@
 #include "events.h"
+#include "MODEL.H"
+#include "BITMAP.H"
 
 void press_key(Doodle *character, char key)
 {
     switch(key)
     {
         case 'a':
-            move_doodle(character, -1, 0)
+            move_doodle(character, -1, 0);
             character->facing = 0;
             break;
         case 'd':
-            move_doodle(character, 1, 0)
+            move_doodle(character, 1, 0);
             character->facing = 1;
             break;
         default:
-            break:
+            break;
     }
 }
  
