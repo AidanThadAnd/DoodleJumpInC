@@ -23,10 +23,10 @@ void press_key(Doodle *character, char key)
     and if the left side of the Doodle is to the left of the right side of the platform */
 int check_collision_doodle_platform(Doodle *d, Platform *p)
 {
-    if (d->y + doodle_height > p->y &&
-        d->y < p->y + platform_height &&
-        d->x + doodle_width > p->x && 
-        d->x < p->x + platform_width)   
+    if (d->y + DOODLE_HEIGHT > p->y &&
+        d->y < p->y + PLATFORM_HEIGHT &&
+        d->x + DOODLE_WIDTH > p->x && 
+        d->x < p->x + PLATFORM_WIDTH)   
     {
         return 1;
     }
