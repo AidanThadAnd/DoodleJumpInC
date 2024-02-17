@@ -19,6 +19,13 @@ typedef struct
   int delta_x;
 } Platform;
 
+typedef struct {
+    Doodle doodle;
+    Monster monster;
+    Platform platforms[7];  // Array of platforms
+} Model;
+
+void initialize_model(Model *model);
 void move_doodle(Doodle *doodle, int displacement_x, int displacement_y);
 void move_platform(Platform *platform);
 
