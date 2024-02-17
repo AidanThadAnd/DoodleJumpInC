@@ -14,6 +14,9 @@ Warning:		- Bitmaps must come with the height defined
 				- No error checking on bitmaps, if incorrect height or incorrect size is given the tests will come out incorrect
 				- Knowledge of RASTER.H function definitions is required as each function takes a specifically sized pointer, 
 				  incorrect use of pointers will result in pointer conversion warnings during compile time
+
+Note:			- clear_screen is implicitly tested as each function relies on the screen being cleared by this function
+				- clear_horizontal_line is implicitly tested as clear_screen relies on clear_horizontal_line to clear each line of the screen
 */
 
 #include <osbind.h>
@@ -25,6 +28,7 @@ Warning:		- Bitmaps must come with the height defined
 #define SCREEN_HEIGHT 400
 #define SCREEN_WIDTH 640
 
+void test_plot_horizontal_line(UINT8 *base);
 void test_plot_bitmap_8(UINT16 *base, const UINT8 *bitmap, const unsigned int height);
 void test_plot_bitmap_16(UINT16 *base, const UINT16 *bitmap, const unsigned int height);
 void test_plot_bitmap_32(UINT32 *base, const UINT32 *bitmap, const unsigned int height);
@@ -38,6 +42,8 @@ int main()
 
     clear_screen((UINT8*)base, SCREEN_HEIGHT, SCREEN_WIDTH);
 
+
+	test_plot_horizontal_line((UINT8*)base);
     test_plot_bitmap_8((UINT16*)base, glyph_A, FONT_HEIGHT);
 	test_plot_bitmap_32(base, monster_bitmap, MONSTER_BITMAP_HEIGHT);
     test_plot_bitmap_32(base, platform_bitmap, PLATFORM_BITMAP_HEIGHT);
@@ -45,6 +51,32 @@ int main()
     test_plot_bitmap_32(base, doodle_bitmap, DOODLE_BITMAP_HEIGHT);
 
 	return 0;
+}
+
+
+/*
+Function Name: test_plot_horizontal_line
+
+Purpose:
+		- Uses the plot_horizontal_line function from RASTER.C to fill the screen with horizontal lines,
+		  after all lines are plotted the screen is cleared
+
+Input:
+		- A pointer to frame buffer called "base"
+
+Output:
+		- Plots 50 lines to the screen, the screen is then cleared
+*/
+void test_plot_horizontal_line(UINT8 *base)
+{
+	int i;
+	int j;
+
+	for(j = 0; j < SCREEN_HEIGHT; j+=8)
+		plot_horizontal_line(base, j);
+
+	clear_screen(base, SCREEN_HEIGHT, SCREEN_WIDTH);
+
 }
 
 /*

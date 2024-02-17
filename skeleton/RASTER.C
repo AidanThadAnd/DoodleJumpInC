@@ -1,10 +1,5 @@
 #include "raster.h"
 
-void plot_pixel(UINT16 *base, int x, int y)
-{
-	*(base + y * 80 + (x >>3)) |= 1 << (7 - (x & 7));
-}
-
 void plot_bitmap_8(UINT16 *base, int x, int y, const UINT8 *bitmap, unsigned int height)
 {
     UINT16 *loc = base + (y * 40) + (x >> 4);
@@ -12,7 +7,7 @@ void plot_bitmap_8(UINT16 *base, int x, int y, const UINT8 *bitmap, unsigned int
        
     for (row = 0; row < height; row++)
     {
-        *loc |= bitmap[row];     /* danger (no bounds checking!) */
+        *loc |= bitmap[row];
         loc += 40;
     }
 }
@@ -24,7 +19,7 @@ void plot_bitmap_16(UINT16 *base, int x, int y, const UINT16 *bitmap, unsigned i
 
     for (row = 0; row < height; row++)
     {
-        *loc |= bitmap[row];     /* danger (no bounds checking!) */
+        *loc |= bitmap[row];     
         loc += 40;
     }
 }
@@ -35,6 +30,7 @@ void plot_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, unsigned i
 	int cols;
 
 	UINT32 *loc = base + (y * 20) + (x>>5);
+
 	for (rows = 0; rows < height; rows++) {
 		for(cols = 0; cols < 2; cols++) {
 			*loc |= *(bitmap)++;
@@ -47,6 +43,7 @@ void plot_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, unsigned i
 
 void plot_horizontal_line(UINT8 *base, int y) {
 	int row= 0;
+
 	UINT8 *drawLine = base + (y*80);
 
 	while(row++ < 80){
@@ -57,7 +54,6 @@ void plot_horizontal_line(UINT8 *base, int y) {
 void clear_screen(UINT8 *base, int SCREEN_HEIGHT, int SCREEN_WIDTH)
 {
 	int row;
-
 
 	for (row = 0; row < SCREEN_HEIGHT; row++) {
 		clear_horizontal_line_8(base, 0, 0, SCREEN_WIDTH);
