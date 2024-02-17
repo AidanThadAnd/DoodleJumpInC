@@ -22,7 +22,7 @@ typedef struct
 typedef struct {
     Doodle doodle;
     Monster monster;
-    Platform platforms[7];  // Array of platforms
+    Platform platforms[7];  
 } Model;
 
 void initialize_model(Model *model);
