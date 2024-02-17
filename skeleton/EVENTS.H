@@ -32,7 +32,6 @@ Functions:
             - m: Pointer to the Monster structure.
         Output:
             - Returns 1 if a collision is detected, 0 otherwise.
-
 */
 
 #ifndef EVENTS_H
