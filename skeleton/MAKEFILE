@@ -1,6 +1,12 @@
+#Creates the test rend file
+tst_rend: tst_rend.o renderer.o model.o events.o raster.o bitmap.o
+	cc68x -g tst_rend.o model.o events.o raster.o bitmap.o renderer.o -o tst_rend
+
+#Creats the test model file
 tst_mod: tst_mod.o model.o events.o
 	cc68x -g tst_mod.o model.o events.o -o tst_mod
 
+#Creates the test rast file
 tst_rast: tst_rast.o raster.o font.o bitmap.o
 	cc68x -g tst_rast.o raster.o  font.o bitmap.o -o tst_rast
 
@@ -27,3 +33,10 @@ model.o: model.c model.h
 
 events.o: events.c events.h
 	cc68x -g -c events.c
+
+#Rendering
+tst_rend.o: tst_rend.c renderer.h
+	cc68x -g -c tst_rend.c
+
+renderer.o: renderer.c renderer.h model.h bitmap.h raster.h
+	cc68x -g -c renderer.c

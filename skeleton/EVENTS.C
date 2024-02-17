@@ -1,7 +1,6 @@
 #include "events.h"
 #include "MODEL.H"
 #include "BITMAP.H"
-
 #include "system.h"
 
 void press_key(Doodle *character, char key)
