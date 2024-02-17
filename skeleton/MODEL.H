@@ -18,5 +18,7 @@ typedef struct
   int delta_x;
 } Platform;
 
+void move_doodle(Doodle *doodle, int displacement_x, int displacement_y);
+
 #endif
 
