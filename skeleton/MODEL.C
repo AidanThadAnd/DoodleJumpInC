@@ -16,7 +16,7 @@ void initialize_model(Model *model) {
 
     // Initialize monster
     model->monster.x = SCREEN_WIDTH / 2;
-    model->monster.y = SCREEN_HEIGHT - 100; // Adjust the position as needed
+    model->monster.y = SCREEN_HEIGHT - 100;
 }
 void move_doodle(Doodle *doodle, int displacement_x, int displacement_y)
 {
