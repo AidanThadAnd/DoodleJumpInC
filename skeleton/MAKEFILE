@@ -1,6 +1,10 @@
+tst_mod: tst_mod.o model.o events.o
+	cc68x -g tst_mod.o model.o events.o -o tst_mod
+
 tst_rast: tst_rast.o raster.o font.o bitmap.o
 	cc68x -g tst_rast.o raster.o  font.o bitmap.o -o tst_rast
 
+#Rasterization
 tst_rast.o: tst_rast.c raster.h font.h
 	cc68x -g -c tst_rast.c
 
@@ -12,3 +16,14 @@ font.o: font.c font.h
 
 bitmap.o: bitmap.c bitmap.h font.h
 	cc68x -g -c bitmap.c
+
+
+#Modeling/Events
+tst_mod.o: tst_mod.c model.h events.h
+	cc68x -g -c tst_mod.c
+	
+model.o: model.c model.h
+	cc68x -g -c model.c
+
+events.o: events.c events.h
+	cc68x -g -c events.c

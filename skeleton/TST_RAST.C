@@ -53,7 +53,6 @@ int main()
 	return 0;
 }
 
-
 /*
 Function Name: test_plot_horizontal_line
 
