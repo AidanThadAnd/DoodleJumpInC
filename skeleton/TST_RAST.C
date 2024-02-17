@@ -4,16 +4,14 @@ Date: Jan 29 2024
 
 Program purpose: Displays various bitmaps to the ATARI 68000 screen for testing purposes
 
-Details:         Input format must be similar to example file.
-				- Knowledge of RASTER.H function definitions is required as each function takes a specifically sized pointer, 
-				  incorrect use of pointers will result in pointer conversion warnings during compile time
+Details:        - Each function will clear the screen after plotting the given bitmap
 				- 
 
 Warning:		- Bitmaps must come with the height defined
 				- No error checking on bitmaps, if incorrect height or incorrect size is given the tests will come out incorrect
-				- 
+				- Knowledge of RASTER.H function definitions is required as each function takes a specifically sized pointer, 
+				  incorrect use of pointers will result in pointer conversion warnings during compile time
 */
-
 
 #include <osbind.h>
 #include <stdio.h>
@@ -34,7 +32,6 @@ int main()
     UINT32 *base  = Physbase(); /* Multiple pointers are created for Physbase to prevent pointer conversion warnings during compile time */
         
 	const UINT8* glyph_A = GLYPH_START('A');
-
 
     clear_screen((UINT8*)base, SCREEN_HEIGHT, SCREEN_WIDTH);
 
