@@ -1,7 +1,6 @@
 #include "events.h"
 #include "MODEL.H"
 #include "BITMAP.H"
-
 #include "system.h"
 
 void press_key(Doodle *character, char key)
@@ -41,7 +40,7 @@ int check_collision_monster(Doodle *d, Monster *m)
 {
     if (d->y + DOODLE_HEIGHT > m->y &&
         d->y < m->y + MONSTER_HEIGHT &&
-        d->x + DOODLE_WIDTH > p->x && 
+        d->x + DOODLE_WIDTH > m->x && 
         d->x < m->x + MONSTER_WIDTH)   
     {
         return 1;
