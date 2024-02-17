@@ -7,7 +7,6 @@ int main() {
     Model model;
 
     initialize_model(&model);
-    printf("Model initialized.\n");
 
     int initialDoodleX = model.doodle.x;
     int initialPlatformX = model.platforms[0].x;
