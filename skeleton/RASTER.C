@@ -58,12 +58,10 @@ void clear_screen(UINT8 *base, int SCREEN_HEIGHT, int SCREEN_WIDTH)
 {
 	int row;
 
-	UINT8 *newBase = base;
 
 	for (row = 0; row < SCREEN_HEIGHT; row++) {
-		clear_horizontal_line_8(newBase, 0, 0, SCREEN_WIDTH);
-		
-		newBase += 80;
+		clear_horizontal_line_8(base, 0, 0, SCREEN_WIDTH);
+		base += 80;
 	}
 }
 

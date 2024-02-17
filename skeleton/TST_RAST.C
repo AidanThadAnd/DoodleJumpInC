@@ -1,3 +1,20 @@
+/*
+Author: Aidan & Jacky
+Date: Jan 29 2024
+
+Program purpose: Displays various bitmaps to the ATARI 68000 screen for testing purposes
+
+Details:         Input format must be similar to example file.
+				- Knowledge of RASTER.H function definitions is required as each function takes a specifically sized pointer, 
+				  incorrect use of pointers will result in pointer conversion warnings during compile time
+				- 
+
+Warning:		- Bitmaps must come with the height defined
+				- No error checking on bitmaps, if incorrect height or incorrect size is given the tests will come out incorrect
+				- 
+*/
+
+
 #include <osbind.h>
 #include <stdio.h>
 #include "raster.h"
@@ -6,7 +23,6 @@
 
 #define SCREEN_HEIGHT 400
 #define SCREEN_WIDTH 640
-#define CHARACTER_HEIGHT 64
 
 void test_plot_bitmap_8(UINT16 *base, const UINT8 *bitmap, const unsigned int height);
 void test_plot_bitmap_16(UINT16 *base, const UINT16 *bitmap, const unsigned int height);
@@ -14,24 +30,24 @@ void test_plot_bitmap_32(UINT32 *base, const UINT32 *bitmap, const unsigned int 
 
 int main()
 {
-        UINT8  *base8  = Physbase();
-	UINT16 *base16 = Physbase();
-        UINT32 *base32 = Physbase();
+	
+    UINT32 *base  = Physbase(); /* Multiple pointers are created for Physbase to prevent pointer conversion warnings during compile time */
         
 	const UINT8* glyph_A = GLYPH_START('A');
 
 
-        clear_screen(base8, SCREEN_HEIGHT, SCREEN_WIDTH);
+    clear_screen((UINT8*)base, SCREEN_HEIGHT, SCREEN_WIDTH);
 
-        test_plot_bitmap_8(base16, glyph_A, FONT_HEIGHT);
-	test_plot_bitmap_32(base32, monster_bitmap, MONSTER_BITMAP_HEIGHT);
-        test_plot_bitmap_32(base32, platform_bitmap, PLATFORM_BITMAP_HEIGHT);
-        test_plot_bitmap_32(base32, broken_platform_bitmap, PLATFORM_BITMAP_HEIGHT);
-        test_plot_bitmap_32(base32, doodle_bitmap, DOODLE_BITMAP_HEIGHT);
+    test_plot_bitmap_8((UINT16*)base, glyph_A, FONT_HEIGHT);
+	test_plot_bitmap_32(base, monster_bitmap, MONSTER_BITMAP_HEIGHT);
+    test_plot_bitmap_32(base, platform_bitmap, PLATFORM_BITMAP_HEIGHT);
+    test_plot_bitmap_32(base, broken_platform_bitmap, PLATFORM_BITMAP_HEIGHT);
+    test_plot_bitmap_32(base, doodle_bitmap, DOODLE_BITMAP_HEIGHT);
 
 	return 0;
 }
-/**/
+
+
 void test_plot_bitmap_8(UINT16 *base, const UINT8 *bitmap, const unsigned int height)
 {
 	int i;
@@ -45,7 +61,6 @@ void test_plot_bitmap_8(UINT16 *base, const UINT8 *bitmap, const unsigned int he
 
 }
 
-/*Test for plot_bitmap_16 and clear_screen*/
 void test_plot_bitmap_16(UINT16 *base, const UINT16 *bitmap, const unsigned int height)
 {
 	int i;
@@ -61,10 +76,10 @@ void test_plot_bitmap_16(UINT16 *base, const UINT16 *bitmap, const unsigned int 
 
 void test_plot_bitmap_32(UINT32 *base, const UINT32 *bitmap, const unsigned int height)
 {
-       	int i;
+    int i;
 	for(i = 0; i < SCREEN_WIDTH; i+=16)
         {
 		plot_bitmap_32(base, i, SCREEN_HEIGHT/2, bitmap, height);
-                clear_screen((UINT8*)base, SCREEN_HEIGHT, SCREEN_WIDTH);
+        clear_screen((UINT8*)base, SCREEN_HEIGHT, SCREEN_WIDTH);
         }
 }
