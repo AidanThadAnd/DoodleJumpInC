@@ -23,6 +23,16 @@ Functions:
             - platform: Pointer to the Platform structure.
         Output:
             - Returns 1 if a collision is detected, 0 otherwise.
+
+    Function Name: check_collision_monster
+        Purpose:
+            - Determine if there is a collision between the Doodle and a Monster.
+        Input:
+            - d: Pointer to the Doodle structure.
+            - m: Pointer to the Monster structure.
+        Output:
+            - Returns 1 if a collision is detected, 0 otherwise.
+
 */
 
 #ifndef EVENTS_H
@@ -31,7 +41,8 @@ Functions:
 #include "model.h"
 
 void press_key(Doodle *character, char key);
-int check_collision_doodle_platform(Doodle *doodle, Platform *platform);
+int check_collision_doodle_platform(Doodle *d, Platform *p);
+int check_collision_monster(Doodle *d, Monster *m);
 
 #endif
 
