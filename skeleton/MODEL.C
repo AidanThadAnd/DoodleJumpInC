@@ -8,7 +8,7 @@ void initialize_model(Model *model) {
     model->doodle.delta_y = 0;
     model->doodle.facing = 1; /* Assuming initially facing right */
 
-    // Initialize platforms
+    /* Initialize platforms */
     for (int i = 0; i < 7; ++i) {
         model->platforms[i].x = i * 100;
         model->platforms[i].y = SCREEN_HEIGHT - (i * 80);
