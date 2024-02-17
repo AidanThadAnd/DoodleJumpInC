@@ -1,4 +1,5 @@
 #include "events.h"
+#include "system.h"
 
 void press_key(Doodle *character, char key)
 {
