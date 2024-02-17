@@ -24,9 +24,7 @@ Note:			- clear_screen is implicitly tested as each function relies on the scree
 #include "raster.h"
 #include "font.h"
 #include "bitmap.h"
-
-#define SCREEN_HEIGHT 400
-#define SCREEN_WIDTH 640
+#include "system.h"
 
 void test_plot_horizontal_line(UINT8 *base);
 void test_plot_bitmap_8(UINT16 *base, const UINT8 *bitmap, const unsigned int height);
