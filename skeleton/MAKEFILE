@@ -1,7 +1,7 @@
 tst_rast: tst_rast.o raster.o font.o bitmap.o
-	cc68x -g tst_rast.o raster.o  font.o bitmap.o -o tst_rast
+	cc68x -g tst_rast.o raster.o font.o bitmap.o model.o events.o -o tst_rast
 
-tst_rast.o: tst_rast.c raster.h font.h
+tst_rast.o: tst_rast.c raster.h font.h model.h events.h
 	cc68x -g -c tst_rast.c
 
 raster.o: raster.c raster.h
@@ -12,3 +12,9 @@ font.o: font.c font.h
 
 bitmap.o: bitmap.c bitmap.h font.h
 	cc68x -g -c bitmap.c
+
+model.o: model.c model.h 
+	cc68x -g -c model.c
+
+events.o: events.c events.h 
+	cc68x -g -c events.c
