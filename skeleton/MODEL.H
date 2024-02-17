@@ -5,6 +5,7 @@ typedef struct
 {
   unsigned int x, y; 
   int delta_x, delta_y; 
+  int facing;
 } Doodle;
 
 typedef struct 
@@ -17,6 +18,9 @@ typedef struct
   unsigned int x, y; 
   int delta_x;
 } Platform;
+
+void move_doodle(Doodle *doodle, int displacement_x, int displacement_y);
+void move_platform(Platform *platform);
 
 #endif
 
