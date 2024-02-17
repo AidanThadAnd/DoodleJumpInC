@@ -28,11 +28,11 @@ int main() {
         printf("Platform has not moved.\n");
     }
 
-    if (check_collision_doodle_platform(&model.doodle, &model.platforms[0])) {
+    if (check_collision_doodle_platform(&model.doodle, &model.platforms[1])) {
         printf("Collision: Doodle collided with a platform!\n");
     }
 
-    if (check_collision_monster(&model.doodle, &model.monster[0])) {
+    if (check_collision_monster(&model.doodle, &model.monster[1])) {
         printf("Collision: Doodle collided with a monster!\n");
     }
 
