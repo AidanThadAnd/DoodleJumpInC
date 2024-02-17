@@ -29,11 +29,24 @@ int check_collision_doodle_platform(Doodle *d, Platform *p)
 {
     if (d->y + DOODLE_HEIGHT > p->y &&
         d->y < p->y + PLATFORM_HEIGHT &&
-        d->x + DOODLE_WIDTH > p->x && 
+        d->x + DOODLE_LEG_WIDTH > p->x && 
         d->x < p->x + PLATFORM_WIDTH)   
     {
         return 1;
     }
         return 0;
 }
+
+int check_collision_monster(Doodle *d, Monster *m)
+{
+    if (d->y + DOODLE_HEIGHT > m->y &&
+        d->y < m->y + MONSTER_HEIGHT &&
+        d->x + DOODLE_WIDTH > p->x && 
+        d->x < m->x + MONSTER_WIDTH)   
+    {
+        return 1;
+    }
+        return 0;
+}
+
 
