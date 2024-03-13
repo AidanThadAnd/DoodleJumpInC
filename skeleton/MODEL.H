@@ -53,40 +53,33 @@ Functions:
         Input:
             - platform: Pointer to the Platform structure to be moved.
 */
+#include "TYPES.H"
 
 #ifndef MODEL_H
 #define MODEL_H
 #define MAX_PLATFORMS 15
 typedef struct 
 {
-    /*
-  int prevX, prevY;  
-    */
-    
-  unsigned int x, y; 
-  int delta_x, delta_y; 
-  int facing;
+    UINT16 prevX, prevY;  
+    UINT16 x, y; 
+    int delta_x, delta_y; 
+    int facing;
 } Doodle;
 
 typedef struct 
 {
-
-/*
-  int prevX, prevY;  
-*/
-    
-  unsigned int x, y; 
+    UINT16 prevX, prevY;
+    int balls, ballsyep;
+    UINT16 x, y; 
 } Monster;
 
 typedef struct 
 {
 
-    /*
-   int prevX, prevY;
-    */
-    
-  unsigned int x, y; 
-  int delta_x;
+
+    UINT16 prevX, prevY;
+    UINT16 x, y; 
+    int delta_x;
 } Platform;
 
 typedef struct {

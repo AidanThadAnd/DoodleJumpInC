@@ -1,36 +1,40 @@
 # 1 "renderer.c" 1
 # 1 "./MODEL.H" 1
-# 60 "./MODEL.H"
+# 1 "./TYPES.H" 1
+
+
+
+typedef unsigned char UINT8;
+typedef unsigned int  UINT16;
+typedef unsigned long UINT32;
+# 56 "./MODEL.H" 2
+
+
+
+
+
 typedef struct
 {
-
-
-
-
-  unsigned int x, y;
-  int delta_x, delta_y;
-  int facing;
+    UINT16 prevX, prevY;
+    UINT16 x, y;
+    int delta_x, delta_y;
+    int facing;
 } Doodle;
 
 typedef struct
 {
-
-
-
-
-
-  unsigned int x, y;
+    UINT16 prevX, prevY;
+    int balls, ballsyep;
+    UINT16 x, y;
 } Monster;
 
 typedef struct
 {
 
 
-
-
-
-  unsigned int x, y;
-  int delta_x;
+    UINT16 prevX, prevY;
+    UINT16 x, y;
+    int delta_x;
 } Platform;
 
 typedef struct {
@@ -45,12 +49,6 @@ void move_platform(Platform *platform);
 # 1 "renderer.c" 2
 # 1 "./RASTER.H" 1
 # 1 "./types.h" 1
-
-
-
-typedef unsigned char UINT8;
-typedef unsigned int  UINT16;
-typedef unsigned long UINT32;
 # 108 "./RASTER.H" 2
 
 
@@ -73,6 +71,8 @@ extern const UINT32 clear_bitmap[];
 # 3 "renderer.c" 2
 # 1 "./RENDERER.H" 1
 # 1 "./MODEL.H" 1
+# 1 "./TYPES.H" 1
+# 56 "./MODEL.H" 2
 # 4 "./RENDERER.H" 2
 # 1 "./RASTER.H" 1
 # 5 "./RENDERER.H" 2

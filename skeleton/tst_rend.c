@@ -11,6 +11,9 @@ int main()
 
     clear_screen((UINT8*)base, SCREEN_HEIGHT, SCREEN_WIDTH);
 
+    /*
     render(model, base);
+    */
+    
     return 0;
 }
