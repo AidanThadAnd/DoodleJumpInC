@@ -4,7 +4,8 @@
 typedef struct
 {
 
-  int prevX, prevY;
+
+
 
   unsigned int x, y;
   int delta_x, delta_y;
@@ -15,7 +16,8 @@ typedef struct
 {
 
 
-  int prevX, prevY;
+
+
 
   unsigned int x, y;
 } Monster;
@@ -24,7 +26,8 @@ typedef struct
 {
 
 
-   int prevX, prevY;
+
+
 
   unsigned int x, y;
   int delta_x;
@@ -216,16 +219,15 @@ void render_monster(const Monster *monster, UINT32 *base)
 
 
 
-void render_platform(Platform *platform, UINT32 *base)
+void render_platform(Platform *platforms, UINT32 *base)
 {
-    int total_platform = sizeof(*platform);
     int i;
 
     for(i = 0; i < 15 ; i++){
 
 
 
-            plot_bitmap_32(base, platform->x, platform->y, platform_bitmap, 24 );
-        platform++;
+            plot_bitmap_32(base, platforms->x, platforms->y, platform_bitmap, 24 );
+            platforms ++;
     }
 }

@@ -59,8 +59,9 @@ Functions:
 #define MAX_PLATFORMS 15
 typedef struct 
 {
-    
+    /*
   int prevX, prevY;  
+    */
     
   unsigned int x, y; 
   int delta_x, delta_y; 
@@ -70,8 +71,9 @@ typedef struct
 typedef struct 
 {
 
-
+/*
   int prevX, prevY;  
+*/
     
   unsigned int x, y; 
 } Monster;
@@ -79,8 +81,9 @@ typedef struct
 typedef struct 
 {
 
-    
+    /*
    int prevX, prevY;
+    */
     
   unsigned int x, y; 
   int delta_x;

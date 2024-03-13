@@ -39,16 +39,15 @@ void render_monster(const Monster *monster, UINT32 *base)
 
 
 /*Note this may need to change as we plan on using decreasing amount of platforms not always the max platforms*/
-void render_platform(Platform *platform, UINT32 *base)
+void render_platform(Platform *platforms, UINT32 *base)
 {
-    int total_platform = sizeof(*platform);
     int i;
 
     for(i = 0; i < MAX_PLATFORMS; i++){
         /*
         if(platform->prevX != platform->x && platform->prevY != platform->y)
         */
-            plot_bitmap_32(base, platform->x, platform->y, platform_bitmap, PLATFORM_HEIGHT);
-        platform++;
+            plot_bitmap_32(base, platforms->x, platforms->y, platform_bitmap, PLATFORM_HEIGHT);
+            platforms ++;
     }
 }
