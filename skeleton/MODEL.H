@@ -56,9 +56,12 @@ Functions:
 
 #ifndef MODEL_H
 #define MODEL_H
-
+#define MAX_PLATFORMS 15
 typedef struct 
 {
+    
+  int prevX, prevY;  
+    
   unsigned int x, y; 
   int delta_x, delta_y; 
   int facing;
@@ -66,11 +69,19 @@ typedef struct
 
 typedef struct 
 {
+
+
+  int prevX, prevY;  
+    
   unsigned int x, y; 
 } Monster;
 
 typedef struct 
 {
+
+    
+   int prevX, prevY;
+    
   unsigned int x, y; 
   int delta_x;
 } Platform;
@@ -78,10 +89,10 @@ typedef struct
 typedef struct {
     Doodle doodle;
     Monster monster;
-    Platform platforms[7];  
+    Platform platforms[MAX_PLATFORMS];  
 } Model;
 
-void initialize_model(Model *model);
+Model* initialize_model();
 void move_doodle(Doodle *doodle, int displacement_x, int displacement_y);
 void move_platform(Platform *platform);
 

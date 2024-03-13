@@ -7,13 +7,10 @@ int main()
 {
     UINT32 *base = Physbase();
 
-    Model *model;
+    Model *model = initialize_model();
 
     clear_screen((UINT8*)base, SCREEN_HEIGHT, SCREEN_WIDTH);
-    initialize_model(model);
-
 
     render(model, base);
-
     return 0;
 }

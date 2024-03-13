@@ -1,0 +1,231 @@
+# 1 "renderer.c" 1
+# 1 "./MODEL.H" 1
+# 60 "./MODEL.H"
+typedef struct
+{
+
+  int prevX, prevY;
+
+  unsigned int x, y;
+  int delta_x, delta_y;
+  int facing;
+} Doodle;
+
+typedef struct
+{
+
+
+  int prevX, prevY;
+
+  unsigned int x, y;
+} Monster;
+
+typedef struct
+{
+
+
+   int prevX, prevY;
+
+  unsigned int x, y;
+  int delta_x;
+} Platform;
+
+typedef struct {
+    Doodle doodle;
+    Monster monster;
+    Platform platforms[15 ];
+} Model;
+
+Model* initialize_model();
+void move_doodle(Doodle *doodle, int displacement_x, int displacement_y);
+void move_platform(Platform *platform);
+# 1 "renderer.c" 2
+# 1 "./RASTER.H" 1
+# 1 "./types.h" 1
+
+
+
+typedef unsigned char UINT8;
+typedef unsigned int  UINT16;
+typedef unsigned long UINT32;
+# 108 "./RASTER.H" 2
+
+
+void plot_bitmap_8(UINT16 *base, int x, int y, const UINT8 *bitmap, unsigned int height);
+void plot_bitmap_16(UINT16 *base, int x, int y, const UINT16 *bitmap, unsigned int height);
+void plot_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, unsigned int height);
+void plot_horizontal_line(UINT8 *base, int y);
+void clear_screen(UINT8 *base, int SCREEN_HEIGHT, int SCREEN_WIDTH);
+void clear_horizontal_line_8(UINT8* base, int x, int y, int length);
+# 2 "renderer.c" 2
+# 1 "./BITMAP.H" 1
+# 1 "./types.h" 1
+# 4 "./BITMAP.H" 2
+# 10 "./BITMAP.H"
+extern const UINT32 doodle_bitmap [];
+extern const UINT32 monster_bitmap [];
+extern const UINT32 platform_bitmap [];
+extern const UINT32 broken_platform_bitmap [];
+extern const UINT32 clear_bitmap[];
+# 3 "renderer.c" 2
+# 1 "./RENDERER.H" 1
+# 1 "./MODEL.H" 1
+# 4 "./RENDERER.H" 2
+# 1 "./RASTER.H" 1
+# 5 "./RENDERER.H" 2
+# 1 "./BITMAP.H" 1
+# 6 "./RENDERER.H" 2
+
+
+void render(const Model *model, UINT32 *base);
+void render_doodle(const Doodle *doodle, UINT32 *base);
+void render_monster(const Monster *monster, UINT32 *base);
+void render_platform(Platform *platform, UINT32 *base);
+# 4 "renderer.c" 2
+# 1 "C:/c68/include/stdio.h" 1
+# 1 "C:/c68/include/compiler.h" 1
+# 11 "C:/c68/include/stdio.h" 2
+# 20 "C:/c68/include/stdio.h"
+typedef unsigned long  size_t;
+# 69 "C:/c68/include/stdio.h"
+typedef	struct
+	{
+	long		_cnt;
+	unsigned char	*_ptr;
+	unsigned char	*_base;
+	unsigned int	_flag;
+	int		_file;
+	long		_bsiz;
+	unsigned char	_ch;
+	}
+	FILE;
+
+
+typedef unsigned long fpos_t;
+# 92 "C:/c68/include/stdio.h"
+extern	FILE	_iob[];
+# 108 "C:/c68/include/stdio.h"
+ char *	ctermid	(char *) ;
+
+
+
+
+ int	remove	(const char *) ;
+ int	rename	(const char *, const char *) ;
+ char *	tmpnam	(char *) ;
+ FILE *	tmpfile	(void) ;
+
+ int	fclose	(FILE *) ;
+ int	fflush	(FILE *) ;
+
+ FILE *	fopen	(const char *, const char *) ;
+ FILE *	freopen	(const char *, const char *, FILE *) ;
+
+ void	setbuf	(FILE *, char *) ;
+ int	setvbuf	(FILE *, char *, int, size_t) ;
+# 132 "C:/c68/include/stdio.h"
+ int  fscanf  (FILE *, const char *, ...) ;
+ int  scanf   (const char *, ...) ;
+ int  sscanf  (const char *, const char *, ...) ;
+
+
+ int	fprintf	(FILE *, const char *, ...) ;
+ int	printf	(const char *, ...) ;
+ int	sprintf	(char *, const char *, ...) ;
+
+ int 	vfprintf (FILE *, const char *, char * ) ;
+ int 	vprintf	 (const char *, char * ) ;
+ int 	vsprintf (char *, const char *, char * ) ;
+
+ int	vscanf  (const char *, char * ) ;
+ int	vfscanf (FILE *, const char *, char * ) ;
+ int	vsscanf	(const char *, const char *, char * ) ;
+
+
+ int	fgetc	(FILE *) ;
+ char	*fgets	(char *, int, FILE *) ;
+ char	*gets	(char *) ;
+ int	fputc	(int c, FILE *) ;
+ int	fputs	(const char *, FILE *) ;
+ int	puts	(const char *) ;
+
+ size_t	fread	(void *, size_t, size_t, FILE *) ;
+ size_t	fwrite	(const void *, size_t, size_t, FILE *) ;
+
+ int	fgetpos	(FILE *, fpos_t *) ;
+ int	fsetpos	(FILE *, fpos_t *) ;
+
+ int	fseek	(FILE *, long, int) ;
+ long	ftell	(FILE *) ;
+ void	rewind	(FILE *) ;
+
+ void	perror	(const char *) ;
+
+
+ FILE	*fdopen	(int, const char *) ;
+
+
+ FILE *	fopenp	(const char *, const char *) ;
+ int 	fungetc	(int, FILE *) ;
+ int	pclose	(FILE *) ;
+ FILE *	popen	(const char *, const char *) ;
+ void	setlinebuf	(FILE *) ;
+
+ void	_binmode	(int) ;
+ long 	getl	(FILE *) ;
+ long 	putl	(long, FILE *) ;
+ short 	getw	(FILE *) ;
+ short 	putw	(short, FILE *) ;
+ void	_getbuf	(FILE *fp) ;
+# 192 "C:/c68/include/stdio.h"
+ int	_filbuf	(FILE *) ;
+# 6 "renderer.c" 2
+
+
+void render(const Model *model, UINT32 *base)
+{
+
+
+
+        render_doodle(&(model->doodle), base);
+
+
+
+        render_monster(&(model->monster), base);
+
+
+    render_platform(model->platforms, base);
+
+}
+
+
+void render_doodle(const Doodle *doodle, UINT32 *base)
+{
+
+    plot_bitmap_32(base, doodle->x, doodle->y, doodle_bitmap, 64 );
+
+}
+
+
+void render_monster(const Monster *monster, UINT32 *base)
+{
+
+    plot_bitmap_32(base, monster->x, monster->y, monster_bitmap, 64 );
+
+}
+
+
+
+void render_platform(Platform *platform, UINT32 *base)
+{
+    int total_platform = sizeof(*platform);
+    int i;
+
+    for(i = 0; i < 15 ; i++){
+
+
+
+            plot_bitmap_32(base, platform->x, platform->y, platform_bitmap, 24 );
+        platform++;
+    }
+}
