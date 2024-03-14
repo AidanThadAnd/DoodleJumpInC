@@ -23,21 +23,11 @@ int main() {
 
     printf("\nPerforming actions:\n");
 
-
     press_key(&gameModel.doodle, 'd');  
     printf("After moving right:\n");
     print_state(&gameModel);
 
     press_key(&gameModel.doodle, 'a');  
-    printf("After moving left:\n");
-    print_state(&gameModel);
-
-    
-    press_key(&gameModel.doodle, 'd');  
-    printf("After moving right:\n");
-    print_state(&gameModel);
-
-    press_key(&gameModel.doodle, 'a');
     printf("After moving left:\n");
     print_state(&gameModel);
 
