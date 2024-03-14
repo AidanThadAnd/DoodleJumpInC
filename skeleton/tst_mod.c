@@ -6,8 +6,9 @@
 void print_state(Model *gameModel) {
     printf("Doodle - X: %d, Y: %d, Facing: %d\n", gameModel->doodle.x, 
 		gameModel->doodle.y, gameModel->doodle.facing);
-
-    for (int i = 0; i < 7; ++i) {
+    int i;
+   
+    for (i = 0; i < 7; ++i) {
         printf("Platform %d - X: %d, Y: %d\n", i + 1, gameModel->platforms[i].x, gameModel->platforms[i].y);
     }
 
