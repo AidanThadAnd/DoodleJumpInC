@@ -4,10 +4,11 @@
 #include "system.h"
 
 void print_state(Model *gameModel) {
-    printf("Doodle - X: %d, Y: %d, Facing: %d\n", gameModel->doodle.x, 
-		gameModel->doodle.y, gameModel->doodle.facing);
+  
     int i;
-   
+
+    printf("Doodle - X: %d, Y: %d, Facing: %d\n", gameModel->doodle.x, 
+        	gameModel->doodle.y, gameModel->doodle.facing);
     for (i = 0; i < 7; ++i) {
         printf("Platform %d - X: %d, Y: %d\n", i + 1, gameModel->platforms[i].x, gameModel->platforms[i].y);
     }
@@ -31,7 +32,6 @@ int main() {
     press_key(&gameModel.doodle, 'a');  
     printf("After moving left:\n");
     print_state(&gameModel);
-
     
     if (check_collision_monster(&gameModel.doodle, &gameModel.monster)) {
         printf("Collision with Monster detected!\n");
