@@ -53,31 +53,34 @@ Functions:
         Input:
             - platform: Pointer to the Platform structure to be moved.
 */
-#include "TYPES.H"
 
 #ifndef MODEL_H
 #define MODEL_H
+
+#include "TYPES.H"
+
 #define MAX_PLATFORMS 15
+
 typedef struct 
 {
-    UINT16 prevX, prevY;  
+    UINT16 prev_x, prev_y;  
     UINT16 x, y; 
-    UINT16 delta_x, delta_y; 
+    int delta_x, delta_y; 
     UINT16 facing;
 } Doodle;
 
 typedef struct 
 {
-    UINT16 prevX, prevY;
-    UINT16 balls, ballsyep;
+    UINT16 prev_x, prev_y;
+    int delta_x, delta_y;
     UINT16 x, y; 
 } Monster;
 
 typedef struct 
 {
-    UINT16 prevX, prevY;
+    UINT16 prev_x, prev_y;
     UINT16 x, y; 
-    UINT16 delta_x;
+    int delta_x, delta_y;
 } Platform;
 
 typedef struct {
@@ -88,8 +91,16 @@ typedef struct {
 
 Model* initialize_model();
 
+/* Changed as I don't think we'll be using displacment and instead we'll be relying on delta_x/y to move characters around, im assuming you just had this for testing
 void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y);
+*/
+void move_doodle(Doodle *doodle);
+
 void move_platform(Platform *platform);
+
+UINT8 has_doodle_moved(Doodle *doodle);
+UINT8 has_monster_moved(Monster *monster);
+UINT8 has_platform_moved(Platform *platform);
 
 #endif
 

@@ -7,13 +7,12 @@
 
 void render(const Model *model, UINT32 *base)
 {
-
     /*Comparing to previous state so that stationary objects are not redrawn*/
-    if(model->doodle.prevX != model->doodle.x && model->doodle.prevY != model->doodle.y)
+    if(has_doodle_moved(&(model->doodle)) == 1)
         render_doodle(&(model->doodle), base); 
 
 
-    if(model->monster.prevX != model->monster.x && model->monster.prevY != model->monster.y)     
+    if(has_monster_moved(&(model->monster)) == 1)     
         render_monster(&(model->monster), base);
 
     render_platform(model->platforms, base);
@@ -42,7 +41,7 @@ void render_platform(Platform *platforms, UINT32 *base)
     int i;
 
     for(i = 0; i < MAX_PLATFORMS; i++){
-        if(platforms->prevX != platforms->x && platforms->prevY != platforms->y)
+        if(has_platform_moved(platforms) == 1)
             plot_bitmap_32(base, platforms->x, platforms->y, platform_bitmap, PLATFORM_HEIGHT);
             platforms ++;
     }

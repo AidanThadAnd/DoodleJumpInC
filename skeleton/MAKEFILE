@@ -1,6 +1,6 @@
 #Creates the test rend file
-tst_rend: tst_rend.o renderer.o model.o events.o raster.o bitmap.o
-	cc68x -g tst_rend.o model.o events.o raster.o bitmap.o renderer.o -o tst_rend
+tst_rend: tst_rend.o renderer.o model.o raster.o bitmap.o
+	cc68x -g tst_rend.o model.o raster.o bitmap.o renderer.o -o tst_rend
 
 #Creats the test model file
 tst_mod: tst_mod.o model.o events.o

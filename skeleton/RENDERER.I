@@ -7,32 +7,31 @@
 typedef unsigned char UINT8;
 typedef unsigned int  UINT16;
 typedef unsigned long UINT32;
-# 56 "./MODEL.H" 2
-
+# 60 "./MODEL.H" 2
 
 
 
 
 typedef struct
 {
-    UINT16 prevX, prevY;
+    UINT16 prev_x, prev_y;
     UINT16 x, y;
-    UINT16 delta_x, delta_y;
+    int delta_x, delta_y;
     UINT16 facing;
 } Doodle;
 
 typedef struct
 {
-    UINT16 prevX, prevY;
-    UINT16 balls, ballsyep;
+    UINT16 prev_x, prev_y;
+    int delta_x, delta_y;
     UINT16 x, y;
 } Monster;
 
 typedef struct
 {
-    UINT16 prevX, prevY;
+    UINT16 prev_x, prev_y;
     UINT16 x, y;
-    UINT16 delta_x;
+    int delta_x, delta_y;
 } Platform;
 
 typedef struct {
@@ -43,8 +42,16 @@ typedef struct {
 
 Model* initialize_model();
 
-void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y);
+
+
+
+void move_doodle(Doodle *doodle);
+
 void move_platform(Platform *platform);
+
+UINT8 has_doodle_moved(Doodle *doodle);
+UINT8 has_monster_moved(Monster *monster);
+UINT8 has_platform_moved(Platform *platform);
 # 1 "renderer.c" 2
 # 1 "./RASTER.H" 1
 # 1 "./types.h" 1
@@ -72,8 +79,6 @@ extern const UINT32 clear_bitmap[];
 # 3 "renderer.c" 2
 # 1 "./RENDERER.H" 1
 # 1 "./MODEL.H" 1
-# 1 "./TYPES.H" 1
-# 56 "./MODEL.H" 2
 # 4 "./RENDERER.H" 2
 # 1 "./RASTER.H" 1
 # 5 "./RENDERER.H" 2
@@ -189,12 +194,11 @@ extern	FILE	_iob[];
 void render(const Model *model, UINT32 *base)
 {
 
-
-    if(model->doodle.prevX != model->doodle.x && model->doodle.prevY != model->doodle.y)
+    if(has_doodle_moved(&(model->doodle)) == 1)
         render_doodle(&(model->doodle), base);
 
 
-    if(model->monster.prevX != model->monster.x && model->monster.prevY != model->monster.y)
+    if(has_monster_moved(&(model->monster)) == 1)
         render_monster(&(model->monster), base);
 
     render_platform(model->platforms, base);
@@ -223,7 +227,7 @@ void render_platform(Platform *platforms, UINT32 *base)
     int i;
 
     for(i = 0; i < 15 ; i++){
-        if(platforms->prevX != platforms->x && platforms->prevY != platforms->y)
+        if(has_platform_moved(platforms) == 1)
             plot_bitmap_32(base, platforms->x, platforms->y, platform_bitmap, 24 );
             platforms ++;
     }
