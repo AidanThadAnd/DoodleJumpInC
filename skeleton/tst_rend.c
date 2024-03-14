@@ -9,8 +9,7 @@ int main()
 
     Model *model = initialize_model();
 
-    clear_screen((UINT8*)base, SCREEN_HEIGHT, SCREEN_WIDTH);
-
+    clear_screen((UINT8*)base);
 
     render(model, base);
 

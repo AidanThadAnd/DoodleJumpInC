@@ -38,7 +38,7 @@ int main()
 	
 	const UINT8* glyph_A = GLYPH_START('A');
 
-    clear_screen((UINT8*)base, SCREEN_HEIGHT, SCREEN_WIDTH);
+    clear_screen((UINT8*)base);
 
 
 	test_plot_horizontal_line((UINT8*)base);
@@ -73,7 +73,7 @@ void test_plot_horizontal_line(UINT8 *base)
 	for(j = 0; j < SCREEN_HEIGHT; j+=8)
 		plot_horizontal_line(base, j);
 
-	clear_screen(base, SCREEN_HEIGHT, SCREEN_WIDTH);
+	clear_screen(base);
 
 }
 
@@ -103,7 +103,7 @@ void test_plot_bitmap_8(UINT16 *base, const UINT8 *bitmap, const unsigned int he
 		for(j = 0; j < SCREEN_HEIGHT; j+=8)
 			plot_bitmap_8(base, i, j, bitmap, height);
 
-	clear_screen((UINT8*)base, SCREEN_HEIGHT, SCREEN_WIDTH);
+	clear_screen((UINT8*)base);
 
 }
 
@@ -133,7 +133,7 @@ void test_plot_bitmap_16(UINT16 *base, const UINT16 *bitmap, const unsigned int 
 			plot_bitmap_16(base, i, j, bitmap, height);
 
 
-	clear_screen((UINT8*)base, SCREEN_HEIGHT, SCREEN_WIDTH);
+	clear_screen((UINT8*)base);
 }
 
 /*
@@ -159,7 +159,7 @@ void test_plot_bitmap_32(UINT32 *base, const UINT32 *bitmap, const unsigned int 
 
 	for(i = 0; i < SCREEN_WIDTH; i+=64)
 		for(j = 0; j < SCREEN_HEIGHT+64; j+=64)
-			plot_bitmap_32(base, i, j, bitmap, height, SCREEN_HEIGHT);
+			plot_bitmap_32(base, i, j, bitmap, height);
     
-	clear_screen((UINT8*)base, SCREEN_HEIGHT, SCREEN_WIDTH);
+	clear_screen((UINT8*)base);
 }

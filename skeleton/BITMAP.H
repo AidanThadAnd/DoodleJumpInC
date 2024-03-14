@@ -4,8 +4,16 @@
 #include "types.h"
 
 #define DOODLE_HEIGHT 64
+#define DOODLE_WIDTH 64
+#define DOODLE_LEG_WIDTH 48
+
 #define MONSTER_HEIGHT 64
+#define MONSTER_WIDTH 64
+
 #define PLATFORM_HEIGHT 24
+#define PLATFORM_WIDTH 64
+
+
 
 extern const UINT32 doodle_bitmap []; 
 extern const UINT32 monster_bitmap []; 

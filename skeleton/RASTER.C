@@ -1,5 +1,5 @@
 #include "raster.h"
-#include <stdio.h>
+
 
 void plot_bitmap_8(UINT16 *base, int x, int y, const UINT8 *bitmap, unsigned int height)
 {
@@ -26,26 +26,7 @@ void plot_bitmap_16(UINT16 *base, int x, int y, const UINT16 *bitmap, unsigned i
 }
 
 
-/*
-void plot_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, unsigned int height)
-{
-	int rows;
-	int cols;
-
-	UINT32 *loc = base + (y * 20) + (x>>5);
-
-	for (rows = 0; rows < height; rows++) {
-		for(cols = 0; cols < 2; cols++) {
-			*loc |= *(bitmap)++;
-			*loc ^= 0xFFFFFFFF;
-			loc++;
-		}
-		loc += 18;
-	}
-}
-*/
-
-void plot_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, int height, int SCREEN_HEIGHT)
+void plot_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, int height)
 {
 	int rows;
 	int cols;
@@ -81,7 +62,7 @@ void plot_horizontal_line(UINT8 *base, int y) {
 	} 
 }
 
-void clear_screen(UINT8 *base, int SCREEN_HEIGHT, int SCREEN_WIDTH)
+void clear_screen(UINT8 *base)
 {
 	int row;
 

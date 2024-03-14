@@ -49,19 +49,21 @@ void move_platform(Platform *platform);
 # 1 "./RASTER.H" 1
 # 1 "./types.h" 1
 # 107 "./RASTER.H" 2
+# 1 "./system.h" 1
+# 108 "./RASTER.H" 2
 
 
 void plot_bitmap_8(UINT16 *base, int x, int y, const UINT8 *bitmap, unsigned int height);
 void plot_bitmap_16(UINT16 *base, int x, int y, const UINT16 *bitmap, unsigned int height);
-void plot_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, unsigned int height, UINT16 SCREEN_HEIGHT);
+void plot_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, int height);
 void plot_horizontal_line(UINT8 *base, int y);
-void clear_screen(UINT8 *base, int SCREEN_HEIGHT, int SCREEN_WIDTH);
+void clear_screen(UINT8 *base);
 void clear_horizontal_line_8(UINT8* base, int x, int y, int length);
 # 2 "renderer.c" 2
 # 1 "./BITMAP.H" 1
 # 1 "./types.h" 1
 # 4 "./BITMAP.H" 2
-# 10 "./BITMAP.H"
+# 18 "./BITMAP.H"
 extern const UINT32 doodle_bitmap [];
 extern const UINT32 monster_bitmap [];
 extern const UINT32 platform_bitmap [];
@@ -195,10 +197,7 @@ void render(const Model *model, UINT32 *base)
     if(model->monster.prevX != model->monster.x && model->monster.prevY != model->monster.y)
         render_monster(&(model->monster), base);
 
-
     render_platform(model->platforms, base);
-
-
 }
 
 
@@ -224,10 +223,7 @@ void render_platform(Platform *platforms, UINT32 *base)
     int i;
 
     for(i = 0; i < 15 ; i++){
-
-
-
-
+        if(platforms->prevX != platforms->x && platforms->prevY != platforms->y)
             plot_bitmap_32(base, platforms->x, platforms->y, platform_bitmap, 24 );
             platforms ++;
     }
