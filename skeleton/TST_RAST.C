@@ -24,9 +24,7 @@ Note:			- clear_screen is implicitly tested as each function relies on the scree
 #include "raster.h"
 #include "font.h"
 #include "bitmap.h"
-
-#define SCREEN_HEIGHT 400
-#define SCREEN_WIDTH 640
+#include "system.h"
 
 void test_plot_horizontal_line(UINT8 *base);
 void test_plot_bitmap_8(UINT16 *base, const UINT8 *bitmap, const unsigned int height);
@@ -37,7 +35,7 @@ int main()
 {
 	
     UINT32 *base  = Physbase();
-        
+	
 	const UINT8* glyph_A = GLYPH_START('A');
 
     clear_screen((UINT8*)base, SCREEN_HEIGHT, SCREEN_WIDTH);
@@ -49,6 +47,7 @@ int main()
     test_plot_bitmap_32(base, platform_bitmap, PLATFORM_HEIGHT);
     test_plot_bitmap_32(base, broken_platform_bitmap, PLATFORM_HEIGHT);
     test_plot_bitmap_32(base, doodle_bitmap, DOODLE_HEIGHT);
+	
 
 	return 0;
 }
@@ -154,13 +153,13 @@ Output:
 		- Screen is cleared after function is complete
 */
 void test_plot_bitmap_32(UINT32 *base, const UINT32 *bitmap, const unsigned int height)
-{
-    int i;
-	int j;
+{	
+    int i=0;
+	int j=0;
 
 	for(i = 0; i < SCREEN_WIDTH; i+=64)
-		for(j = 0; j < SCREEN_HEIGHT; j+=64)
-			plot_bitmap_32(base, i, j, bitmap, height);
+		for(j = 0; j < SCREEN_HEIGHT+64; j+=64)
+			plot_bitmap_32(base, i, j, bitmap, height, SCREEN_HEIGHT);
     
 	clear_screen((UINT8*)base, SCREEN_HEIGHT, SCREEN_WIDTH);
 }

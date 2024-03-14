@@ -75,8 +75,6 @@ typedef struct
 
 typedef struct 
 {
-
-
     UINT16 prevX, prevY;
     UINT16 x, y; 
     UINT16 delta_x;
@@ -89,6 +87,7 @@ typedef struct {
 } Model;
 
 Model* initialize_model();
+
 void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y);
 void move_platform(Platform *platform);
 

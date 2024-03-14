@@ -30,8 +30,6 @@ typedef struct
 
 typedef struct
 {
-
-
     UINT16 prevX, prevY;
     UINT16 x, y;
     UINT16 delta_x;
@@ -44,17 +42,18 @@ typedef struct {
 } Model;
 
 Model* initialize_model();
+
 void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y);
 void move_platform(Platform *platform);
 # 1 "renderer.c" 2
 # 1 "./RASTER.H" 1
 # 1 "./types.h" 1
-# 108 "./RASTER.H" 2
+# 107 "./RASTER.H" 2
 
 
 void plot_bitmap_8(UINT16 *base, int x, int y, const UINT8 *bitmap, unsigned int height);
 void plot_bitmap_16(UINT16 *base, int x, int y, const UINT16 *bitmap, unsigned int height);
-void plot_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, unsigned int height);
+void plot_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, unsigned int height, UINT16 SCREEN_HEIGHT);
 void plot_horizontal_line(UINT8 *base, int y);
 void clear_screen(UINT8 *base, int SCREEN_HEIGHT, int SCREEN_WIDTH);
 void clear_horizontal_line_8(UINT8* base, int x, int y, int length);
@@ -189,15 +188,16 @@ void render(const Model *model, UINT32 *base)
 {
 
 
-
+    if(model->doodle.prevX != model->doodle.x && model->doodle.prevY != model->doodle.y)
         render_doodle(&(model->doodle), base);
 
 
-
+    if(model->monster.prevX != model->monster.x && model->monster.prevY != model->monster.y)
         render_monster(&(model->monster), base);
 
 
     render_platform(model->platforms, base);
+
 
 }
 
@@ -224,6 +224,7 @@ void render_platform(Platform *platforms, UINT32 *base)
     int i;
 
     for(i = 0; i < 15 ; i++){
+
 
 
 

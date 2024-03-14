@@ -13,10 +13,10 @@ Model* initialize_model()
     model->doodle.delta_y = 0;
     model->doodle.facing = 1; /* Assuming initially facing right */
 
-    /*
-    model->doodle.prevX = SCREEN_WIDTH+1; /* Sets the previous location state for optimized rendering 
+    
+    model->doodle.prevX = SCREEN_WIDTH+1; /* Sets the previous location state for optimized rendering */
     model->doodle.prevY = SCREEN_HEIGHT+1;
-    */
+    
 
 
 
@@ -25,10 +25,10 @@ Model* initialize_model()
         model->platforms[i].x = i * 100;
         model->platforms[i].y = SCREEN_HEIGHT - (i * 40);
 
-        /*
+        
         model->platforms[i].prevX = SCREEN_WIDTH+1;
         model->platforms[i].prevY = SCREEN_HEIGHT+1;
-        */
+        
         
         
     }
@@ -43,10 +43,10 @@ Model* initialize_model()
 void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y)
 {
 
-    /*
+    
     doodle->prevY = doodle->y;
     doodle->prevX = doodle->x;
-    */
+    
     
 
 
