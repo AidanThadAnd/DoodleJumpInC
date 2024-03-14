@@ -1,5 +1,6 @@
 #include "model.h"
 #include "system.h"
+#include "TYPES.H"
 
 Model* initialize_model()
 {
@@ -39,7 +40,7 @@ Model* initialize_model()
     return model;
 }
 
-void move_doodle(Doodle *doodle, int displacement_x, int displacement_y)
+void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y)
 {
 
     /*

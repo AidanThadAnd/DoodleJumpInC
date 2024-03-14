@@ -62,14 +62,14 @@ typedef struct
 {
     UINT16 prevX, prevY;  
     UINT16 x, y; 
-    int delta_x, delta_y; 
-    int facing;
+    UINT16 delta_x, delta_y; 
+    UINT16 facing;
 } Doodle;
 
 typedef struct 
 {
     UINT16 prevX, prevY;
-    int balls, ballsyep;
+    UINT16 balls, ballsyep;
     UINT16 x, y; 
 } Monster;
 
@@ -79,7 +79,7 @@ typedef struct
 
     UINT16 prevX, prevY;
     UINT16 x, y; 
-    int delta_x;
+    UINT16 delta_x;
 } Platform;
 
 typedef struct {
@@ -89,7 +89,7 @@ typedef struct {
 } Model;
 
 Model* initialize_model();
-void move_doodle(Doodle *doodle, int displacement_x, int displacement_y);
+void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y);
 void move_platform(Platform *platform);
 
 #endif
