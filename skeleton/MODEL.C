@@ -49,7 +49,7 @@ void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y)
     doodle->y += displacement_y;
 }
 
-void move_platform(Platform *platform, UINT16 displacement_x, UINT16 displacement_y)
+void move_platform_relative(Platform *platform, UINT16 displacement_x, UINT16 displacement_y)
 {
     platform->prev_x = platform->x;
     platform->prev_y = platform->y;
@@ -65,6 +65,21 @@ void move_monster(Monster *monster, UINT16 displacement_x, UINT16 displacement_y
 
     monster->x += displacement_x;
     monster->y += displacement_y;
+}
+
+void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y, UINT8 selected_platform)
+{
+    int i;
+
+    for(i=0; i<selected_platform;i++)
+        platforms++;
+
+
+    platforms->prev_x = platforms->x;
+    platforms->prev_y = platforms->y;
+
+    platforms->x = x;
+    platforms->y = y;
 }
 
 

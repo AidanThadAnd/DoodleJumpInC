@@ -8,11 +8,14 @@ int main()
 {
     int i;
     int j;
+    int loop;
     UINT32 *base = Physbase();
 
     Model *model = initialize_model();
     Platform *platform = model->platforms;
+    Platform *save = platform;
 
+    loop = 0;
     clear_screen((UINT8*)base);
 
     render(model, base);
@@ -25,16 +28,8 @@ int main()
    {
     move_doodle(&(model->doodle), 8, 0);
     move_monster(&(model->monster), 8, 0);
-    model->doodle.facing = 0;
-    for(j=0; j < MAX_PLATFORMS; j++)
-    {
-        move_platform(platform, 1,0);
-        platform++;
-    }
-    platform = model->platforms;
-
+    move_platform_absolute(model->platforms, 300, 200, 1);
     render(model, base);
-    
    }
    
     return 0;
