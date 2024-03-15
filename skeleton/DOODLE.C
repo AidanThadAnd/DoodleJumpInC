@@ -7,7 +7,6 @@
 UINT32 get_time();
 void delay(int milliseconds);
 void erase_doodle(const Doodle doodle, UINT32 *base);
-void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y);
 
 int main() {
     Model *model = initialize_model();
