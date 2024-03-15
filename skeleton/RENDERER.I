@@ -41,7 +41,7 @@ Model* initialize_model();
 
 void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y);
 void move_monster(Monster *monster, UINT16 displacement_x, UINT16 displacement_y);
-void move_platform_relative(Platform *platform, UINT16 displacement_x, UINT16 displacement_y);
+void move_platform_relative(Platform *platform, UINT16 displacement_x, UINT16 displacement_y, UINT8 selected_platform);
 void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y, UINT8 selected_platform);
 
 UINT8 has_doodle_moved(Doodle *doodle);

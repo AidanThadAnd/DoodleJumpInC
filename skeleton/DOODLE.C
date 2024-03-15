@@ -9,13 +9,20 @@ void delay(int milliseconds);
 void input(Model *model, char *pressedKey);
 
 int main() {
-    
+    UINT8 i;
     UINT32 timeThen, timeNow, timeElapsed;
-    
     Model *model = initialize_model();
     UINT32 *base = Physbase();   
     char pressedKey = 0;
     clear_screen((UINT8*)base);
+
+    /* slight movement to all objects are required as the rendering optimzation requires some movement from initlization of objects 
+    to prevent redrawing of still objects*/
+    for(i=0; i<MAX_PLATFORMS;i++)
+    {
+        move_platform_relative(model->platforms, 1, 1, i);
+    }
+    move_monster(&(model->monster),1,1);
 
     render(model, base);  /* Render the initial state of the model */
 
