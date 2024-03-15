@@ -25,7 +25,7 @@ int main()
    {
     move_doodle(&(model->doodle), 8, 0);
     move_monster(&(model->monster), 8, 0);
-
+    model->doodle.facing = 0;
     for(j=0; j < MAX_PLATFORMS; j++)
     {
         move_platform(platform, 1,0);

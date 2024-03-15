@@ -28,7 +28,10 @@ void render(const Model *model, UINT32 *base)
 void render_doodle(const Doodle *doodle, UINT32 *base)
 {
 
-    plot_bitmap_32(base, doodle->x, doodle->y, doodle_bitmap, DOODLE_HEIGHT);
+    if(doodle->facing == 1)
+        plot_bitmap_32(base, doodle->x, doodle->y, doodle_bitmap_right, DOODLE_HEIGHT);
+    else
+        plot_bitmap_32(base, doodle->x, doodle->y, doodle_bitmap_left, DOODLE_HEIGHT);
 
 }
 

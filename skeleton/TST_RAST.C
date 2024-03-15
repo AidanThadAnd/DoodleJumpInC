@@ -33,20 +33,23 @@ void test_plot_bitmap_32(UINT32 *base, const UINT32 *bitmap, const unsigned int 
 
 int main()
 {
-	
+	int i;
     UINT32 *base  = Physbase();
 	
 	const UINT8* glyph_A = GLYPH_START('A');
 
     clear_screen((UINT8*)base);
 
-
+	/*
 	test_plot_horizontal_line((UINT8*)base);
     test_plot_bitmap_8((UINT16*)base, glyph_A, FONT_HEIGHT);
 	test_plot_bitmap_32(base, monster_bitmap, MONSTER_HEIGHT);
     test_plot_bitmap_32(base, platform_bitmap, PLATFORM_HEIGHT);
     test_plot_bitmap_32(base, broken_platform_bitmap, PLATFORM_HEIGHT);
-    test_plot_bitmap_32(base, doodle_bitmap, DOODLE_HEIGHT);
+	*/
+    test_plot_bitmap_32(base, doodle_bitmap_right, DOODLE_HEIGHT);
+	clear_screen((UINT8*)base);
+    test_plot_bitmap_32(base, doodle_bitmap_left, DOODLE_HEIGHT);
 	
 
 	return 0;
@@ -154,12 +157,11 @@ Output:
 */
 void test_plot_bitmap_32(UINT32 *base, const UINT32 *bitmap, const unsigned int height)
 {	
-    int i=0;
-	int j=0;
+    int i=SCREEN_WIDTH/2;
+	int j=SCREEN_HEIGHT/2;
 
-	for(i = 0; i < SCREEN_WIDTH; i+=64)
-		for(j = 0; j < SCREEN_HEIGHT+64; j+=64)
+
 			plot_bitmap_32(base, i, j, bitmap, height);
     
-	clear_screen((UINT8*)base);
+	
 }

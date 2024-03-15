@@ -69,7 +69,8 @@ void clear_horizontal_line_8(UINT8* base, int x, int y, int length);
 # 1 "./types.h" 1
 # 4 "./BITMAP.H" 2
 # 18 "./BITMAP.H"
-extern const UINT32 doodle_bitmap [];
+extern const UINT32 doodle_bitmap_right [];
+extern UINT32 doodle_bitmap_left[];
 extern const UINT32 monster_bitmap [];
 extern const UINT32 platform_bitmap [];
 extern const UINT32 broken_platform_bitmap [];
@@ -212,7 +213,10 @@ void render(const Model *model, UINT32 *base)
 void render_doodle(const Doodle *doodle, UINT32 *base)
 {
 
-    plot_bitmap_32(base, doodle->x, doodle->y, doodle_bitmap, 64 );
+    if(doodle->facing == 1)
+        plot_bitmap_32(base, doodle->x, doodle->y, doodle_bitmap_right, 64 );
+    else
+        plot_bitmap_32(base, doodle->x, doodle->y, doodle_bitmap_left, 64 );
 
 }
 
