@@ -24,24 +24,24 @@ void press_key(Doodle *character, char key)
     and if the top of the Doodle is above the bottom of the platform
     Check if the right side of the Doodle is to the right of the left side of the platform
     and if the left side of the Doodle is to the left of the right side of the platform */
-int check_collision_doodle_platform(Doodle *d, Platform *p)
+int check_collision_doodle_platform(Doodle *doodle, Platform *platform)
 {
-    if (d->y + DOODLE_HEIGHT > p->y &&
-        d->y < p->y + PLATFORM_HEIGHT &&
-        d->x + DOODLE_LEG_WIDTH > p->x && 
-        d->x < p->x + PLATFORM_WIDTH)   
+    if (doodle->y + DOODLE_HEIGHT > platform->y &&
+        doodle->y < platform->y + PLATFORM_HEIGHT &&
+        doodle->x + DOODLE_LEG_WIDTH > platform->x && 
+        doodle->x < platform->x + PLATFORM_WIDTH)   
     {
         return 1;
     }
         return 0;
 }
 
-int check_collision_monster(Doodle *d, Monster *m)
+int check_collision_monster(Doodle *doodle, Monster *monster)
 {
-    if (d->y + DOODLE_HEIGHT > m->y &&
-        d->y < m->y + MONSTER_HEIGHT &&
-        d->x + DOODLE_WIDTH > m->x && 
-        d->x < m->x + MONSTER_WIDTH)   
+    if (doodle->y + DOODLE_HEIGHT > monster->y &&
+        doodle->y < monster->y + MONSTER_HEIGHT &&
+        doodle->x + DOODLE_WIDTH > monster->x && 
+        doodle->x < monster->x + MONSTER_WIDTH)   
     {
         return 1;
     }

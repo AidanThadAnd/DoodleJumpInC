@@ -1,3 +1,7 @@
+#Creates main doodle game
+doodle: doodle.o renderer.o model.o raster.o bitmap.o events.o font.o
+	cc68x -g doodle.o renderer.o model.o raster.o bitmap.o events.o font.o -o doodle
+
 #Creates the test rend file
 tst_rend: tst_rend.o renderer.o model.o raster.o bitmap.o
 	cc68x -g tst_rend.o model.o raster.o bitmap.o renderer.o -o tst_rend
@@ -9,6 +13,10 @@ tst_mod: tst_mod.o model.o events.o
 #Creates the test rast file
 tst_rast: tst_rast.o raster.o font.o bitmap.o
 	cc68x -g tst_rast.o raster.o  font.o bitmap.o -o tst_rast
+
+#Main doodle game 
+doodle.o: doodle.c model.h renderer.h events.h
+	cc68x -g -c doodle.c
 
 #Rasterization
 tst_rast.o: tst_rast.c raster.h font.h

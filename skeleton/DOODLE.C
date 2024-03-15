@@ -6,47 +6,62 @@
 
 UINT32 get_time();
 void delay(int milliseconds);
-void erase_doodle(const Doodle doodle, UINT32 *base);
+void input(Model *model, char *pressedKey);
 
 int main() {
+    
+    UINT32 timeThen, timeNow, timeElapsed;
+    
     Model *model = initialize_model();
     UINT32 *base = Physbase();   
     char pressedKey = 0;
+    clear_screen((UINT8*)base);
+
     render(model, base);  /* Render the initial state of the model */
 
-    while (1) { /* Main game loop */
-        if (Cconis()) { /* Check if keyboard input is available */
-            char key = (char)Cnecin(); /* Read keyboard input */
-            if (key == 'a' || key == 'd') {
-                pressedKey = key;
-            }
-        } else {
-            pressedKey = 0; /* Reset pressedKey if no key is pressed */
-        }
+    while (pressedKey != 'q') { /* Main game loop */
+        timeThen = get_time();
+        input(model, &pressedKey);
 
-        switch (pressedKey) { /* Handle the pressed key */
-            case 'a':
-                erase_doodle(model->doodle, base);  
-                move_doodle(&(model->doodle), -25, 0); /* Move the doodle left */
-                render_doodle(&(model->doodle), base); 
-                break;
-            case 'd':
-                erase_doodle(model->doodle, base);  
-                move_doodle(&(model->doodle), 25, 0); /* Move the doodle right */
-                render_doodle(&(model->doodle), base); 
-                break;
-            default:
-                break;
-        }
+        timeNow = get_time();
+        timeElapsed = timeNow - timeThen;
+        if(timeElapsed > 0)
+            {
+                render(model,base);
+            }
 
     }
 
     return 0;
 }
 
-void erase_doodle(const Doodle doodle, UINT32 *base) {
-    plot_bitmap_32(base, doodle.x, doodle.y, clear_bitmap, DOODLE_HEIGHT);
+
+void input(Model *model, char *pressedKey)
+{
+    if (Cconis()) /* Check if keyboard input is available */
+    { 
+        char key = (char)Cnecin(); /* Read keyboard input */
+        if (key == 'a' || key == 'd' || key == 'q')
+            *pressedKey = key;
+    } 
+        else 
+            *pressedKey = 0; /* Reset pressedKey if no key is pressed */
+
+    switch (*pressedKey) { /* Handle the pressed key */
+        case 'a':  
+            model->doodle.facing = 0;
+            move_doodle(&(model->doodle), -8, 0); /* Move the doodle left */
+            break;
+        case 'd':  
+            model->doodle.facing = 1;
+            move_doodle(&(model->doodle), 8, 0); /* Move the doodle right */
+            break;
+        default:
+            break;
+    }
 }
+
+
 
 UINT32 get_time() {
     UINT32 time;
