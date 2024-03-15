@@ -16,14 +16,12 @@ typedef struct
 {
     UINT16 prev_x, prev_y;
     UINT16 x, y;
-    int delta_x, delta_y;
     UINT16 facing;
 } Doodle;
 
 typedef struct
 {
     UINT16 prev_x, prev_y;
-    int delta_x, delta_y;
     UINT16 x, y;
 } Monster;
 
@@ -31,7 +29,6 @@ typedef struct
 {
     UINT16 prev_x, prev_y;
     UINT16 x, y;
-    int delta_x, delta_y;
 } Platform;
 
 typedef struct {
@@ -47,7 +44,8 @@ Model* initialize_model();
 
 void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y);
 
-void move_platform(Platform *platform);
+void move_platform(Platform *platform, UINT16 displacement_x, UINT16 displacement_y);
+void move_monster(Monster *monster, UINT16 displacement_x, UINT16 displacement_y);
 
 UINT8 has_doodle_moved(Doodle *doodle);
 UINT8 has_monster_moved(Monster *monster);
@@ -193,15 +191,21 @@ extern	FILE	_iob[];
 
 void render(const Model *model, UINT32 *base)
 {
-
-    if(has_doodle_moved(&(model->doodle)) == 1)
-        render_doodle(&(model->doodle), base);
-
+    render_platform(model->platforms, base);
 
     if(has_monster_moved(&(model->monster)) == 1)
+    {
+        plot_bitmap_32(base, model->monster.prev_x, model->monster.prev_y, clear_bitmap, 64 );
         render_monster(&(model->monster), base);
+    }
 
-    render_platform(model->platforms, base);
+
+
+    if(has_doodle_moved(&(model->doodle)) == 1)
+    {
+        plot_bitmap_32(base, model->doodle.prev_x, model->doodle.prev_y, clear_bitmap, 64 );
+        render_doodle(&(model->doodle), base);
+    }
 }
 
 
@@ -228,7 +232,10 @@ void render_platform(Platform *platforms, UINT32 *base)
 
     for(i = 0; i < 15 ; i++){
         if(has_platform_moved(platforms) == 1)
+        {
+            plot_bitmap_32(base, platforms->prev_x, platforms->prev_y, clear_bitmap, 24 );
             plot_bitmap_32(base, platforms->x, platforms->y, platform_bitmap, 24 );
+        }
             platforms ++;
     }
 }

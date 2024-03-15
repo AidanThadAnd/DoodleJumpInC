@@ -9,12 +9,10 @@ Model* initialize_model()
     /* Initialize Doodle character */
     model->doodle.x = SCREEN_WIDTH / 2;
     model->doodle.y = SCREEN_HEIGHT / 2;
-    model->doodle.delta_x = 0;
-    model->doodle.delta_y = 0;
     model->doodle.facing = 1; /* Assuming initially facing right */
 
     
-    model->doodle.prev_x = -1; /* Sets the previous location state for optimized rendering */
+    model->doodle.prev_x = -1; /* Sets the previous location state for optimized rendering, intialzed to an impossible state */
     model->doodle.prev_y = -1;
     
 
@@ -28,9 +26,6 @@ Model* initialize_model()
         
         model->platforms[i].prev_x = -1;
         model->platforms[i].prev_y = -1;
-        
-        
-        
     }
 
     /* Initialize monster */
@@ -46,47 +41,36 @@ Model* initialize_model()
 
 void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y)
 {
-    doodle->y += displacement_x;
-    doodle->x += displacement_y;
+    doodle->prev_x = doodle->x;
+    doodle->prev_y = doodle->y;
+
+
+    doodle->x += displacement_x;
+    doodle->y += displacement_y;
 }
 
-/*
-void move_doodle(Doodle *doodle)
-{
-    doodle->prev_y = doodle->y;
-    doodle->prev_x = doodle->x;
-    
-    doodle->y += doodle->delta_y;
-    doodle->x += doodle->delta_x;
-}
-*/
-/*
-As the camera will be locked on the center of the screen (and capped to the highest height achieved) we will need to link the delta y with
-the movement of the camera 
-*/
-void move_platform(Platform *platform)
+void move_platform(Platform *platform, UINT16 displacement_x, UINT16 displacement_y)
 {
     platform->prev_x = platform->x;
     platform->prev_y = platform->y;
 
-    platform->x += platform->delta_x;
-    platform->y += platform->delta_y;
+    platform->x += displacement_x;
+    platform->y += displacement_y;
 }
 
-void move_monster(Monster *monster)
+void move_monster(Monster *monster, UINT16 displacement_x, UINT16 displacement_y)
 {
     monster->prev_x = monster->x;
     monster->prev_y = monster->y;
 
-    monster->x += monster->delta_x;
-    monster->y += monster->delta_y;
+    monster->x += displacement_x;
+    monster->y += displacement_y;
 }
-
 
 
 UINT8 has_doodle_moved(Doodle *doodle)
 {
-    if(doodle->prev_x != doodle->x && doodle->prev_y != doodle->y)
+    if(doodle->prev_x != doodle->x || doodle->prev_y != doodle->y)
         return 1;
 
     return 0;
@@ -94,7 +78,7 @@ UINT8 has_doodle_moved(Doodle *doodle)
 
 UINT8 has_monster_moved(Monster *monster)
 {
-    if(monster->prev_x != monster->x && monster->prev_y != monster->y)
+    if(monster->prev_x != monster->x || monster->prev_y != monster->y)
         return 1;
 
     return 0;
@@ -102,7 +86,7 @@ UINT8 has_monster_moved(Monster *monster)
 
 UINT8 has_platform_moved(Platform *platform)
 {
-    if(platform->prev_x != platform->x && platform->prev_y != platform->y)
+    if(platform->prev_x != platform->x || platform->prev_y != platform->y)
         return 1;
     
     return 0;
