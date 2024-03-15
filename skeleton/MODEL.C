@@ -43,14 +43,14 @@ Model* initialize_model()
     return model;
 }
 
-/* Previous code
+
 void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y)
 {
     doodle->y += displacement_x;
     doodle->x += displacement_y;
 }
-*/
 
+/*
 void move_doodle(Doodle *doodle)
 {
     doodle->prev_y = doodle->y;
@@ -59,7 +59,7 @@ void move_doodle(Doodle *doodle)
     doodle->y += doodle->delta_y;
     doodle->x += doodle->delta_x;
 }
-
+*/
 /*
 As the camera will be locked on the center of the screen (and capped to the highest height achieved) we will need to link the delta y with
 the movement of the camera 

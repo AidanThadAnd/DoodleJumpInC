@@ -18,13 +18,9 @@ int main()
     /*
     Changing models 
     */
-   for(i=0; i<100000; i++){
-    model->doodle.delta_x += 5;
-    model->doodle.delta_y += 5;
-    move_doodle(&(model->doodle));
 
     render(model, base);
-   }
+   
    
     return 0;
 }

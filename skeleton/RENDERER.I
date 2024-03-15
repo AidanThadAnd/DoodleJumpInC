@@ -45,7 +45,7 @@ Model* initialize_model();
 
 
 
-void move_doodle(Doodle *doodle);
+void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y);
 
 void move_platform(Platform *platform);
 

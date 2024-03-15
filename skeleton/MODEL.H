@@ -92,9 +92,9 @@ typedef struct {
 Model* initialize_model();
 
 /* Changed as I don't think we'll be using displacment and instead we'll be relying on delta_x/y to move characters around, im assuming you just had this for testing
-void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y);
-*/
 void move_doodle(Doodle *doodle);
+*/
+void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y);
 
 void move_platform(Platform *platform);
 
