@@ -3,7 +3,7 @@
   Date: March 15, 2024
  
   Purpose:
-    - The main function of the game, controlling rendering, input, and event handling.
+    - The main function of the game, controlling animation, rendering, input, and event handling.
  
   Functions:
     Function Name: input
