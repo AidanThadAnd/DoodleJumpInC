@@ -4,40 +4,71 @@
 #include <stdio.h>
 #include <osbind.h>
 
+
+UINT8 double_buffer[512][80];
+
+
 UINT32 get_time();
 void delay(int milliseconds);
 void input(Model *model, char *pressedKey);
 
 int main() {
+    UINT8 *bufferPtr = double_buffer;
     UINT8 i;
+    int useDoubleBuffer = 1;
     UINT32 timeThen, timeNow, timeElapsed;
     Model *model = initialize_model();
-    UINT32 *base = Physbase();   
+    UINT32 *base = Physbase();
     char pressedKey = 0;
-    clear_screen((UINT8*)base);
 
-    /* slight movement to all objects are required as the rendering optimzation requires some movement from initlization of objects 
-    to prevent redrawing of still objects*/
+    while((int)bufferPtr % 256 != 0)
+        bufferPtr++;
+
+    render(model, bufferPtr);
+
+
+/*
+        /*slight movement to all objects are required as the rendering optimzation requires some movement from initlization of objects 
+    to prevent redrawing of still objects
     for(i=0; i<MAX_PLATFORMS;i++)
     {
         move_platform_relative(model->platforms, 1, 1, i);
     }
     move_monster(&(model->monster),1,1);
 
-    render(model, base);  /* Render the initial state of the model */
+    render(model, base);  /* Render the initial state of the model 
 
-    while (pressedKey != 'q') { /* Main game loop */
+    while (pressedKey != 'q') { /* Main game loop 
         timeThen = get_time();
         input(model, &pressedKey);
+        if(useDoubleBuffer == 1)
+        {
+            render(model, bufferPtr);
+        }
+        else
+        {
+            render(model,base);
+        }
+
 
         timeNow = get_time();
         timeElapsed = timeNow - timeThen;
         if(timeElapsed > 0)
             {
-                render(model,base);
+                if(useDoubleBuffer == 1)
+                    {
+                        Vsync();
+                        Setscreen(-1, bufferPtr, -1);
+                        useDoubleBuffer = 0;
+                    }
+                    else
+                    {
+                        Vsync();
+                        Setscreen(-1, base, -1);
+                        useDoubleBuffer = 1;
+                    }
             }
-
-    }
+    }*/
 
     return 0;
 }
@@ -77,3 +108,4 @@ UINT32 get_time() {
     Super(old_ssp); 
     return time;
 }
+
