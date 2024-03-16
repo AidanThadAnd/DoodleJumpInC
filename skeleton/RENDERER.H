@@ -1,38 +1,38 @@
 /*
- * Author: Aidan & Jacky
- * Date: Feb 5, 2024
- *
- * Purpose:
- *   - Defines functions related to rendering game entities.
- *
- * Functions:
- *   Function Name: render
- *     Purpose:
- *       - Render a model.
- *     Input:
- *       - model: Pointer to the Model structure to be rendered.
- *       - base: Base address for rendering.
- *
- *   Function Name: render_doodle
- *     Purpose:
- *       - Render a doodle.
- *     Input:
- *       - doodle: Pointer to the Doodle structure to be rendered.
- *       - base: Base address for rendering.
- *
- *   Function Name: render_monster
- *     Purpose:
- *       - Render a monster.
- *     Input:
- *       - monster: Pointer to the Monster structure to be rendered.
- *       - base: Base address for rendering.
- *
- *   Function Name: render_platform
- *     Purpose:
- *       - Render a platform.
- *     Input:
- *       - platform: Pointer to the Platform structure to be rendered.
- *       - base: Base address for rendering.
+  Author: Aidan & Jacky
+  Date: Feb 5, 2024
+ 
+  Purpose:
+    - Defines functions related to rendering game entities.
+ 
+  Functions:
+    Function Name: render
+      Purpose:
+        - Render a model.
+      Input:
+        - model: Pointer to the Model structure to be rendered.
+        - base: Base address for rendering.
+ 
+    Function Name: render_doodle
+      Purpose:
+        - Render a doodle.
+      Input:
+        - doodle: Pointer to the Doodle structure to be rendered.
+        - base: Base address for rendering.
+ 
+    Function Name: render_monster
+      Purpose:
+        - Render a monster.
+      Input:
+        - monster: Pointer to the Monster structure to be rendered.
+        - base: Base address for rendering.
+ 
+    Function Name: render_platform
+      Purpose:
+        - Render a platform.
+      Input:
+        - platform: Pointer to the Platform structure to be rendered.
+        - base: Base address for rendering.
  */
 
 #ifndef RENDERER_H
