@@ -1,3 +1,28 @@
+/*
+ * Author: Aidan & Jacky
+ * Date: March 15, 2024
+ *
+ * Purpose:
+ *   - The main function of the game, controlling rendering, input, and event handling.
+ *
+ * Functions:
+ *   Function Name: input
+ *     Purpose:
+ *       - Handle keyboard input to update the game state.
+ *     Input:
+ *       - model: Pointer to the Model structure representing the game state.
+ *       - pressedKey: Pointer to the variable storing the pressed key.
+ *
+ *   Function Name: get_time
+ *     Purpose:
+ *       - Get the current time in milliseconds.
+ *     Output:
+ *       - Returns the current time.
+ *
+ * Global Variables:
+ *   - double_buffer: Double buffer for smoother rendering.
+ */
+
 #include "model.h"
 #include "events.h"
 #include "renderer.h"
