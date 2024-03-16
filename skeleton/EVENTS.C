@@ -20,10 +20,6 @@ void press_key(Doodle *character, char key)
     }
 }
  
-/*  Check if the bottom of the Doodle is below the top of the platform
-    and if the top of the Doodle is above the bottom of the platform
-    Check if the right side of the Doodle is to the right of the left side of the platform
-    and if the left side of the Doodle is to the left of the right side of the platform */
 int check_collision_doodle_platform(Doodle *doodle, Platform *platform)
 {
     if (doodle->y + DOODLE_HEIGHT > platform->y &&
