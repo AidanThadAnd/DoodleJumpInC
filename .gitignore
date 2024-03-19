@@ -62,3 +62,4 @@ dkms.conf
 TUT41.c
 skeleton/TST_RAST
 skeleton/TST_MOD
+*.I

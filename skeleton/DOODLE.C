@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <osbind.h>
 
-UINT8 double_buffer[512][80];
+UINT8 double_buffer[408][80];
 
 UINT32 get_time();
 void delay(int milliseconds);
@@ -38,6 +38,8 @@ void input(Model *model, char *pressedKey);
 int main() {
     UINT8 *bufferPtr = double_buffer;
     UINT8 i;
+    UINT8 column = 0;
+    UINT8 row = 0;
     int useDoubleBuffer = 1;
     UINT32 timeThen, timeNow, timeElapsed;
     Model *model = initialize_model();
@@ -45,9 +47,21 @@ int main() {
     char pressedKey = 0;
 
     while((int)bufferPtr % 256 != 0)
+    {
         bufferPtr++;
+        column++;
+        if(column == 80)
+        {
+            column = 0;
+            row++;
+        }
+        printf("%p \n", bufferPtr);
+    }
+    printf("row is: %d,   column is: %d,", row, column);
 
+/*
     render(model, bufferPtr);
+*/
 
     /*slight movement to all objects are required as the rendering optimzation requires some movement from initlization of objects 
     to prevent redrawing of still objects */
@@ -64,11 +78,11 @@ int main() {
         input(model, &pressedKey);
         if(useDoubleBuffer == 1)
         {
-            render(model, bufferPtr);
+            
         }
         else
         {
-            render(model,base);
+            
         }
 
         timeNow = get_time();
@@ -77,19 +91,21 @@ int main() {
         {
             if(useDoubleBuffer == 1)
                 {
+                    render(model, bufferPtr);
                     Vsync();
                     Setscreen(-1, bufferPtr, -1);
                     useDoubleBuffer = 0;
                 }
                 else
                 {
+                    render(model,base);
                     Vsync();
                     Setscreen(-1, base, -1);
                     useDoubleBuffer = 1;
                 }
         }
     }
-
+    Setscreen(-1, base, -1);
     return 0;
 }
 
