@@ -29,64 +29,67 @@
 #include <stdio.h>
 #include <osbind.h>
 
-UINT8 double_buffer[512][80];
+UINT8 double_buffer[432][80] = {0};
 
 UINT32 get_time();
 void delay(int milliseconds);
 void input(Model *model, char *pressedKey);
 
 int main() {
-    UINT32 *page2 = double_buffer;
+    UINT8 *page2 = &double_buffer[0][0];
     UINT8 i;
     int useDoubleBuffer = 1;
     UINT32 timeThen, timeNow, timeElapsed;
     Model *model = initialize_model();
-    UINT32 *page1 = Physbase();
+    UINT8 *page1 = Physbase();
     char pressedKey = 0;
 
 
-    page2 = (((UINT32)page2) | 0xff) + 1;
 
-    clear_screen(page1);
+    printf("Value of page2: %p\n", page2);
+    page2 = (UINT8*)((size_t)page2 | 0xff ) + 1;
+
+    clear_screen(page2);
+    /*
+    page2 = (UINT8*)(((size_t)page2 + 255) & ~255);
+    */
+
+    printf("Value of page2: %p\n", page2);
+
+
     /*slight movement to all objects are required as the rendering optimzation requires some movement from initlization of objects 
-    to prevent redrawing of still objects */
+    to prevent redrawing of still objects  */
     for(i=0; i<MAX_PLATFORMS;i++)
     {
         move_platform_relative(model->platforms, 1, 1, i);
     }
     move_monster(&(model->monster),1,1);
 
-    render(model, page1);  /* Render the initial state of the model */
 
     for(i=0; i<MAX_PLATFORMS;i++)
     {
         move_platform_relative(model->platforms, 5, 5, i);
     }
 
-
-
-    Setscreen(page1, -1, -1);
-
+    render(model, page1);  /* Render the initial state of the model 
 
 /*
-
-while (pressedKey != 'q') { /* Main game loop 
-
-/*
+while (pressedKey != 'q') { 
+        timeThen = get_time();
         input(model, &pressedKey);
         render(model,page1);
-
-        timeThen = get_time();
-
+        
         timeNow = get_time();
         timeElapsed = timeNow - timeThen;
         if(timeElapsed > 0)
         {
-           Setscreen(page1, -1, -1);
+            Setscreen(-1, page1, -1);
+            Vsync();
         }
     }
 */
-/*
+
+ /*
 
     while (pressedKey != 'q') { /* Main game loop 
         timeThen = get_time();
@@ -106,14 +109,14 @@ while (pressedKey != 'q') { /* Main game loop
         {
             if(useDoubleBuffer == 1)
                 {
-                    Vsync();
                     Setscreen(-1, page2, -1);
+                    Vsync();
                     useDoubleBuffer = 0;
                 }
                 else
                 {
-                    Vsync();
                     Setscreen(-1, page1, -1);
+                    Vsync();
                     useDoubleBuffer = 1;
                 }
         }
@@ -149,6 +152,15 @@ void input(Model *model, char *pressedKey)
             break;
     }
 }
+
+/*
+bool isKeyPressed()
+{
+    if(Cconis())
+        return true;
+    return false;
+}
+*/
 
 UINT32 get_time() {
     UINT32 time;

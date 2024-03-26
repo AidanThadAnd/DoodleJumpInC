@@ -28,7 +28,7 @@ int main()
    {
     move_doodle(&(model->doodle), 8, 0);
     move_monster(&(model->monster), 8, 0);
-    move_platform_absolute(model->platforms, 300, 200, 1);
+    move_platform_absolute(model->platforms, i, i, 5);
     render(model, base);
    }
    
