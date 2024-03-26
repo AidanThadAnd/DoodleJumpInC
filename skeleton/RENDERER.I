@@ -7,7 +7,7 @@
 typedef unsigned char UINT8;
 typedef unsigned int  UINT16;
 typedef unsigned long UINT32;
-# 60 "./MODEL.H" 2
+# 78 "./MODEL.H" 2
 
 
 
@@ -75,11 +75,11 @@ extern const UINT32 clear_bitmap[];
 # 3 "renderer.c" 2
 # 1 "./RENDERER.H" 1
 # 1 "./MODEL.H" 1
-# 4 "./RENDERER.H" 2
+# 41 "./RENDERER.H" 2
 # 1 "./RASTER.H" 1
-# 5 "./RENDERER.H" 2
+# 42 "./RENDERER.H" 2
 # 1 "./BITMAP.H" 1
-# 6 "./RENDERER.H" 2
+# 43 "./RENDERER.H" 2
 
 
 void render(const Model *model, UINT32 *base);

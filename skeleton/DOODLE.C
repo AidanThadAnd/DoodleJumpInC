@@ -36,19 +36,18 @@ void delay(int milliseconds);
 void input(Model *model, char *pressedKey);
 
 int main() {
-    UINT8 *bufferPtr = double_buffer;
+    UINT32 *page2 = double_buffer;
     UINT8 i;
     int useDoubleBuffer = 1;
     UINT32 timeThen, timeNow, timeElapsed;
     Model *model = initialize_model();
-    UINT32 *base = Physbase();
+    UINT32 *page1 = Physbase();
     char pressedKey = 0;
 
-    while((int)bufferPtr % 256 != 0)
-        bufferPtr++;
 
-    render(model, bufferPtr);
+    page2 = (((UINT32)page2) | 0xff) + 1;
 
+    clear_screen(page1);
     /*slight movement to all objects are required as the rendering optimzation requires some movement from initlization of objects 
     to prevent redrawing of still objects */
     for(i=0; i<MAX_PLATFORMS;i++)
@@ -57,18 +56,48 @@ int main() {
     }
     move_monster(&(model->monster),1,1);
 
-    render(model, base);  /* Render the initial state of the model */
+    render(model, page1);  /* Render the initial state of the model */
 
-    while (pressedKey != 'q') { /* Main game loop */
+    for(i=0; i<MAX_PLATFORMS;i++)
+    {
+        move_platform_relative(model->platforms, 5, 5, i);
+    }
+
+
+
+    Setscreen(page1, -1, -1);
+
+
+/*
+
+while (pressedKey != 'q') { /* Main game loop 
+
+/*
+        input(model, &pressedKey);
+        render(model,page1);
+
+        timeThen = get_time();
+
+        timeNow = get_time();
+        timeElapsed = timeNow - timeThen;
+        if(timeElapsed > 0)
+        {
+           Setscreen(page1, -1, -1);
+        }
+    }
+*/
+/*
+
+    while (pressedKey != 'q') { /* Main game loop 
         timeThen = get_time();
         input(model, &pressedKey);
         if(useDoubleBuffer == 1)
         {
-            render(model, bufferPtr);
+            render(model, page2);
         }
         else
         {
-            render(model,base);
+            render(model,page1);
         }
 
         timeNow = get_time();
@@ -78,20 +107,23 @@ int main() {
             if(useDoubleBuffer == 1)
                 {
                     Vsync();
-                    Setscreen(-1, bufferPtr, -1);
+                    Setscreen(-1, page2, -1);
                     useDoubleBuffer = 0;
                 }
                 else
                 {
                     Vsync();
-                    Setscreen(-1, base, -1);
+                    Setscreen(-1, page1, -1);
                     useDoubleBuffer = 1;
                 }
         }
     }
-
+    Setscreen(-1, page1, -1);
+*/
     return 0;
 }
+
+
 
 void input(Model *model, char *pressedKey)
 {
