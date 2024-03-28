@@ -28,6 +28,7 @@
 #include "renderer.h"
 #include <stdio.h>
 #include <osbind.h>
+#include "BITMAP.H"
 
 UINT8 double_buffer[432][80] = {0};
 
@@ -71,7 +72,29 @@ int main() {
         move_platform_relative(model->platforms, 5, 5, i);
     }
 
-    render(model, page1);  /* Render the initial state of the model 
+
+
+/*
+    plot_bitmap_32(page2, SCREEN_WIDTH/2, SCREEN_HEIGHT-DOODLE_HEIGHT+32, doodle_bitmap_right, DOODLE_HEIGHT);
+    clear_screen(page2);
+
+    render(model, page2);
+    Setscreen(-1, page2, -1);
+    Vsync();
+
+    while (pressedKey != 'q') { 
+        input(model, &pressedKey);
+    }
+
+
+    Setscreen(-1, page1, -1);
+    Vsync();
+*/
+
+/*
+*/
+    clear_screen(page1);
+    render(model, page1);  /* Render the initial state of the model */
 
 /*
 while (pressedKey != 'q') { 
@@ -89,10 +112,10 @@ while (pressedKey != 'q') {
     }
 */
 
- /*
+ 
+    timeThen = get_time();
 
-    while (pressedKey != 'q') { /* Main game loop 
-        timeThen = get_time();
+    while (pressedKey != 'q') { /* Main game loop */
         input(model, &pressedKey);
         if(useDoubleBuffer == 1)
         {
@@ -105,6 +128,7 @@ while (pressedKey != 'q') {
 
         timeNow = get_time();
         timeElapsed = timeNow - timeThen;
+
         if(timeElapsed > 0)
         {
             if(useDoubleBuffer == 1)
@@ -120,9 +144,11 @@ while (pressedKey != 'q') {
                     useDoubleBuffer = 1;
                 }
         }
+        timeThen = get_time();
     }
+
     Setscreen(-1, page1, -1);
-*/
+
     return 0;
 }
 
@@ -142,11 +168,11 @@ void input(Model *model, char *pressedKey)
     switch (*pressedKey) { /* Handle the pressed key */
         case 'a':  
             model->doodle.facing = 0;
-            move_doodle(&(model->doodle), -8, 0); /* Move the doodle left */
+            move_doodle(&(model->doodle), -32, 0); /* Move the doodle left */
             break;
         case 'd':  
             model->doodle.facing = 1;
-            move_doodle(&(model->doodle), 8, 0); /* Move the doodle right */
+            move_doodle(&(model->doodle), 32, 0); /* Move the doodle right */
             break;
         default:
             break;

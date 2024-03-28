@@ -48,7 +48,7 @@ void plot_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, int height
 
 	if(y+height > SCREEN_HEIGHT)
 	{
-		height = SCREEN_HEIGHT-y-8;
+		height = SCREEN_HEIGHT-y-1;
 	}
 
 	for (rows = 0; rows < height; rows++) {

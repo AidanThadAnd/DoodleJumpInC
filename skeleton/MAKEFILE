@@ -21,7 +21,7 @@ tst_rast: tst_rast.o raster.o font.o bitmap.o
 	cc68x -g tst_rast.o raster.o  font.o bitmap.o -o tst_rast
 
 #Main doodle game 
-doodle.o: doodle.c model.h renderer.h events.h
+doodle.o: doodle.c model.h renderer.h events.h bitmap.h
 	cc68x -g -c doodle.c
 
 #Rasterization
