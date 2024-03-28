@@ -10,7 +10,7 @@ Model* initialize_model()
     model->doodle.x = SCREEN_WIDTH / 2;
     model->doodle.y = (SCREEN_HEIGHT-64) / 2;
     model->doodle.facing = 1; /* Assuming initially facing right */
-
+    model->doodle.prev_facing = 0;
     
     model->doodle.prev_x = -1; /* Sets the previous location state for optimized rendering, intialzed to an impossible state */
     model->doodle.prev_y = -1;
@@ -39,12 +39,14 @@ Model* initialize_model()
 }
 
 
-void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y)
+void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y, UINT16 newFacing)
 {
+
+    doodle->prev_facing = doodle->facing;
     doodle->prev_x = doodle->x;
     doodle->prev_y = doodle->y;
 
-
+    doodle->facing = newFacing;
     doodle->x += displacement_x;
     doodle->y += displacement_y;
 }
@@ -90,7 +92,7 @@ void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y, UINT8 selec
 
 UINT8 has_doodle_moved(Doodle *doodle)
 {
-    if(doodle->prev_x != doodle->x || doodle->prev_y != doodle->y)
+    if(doodle->prev_x != doodle->x || doodle->prev_y != doodle->y || doodle->prev_facing != doodle->facing)
         return 1;
 
     return 0;

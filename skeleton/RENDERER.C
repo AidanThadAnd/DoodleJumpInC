@@ -33,6 +33,7 @@ void render_doodle(Doodle *doodle, UINT32 *base)
     else
         plot_bitmap_32(base, doodle->x, doodle->y, doodle_bitmap_left, DOODLE_HEIGHT);
 
+        doodle->prev_facing = doodle->facing;
         doodle->prev_x = doodle->x;
         doodle->prev_y = doodle->y;
 

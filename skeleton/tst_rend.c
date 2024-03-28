@@ -28,7 +28,7 @@ int main()
 
    for(i=0; i <= 400; i++)
    {
-    move_doodle(&(model->doodle), 8, 0);
+    move_doodle(&(model->doodle), 8, 0,0);
     move_platform_absolute(model->platforms, i, i, 5);
     render(model, base);
     Vsync();
@@ -36,7 +36,7 @@ int main()
 
    for(j=0; j <=400; j++)
    {
-        move_monster(&(model->monster), 8, 0);
+        move_monster(&(model->monster), 8, -1);
         render(model,base);
         Vsync();
    }

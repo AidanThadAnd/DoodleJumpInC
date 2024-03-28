@@ -45,18 +45,7 @@ int main() {
     UINT8 *page1 = Physbase();
     char pressedKey = 0;
 
-
-
-    printf("Value of page2: %p\n", page2);
     page2 = (UINT8*)((size_t)page2 | 0xff ) + 1;
-
-    clear_screen(page2);
-    /*
-    page2 = (UINT8*)(((size_t)page2 + 255) & ~255);
-    */
-
-    printf("Value of page2: %p\n", page2);
-
 
     /*slight movement to all objects are required as the rendering optimzation requires some movement from initlization of objects 
     to prevent redrawing of still objects  */
@@ -71,7 +60,6 @@ int main() {
     {
         move_platform_relative(model->platforms, 5, 5, i);
     }
-
 
 
 /*
@@ -92,15 +80,12 @@ int main() {
 */
 
 /*
-*/
-    clear_screen(page1);
-    render(model, page2);  /* Render the initial state of the model */
+    render(model, page1);  
 
-/*
 while (pressedKey != 'q') { 
         timeThen = get_time();
         input(model, &pressedKey);
-        render(model,page1);
+        render(model, page1);
         
         timeNow = get_time();
         timeElapsed = timeNow - timeThen;
@@ -110,34 +95,29 @@ while (pressedKey != 'q') {
             Vsync();
         }
     }
-*/
 
- 
+*/
+    clear_screen(page1);
+
     timeThen = get_time();
 
     while (pressedKey != 'q') { /* Main game loop */
         input(model, &pressedKey);
-
         timeNow = get_time();
-        timeElapsed = timeNow - timeThen;
 
-        if(timeElapsed > 0)
+        if(timeThen != timeNow)
         {
-            if(useDoubleBuffer == 1)
-                {
-                    render(model, page2);
-                    Setscreen(-1, page2, -1);
-                    Vsync();
-                    useDoubleBuffer = 1;
-                }
-                else
-                {
-                    Setscreen(-1, page1, -1);
-                    Vsync();
-                    useDoubleBuffer = 1;
-                }
+
+
+            render(model, page1);
+
+            Setscreen(-1, page1, -1);
+            Vsync();
+
+            useDoubleBuffer = 0;
+
+            timeThen = get_time();
         }
-        timeThen = get_time();
     }
 
     Setscreen(-1, page1, -1);
@@ -152,7 +132,7 @@ void input(Model *model, char *pressedKey)
     if (Cconis()) /* Check if keyboard input is available */
     { 
         char key = (char)Cnecin(); /* Read keyboard input */
-        if (key == 'a' || key == 'd' || key == 'q')
+        if (key == 'a' || key == 'd' || key == 'q' || key == 'k')
             *pressedKey = key;
     } 
         else 
