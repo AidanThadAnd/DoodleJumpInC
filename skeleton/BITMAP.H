@@ -4,7 +4,7 @@
 #include "types.h"
 
 #define DOODLE_HEIGHT 55
-#define DOODLE_WIDTH 30
+#define DOODLE_WIDTH 32
 #define DOODLE_LEG_WIDTH 48
 
 #define MONSTER_HEIGHT 35
