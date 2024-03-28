@@ -105,7 +105,7 @@ typedef struct {
     Platform platforms[MAX_PLATFORMS];  
 } Model;
 
-Model* initialize_model();
+void initialize_model(Model *model);
 
 void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y, UINT16 newFacing);
 void move_monster(Monster *monster, UINT16 displacement_x, UINT16 displacement_y);

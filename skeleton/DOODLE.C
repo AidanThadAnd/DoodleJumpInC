@@ -42,12 +42,16 @@ int main() {
     UINT8 i;
     int useDoubleBuffer = 1;
     UINT32 timeThen, timeNow, timeElapsed;
-    Model *modelOne = initialize_model();
+    Model modelOne;
     Model modelTwo;
+    Model *modelOnePtr = &modelOne;
+    Model *modelTwoPtr = &modelTwo;
     
     UINT8 *page1 = Physbase();
     char pressedKey = 0;
 
+    initialize_model(modelOnePtr);
+    initialize_model(modelTwoPtr);
 
     page2 = (UINT8*)((size_t)page2 | 0xff ) + 1;
 
@@ -64,13 +68,13 @@ int main() {
     to prevent redrawing of still objects  */
     for(i=0; i<MAX_PLATFORMS;i++)
     {
-        move_platform_relative(modelOne->platforms, 1, 1, i);
+        move_platform_relative(modelOnePtr->platforms, 1, 1, i);
     }
-    move_monster(&(modelOne->monster), 8, 8);
+    move_monster(&(modelOnePtr->monster), 8, 8);
 
     for(i=0; i<MAX_PLATFORMS;i++)
     {
-        move_platform_relative(modelOne->platforms, 5, 5, i);
+        move_platform_relative(modelOnePtr->platforms, 5, 5, i);
     }
 
 
@@ -113,13 +117,13 @@ while (pressedKey != 'q') {
 */
 
     clear_screen(page1);
-    render(modelOne, page1);  /* Render the initial state of the model */
+    render(modelOnePtr, page1);  /* Render the initial state of the model */
     /*
     syncModel(modelOne, modelTwo);
     */
     timeThen = get_time();
 
-    printf("Model 1 x: %d  Model 2 x: %d\n", modelOne->monster.prev_x, modelTwo->monster.prev_x);
+    printf("Model 1 x: %d  Model 2 x: %d\n", modelOnePtr->monster.prev_x, modelTwoPtr->monster.prev_x);
 
 /*
     while (pressedKey != 'q') { /* Main game loop 
