@@ -53,6 +53,31 @@ void plot_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, int height
 
 	for (rows = 0; rows < height; rows++) {
 		for(cols = 0; cols < 2; cols++) {
+			*loc = *loc | *(bitmap)++;
+			*loc = ~(*loc ^ 0xFFFFFFFF);
+			loc++;
+		}
+		loc += 18;
+	}
+}
+
+void clear_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, int height)
+{
+	int rows;
+	int cols;
+
+	UINT32 *loc = base + (y * 20) + (x>>5);
+
+	if(y >= SCREEN_HEIGHT)
+		return;
+
+	if(y+height > SCREEN_HEIGHT)
+	{
+		height = SCREEN_HEIGHT-y-1;
+	}
+	
+	for (rows = 0; rows < height; rows++) {
+		for(cols = 0; cols < 2; cols++) {
 			*loc |= *(bitmap)++;
 			*loc ^= 0xFFFFFFFF;
 			loc++;

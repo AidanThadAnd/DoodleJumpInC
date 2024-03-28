@@ -8,7 +8,7 @@ Model* initialize_model()
     int i;
     /* Initialize Doodle character */
     model->doodle.x = SCREEN_WIDTH / 2;
-    model->doodle.y = SCREEN_HEIGHT / 2;
+    model->doodle.y = (SCREEN_HEIGHT-64) / 2;
     model->doodle.facing = 1; /* Assuming initially facing right */
 
     
@@ -108,6 +108,8 @@ UINT8 has_platform_moved(Platform *platform)
 {
     if(platform->prev_x != platform->x || platform->prev_y != platform->y)
         return 1;
+
+    
     
     return 0;
 }
