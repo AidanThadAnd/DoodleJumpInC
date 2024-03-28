@@ -35,41 +35,42 @@ UINT8 double_buffer[432][80] = {0};
 UINT32 get_time();
 void delay(int milliseconds);
 void input(Model *model, char *pressedKey);
+void syncModel(Model *modelSrc, Model *modelDst);
 
 int main() {
     UINT8 *page2 = &double_buffer[0][0];
     UINT8 i;
     int useDoubleBuffer = 1;
     UINT32 timeThen, timeNow, timeElapsed;
-    Model *model = initialize_model();
+    Model *modelOne = initialize_model();
+    Model modelTwo;
+    
     UINT8 *page1 = Physbase();
     char pressedKey = 0;
 
 
-
-    printf("Value of page2: %p\n", page2);
     page2 = (UINT8*)((size_t)page2 | 0xff ) + 1;
 
     clear_screen(page2);
     /*
+    printf("Value of page2: %p\n", page2);
     page2 = (UINT8*)(((size_t)page2 + 255) & ~255);
     */
-
     printf("Value of page2: %p\n", page2);
+
 
 
     /*slight movement to all objects are required as the rendering optimzation requires some movement from initlization of objects 
     to prevent redrawing of still objects  */
     for(i=0; i<MAX_PLATFORMS;i++)
     {
-        move_platform_relative(model->platforms, 1, 1, i);
+        move_platform_relative(modelOne->platforms, 1, 1, i);
     }
-    move_monster(&(model->monster),1,1);
-
+    move_monster(&(modelOne->monster), 8, 8);
 
     for(i=0; i<MAX_PLATFORMS;i++)
     {
-        move_platform_relative(model->platforms, 5, 5, i);
+        move_platform_relative(modelOne->platforms, 5, 5, i);
     }
 
 
@@ -93,8 +94,7 @@ int main() {
 
 /*
 */
-    clear_screen(page1);
-    render(model, page2);  /* Render the initial state of the model */
+
 
 /*
 while (pressedKey != 'q') { 
@@ -112,11 +112,23 @@ while (pressedKey != 'q') {
     }
 */
 
- 
+    clear_screen(page1);
+    render(modelOne, page1);  /* Render the initial state of the model */
+    /*
+    syncModel(modelOne, modelTwo);
+    */
     timeThen = get_time();
 
-    while (pressedKey != 'q') { /* Main game loop */
-        input(model, &pressedKey);
+    printf("Model 1 x: %d  Model 2 x: %d\n", modelOne->monster.prev_x, modelTwo->monster.prev_x);
+
+/*
+    while (pressedKey != 'q') { /* Main game loop 
+
+        if(useDoubleBuffer == 1)
+            input(modelOne, &pressedKey);
+        else
+            input(modelTwo, &pressedKey);
+            
 
         timeNow = get_time();
         timeElapsed = timeNow - timeThen;
@@ -125,16 +137,18 @@ while (pressedKey != 'q') {
         {
             if(useDoubleBuffer == 1)
                 {
-                    render(model, page2);
+                    render(modelTwo, page2);
                     Setscreen(-1, page2, -1);
                     Vsync();
-                    useDoubleBuffer = 1;
+                    useDoubleBuffer = 0;
                 }
                 else
                 {
+                    render(modelOne,page1);
                     Setscreen(-1, page1, -1);
                     Vsync();
                     useDoubleBuffer = 1;
+
                 }
         }
         timeThen = get_time();
@@ -142,9 +156,46 @@ while (pressedKey != 'q') {
 
     Setscreen(-1, page1, -1);
 
+*/
     return 0;
 }
 
+void syncModel(Model *modelSrc, Model *modelDst)
+{
+    UINT8 i;
+    Platform *srcPlatform, *dstPlatform;
+
+
+    modelDst->doodle.x = modelSrc->doodle.x;
+    modelDst->doodle.y = modelSrc->doodle.y;
+    modelDst->doodle.prev_x = modelSrc->doodle.prev_x;
+    modelDst->doodle.prev_y = modelSrc->doodle.prev_y;
+    modelDst->doodle.facing = modelSrc->doodle.facing;
+    modelDst->doodle.prev_facing = modelSrc->doodle.prev_facing;
+
+    modelDst->monster.x = modelSrc->monster.x;
+    modelDst->monster.y = modelSrc->monster.y;
+    modelDst->monster.prev_x = modelSrc->monster.prev_x;
+    modelDst->monster.prev_y = modelSrc->monster.prev_y;
+
+
+/*
+    srcPlatform = (modelSrc->platforms);
+    dstPlatform = (modelDst->platforms);
+
+    for(i=0; i < MAX_PLATFORMS;i++)
+    {
+        dstPlatform->x = srcPlatform->x;
+        dstPlatform->y = srcPlatform->y;
+        dstPlatform->prev_x = srcPlatform->prev_x;
+        dstPlatform->prev_y = srcPlatform->prev_y; 
+
+        srcPlatform++;
+        dstPlatform++;     
+    }
+*/
+
+}
 
 
 void input(Model *model, char *pressedKey)
@@ -158,16 +209,9 @@ void input(Model *model, char *pressedKey)
         else 
             *pressedKey = 0; /* Reset pressedKey if no key is pressed */
 
-    switch (*pressedKey) { /* Handle the pressed key */
-        case 'a':  
-            move_doodle(&(model->doodle), -32, 0, 0); /* Move the doodle left */
-            break;
-        case 'd':  
-            move_doodle(&(model->doodle), 32, 0, 1); /* Move the doodle right */
-            break;
-        default:
-            break;
-    }
+
+    doodle_input(&(model->doodle), *pressedKey);
+    
 }
 
 /*

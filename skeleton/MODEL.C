@@ -2,9 +2,8 @@
 #include "system.h"
 
 
-Model* initialize_model()
+void initialize_model(Model *model)
 {
-    Model *model;
     int i;
     /* Initialize Doodle character */
     model->doodle.x = SCREEN_WIDTH / 2;
@@ -34,8 +33,6 @@ Model* initialize_model()
 
     model->monster.prev_x = -1;
     model->monster.prev_y = -1;
-    
-    return model;
 }
 
 

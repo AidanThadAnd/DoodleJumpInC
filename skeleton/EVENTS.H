@@ -39,7 +39,7 @@ Functions:
 
 #include "model.h"
 
-void press_key(Doodle *character, char key);
+void doodle_input(Doodle *character, char key);
 int check_collision_doodle_platform(Doodle *d, Platform *p);
 int check_collision_monster(Doodle *d, Monster *m);
 
