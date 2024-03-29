@@ -13,7 +13,6 @@ void initialize_model(Model *model)
     
     model->doodle.prev_x_one = -1; /* Sets the previous location state for optimized rendering, intialzed to an impossible state */
     model->doodle.prev_y_one = -1;
-    
 
 
 
@@ -38,12 +37,6 @@ void initialize_model(Model *model)
 
 void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y, UINT16 newFacing)
 {
-
-    doodle->prev_x_three = doodle->prev_x_two;
-    doodle->prev_y_three = doodle->prev_y_two;
-
-    doodle->prev_x_two = doodle->prev_x_one;
-    doodle->prev_y_two = doodle->prev_y_one;
 
     doodle->prev_facing = doodle->facing;
     doodle->prev_x_one = doodle->x;

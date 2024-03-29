@@ -35,6 +35,26 @@ void render(Model *model, UINT32 *base)
     }
 }
 
+void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *base)
+{
+    int multipleDoodleDeletions;
+
+    render_platform(modelNew->platforms, base);
+
+    if(modelOld->monster.x != modelNew->monster.x || modelOld->monster.y != modelNew->monster.y)
+    {
+        clear_bitmap_32(base, modelOld->monster.x, modelOld->monster.y, clear_bitmap, MONSTER_HEIGHT);
+        render_monster(&(modelNew->monster), base);
+    }
+
+    /*Comparing to previous state so that stationary objects are not redrawn*/
+    if(modelOld->doodle.x != modelNew->doodle.x || modelOld->doodle.y != modelNew->doodle.y)
+    {
+        clear_bitmap_32(base, modelOld->doodle.x, modelOld->doodle.y, clear_bitmap, DOODLE_HEIGHT);
+        render_doodle(&(modelNew->doodle), base);
+    }
+}
+
 
 void render_doodle(Doodle *doodle, UINT32 *base)
 {
@@ -42,7 +62,6 @@ void render_doodle(Doodle *doodle, UINT32 *base)
         plot_bitmap_32(base, doodle->x, doodle->y, doodle_bitmap_right, DOODLE_HEIGHT);
     else
         plot_bitmap_32(base, doodle->x, doodle->y, doodle_bitmap_left, DOODLE_HEIGHT);
-
 }
 
 

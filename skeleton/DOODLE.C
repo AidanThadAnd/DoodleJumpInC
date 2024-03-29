@@ -106,15 +106,15 @@ int main() {
             Vsync();
             if(useDoubleBuffer == 1)
                 {
-                    render(modelOnePtr, (UINT32*)page2);
+                    double_buffer_render(modelOnePtr, modelTwoPtr, (UINT32*)page2);
                     Setscreen(-1, page2, -1);
                     Vsync();
-                    useDoubleBuffer = 0;
+                    useDoubleBuffer = 1;
                     syncModel(modelTwoPtr, modelOnePtr);
                 }
                 else
                 {
-                    render(modelTwoPtr, (UINT32*)page1);
+                    double_buffer_render(modelTwoPtr, modelOnePtr, (UINT32*)page1);
                     Setscreen(-1, page1, -1);
                     Vsync();
                     useDoubleBuffer = 1;
@@ -140,8 +140,6 @@ void syncModel(Model *modelSrc, Model *modelDst)
     modelDst->doodle.y = modelSrc->doodle.y;
     modelDst->doodle.prev_x_one = modelSrc->doodle.prev_x_one;
     modelDst->doodle.prev_y_one = modelSrc->doodle.prev_y_one;
-    modelDst->doodle.prev_x_two = modelSrc->doodle.prev_x_two;
-    modelDst->doodle.prev_y_two = modelSrc->doodle.prev_y_two;
     modelDst->doodle.facing = modelSrc->doodle.facing;
     modelDst->doodle.prev_facing = modelSrc->doodle.prev_facing;
 

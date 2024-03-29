@@ -90,6 +90,7 @@ void render(const Model *model, UINT32 *base);
 void render_doodle(const Doodle *doodle, UINT32 *base);
 void render_monster(const Monster *monster, UINT32 *base);
 void render_platform(Platform *platform, UINT32 *base);
+void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *base);
 # 4 "renderer.c" 2
 # 1 "C:/c68/include/stdio.h" 1
 # 1 "C:/c68/include/compiler.h" 1
@@ -218,6 +219,27 @@ void render(Model *model, UINT32 *base)
         model->doodle.prev_y_three = model->doodle.prev_y_one;
         model->doodle.prev_x_two = model->doodle.prev_x_one;
         model->doodle.prev_y_two = model->doodle.prev_y_one;
+    }
+}
+
+void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *base)
+{
+    int multipleDoodleDeletions;
+    printf("We got here \n \n \n");
+    render_platform(modelNew->platforms, base);
+
+    if(modelOld->monster.x != modelNew->monster.x || modelOld->monster.y != modelNew->monster.y)
+    {
+        clear_bitmap_32(base, modelOld->monster.x, modelOld->monster.y, clear_bitmap, 35 );
+        render_monster(&(modelNew->monster), base);
+    }
+
+
+    if(modelOld->doodle.x != modelNew->doodle.x || modelOld->doodle.y != modelNew->doodle.y)
+    {   printf("We got here \n \n \n");
+        clear_bitmap_32(base, modelOld->doodle.x, modelOld->doodle.y, clear_bitmap, 55 );
+        printf("We got here \n \n \n");
+        render_doodle(&(modelNew->doodle), base);
     }
 }
 
