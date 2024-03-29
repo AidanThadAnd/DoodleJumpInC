@@ -10,10 +10,15 @@ int main()
     int j;
     int loop;
     UINT32 *base = Physbase();
+    Model instantiateModel;
+    Model *model = &instantiateModel;
 
-    Model *model = initialize_model();
     Platform *platform = model->platforms;
     Platform *save = platform;
+    
+
+    initialize_model(model);
+    
 
     loop = 0;
     clear_screen((UINT8*)base);

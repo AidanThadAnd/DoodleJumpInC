@@ -38,10 +38,12 @@ void initialize_model(Model *model)
 
 void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y, UINT16 newFacing)
 {
-
+/*
     doodle->prev_facing = doodle->facing;
     doodle->prev_x = doodle->x;
     doodle->prev_y = doodle->y;
+*/
+
 
     doodle->facing = newFacing;
     doodle->x += displacement_x;

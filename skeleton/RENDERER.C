@@ -7,6 +7,7 @@
 
 void render(Model *model, UINT32 *base)
 {
+    int multipleDoodleDeletions;
     render_platform(model->platforms, base);
 
     if(has_monster_moved(&(model->monster)) == 1)
@@ -17,16 +18,20 @@ void render(Model *model, UINT32 *base)
 
     /*Comparing to previous state so that stationary objects are not redrawn*/
     if(has_doodle_moved(&(model->doodle)) == 1)
-    {
+    {   
         clear_bitmap_32(base, model->doodle.prev_x, model->doodle.prev_y, clear_bitmap, DOODLE_HEIGHT);
         render_doodle(&(model->doodle), base);
+
+        model->doodle.prev_facing = model->doodle.facing;
+        model->doodle.prev_x = model->doodle.x;
+        model->doodle.prev_y = model->doodle.y;
+        
     }
 }
 
 
 void render_doodle(Doodle *doodle, UINT32 *base)
 {
-
     if(doodle->facing == 1)
         plot_bitmap_32(base, doodle->x, doodle->y, doodle_bitmap_right, DOODLE_HEIGHT);
     else

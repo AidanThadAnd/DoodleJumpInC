@@ -8,10 +8,10 @@ void doodle_input(Doodle *character, char key)
     switch(key)
     {
         case 'a':
-            move_doodle(character, -32, 0, 0);
+            move_doodle(character, -DOODLE_HORIZONTAL_MOVEMENT, 0, 0);
             break;
         case 'd':
-            move_doodle(character, 32, 0, 1);
+            move_doodle(character, DOODLE_HORIZONTAL_MOVEMENT, 0, 1);
             break;
         default:
             break;

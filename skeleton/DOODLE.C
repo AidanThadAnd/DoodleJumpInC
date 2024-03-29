@@ -46,7 +46,7 @@ int main() {
     Model modelTwo;
     Model *modelOnePtr = &modelOne;
     Model *modelTwoPtr = &modelTwo;
-    
+    UINT8 confirmedInput;
     UINT8 *page1 = Physbase();
     char pressedKey = 0;
 
@@ -79,13 +79,14 @@ int main() {
 
 
     clear_screen(page1);
-    render(modelOnePtr, page1);  /* Render the initial state of the model */
+    render(modelOnePtr, (UINT32*)page1);  /* Render the initial state of the model */
     
     
     timeThen = get_time();
 /*
     printf("Model 1 x: %d  Model 2 x: %d\n", modelOnePtr->monster.prev_x, modelTwoPtr->monster.prev_x);
 */
+
     syncModel(modelOnePtr, modelTwoPtr);
 
 
@@ -105,17 +106,17 @@ int main() {
             Vsync();
             if(useDoubleBuffer == 1)
                 {
-                    render(modelTwoPtr, page2);
-                    Setscreen(-1, page2, -1);
+                    render(modelOnePtr, (UINT32*)page2);
                     Vsync();
+                    Setscreen(-1, page2, -1);
                     useDoubleBuffer = 0;
                     syncModel(modelTwoPtr, modelOnePtr);
                 }
                 else
                 {
-                    render(modelOnePtr,page1);
-                    Setscreen(-1, page1, -1);
+                    render(modelTwoPtr, (UINT32*)page1);
                     Vsync();
+                    Setscreen(-1, page1, -1);
                     useDoubleBuffer = 1;
                     syncModel(modelOnePtr, modelTwoPtr);
                 }
@@ -158,7 +159,10 @@ void syncModel(Model *modelSrc, Model *modelDst)
         srcPlatform++;
         dstPlatform++;     
     }
+}
 
+void compareAndReplot(Model *modelSrc, Model *modelDst)
+{
 
 }
 

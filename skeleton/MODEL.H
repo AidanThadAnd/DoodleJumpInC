@@ -78,7 +78,7 @@ Purpose:
 #include "TYPES.H"
 
 #define MAX_PLATFORMS 15
-
+#define DOODLE_HORIZONTAL_MOVEMENT 32
 typedef struct 
 {
     UINT16 prev_x, prev_y;  
