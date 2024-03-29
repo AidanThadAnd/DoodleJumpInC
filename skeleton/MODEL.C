@@ -11,8 +11,8 @@ void initialize_model(Model *model)
     model->doodle.facing = 1; /* Assuming initially facing right */
     model->doodle.prev_facing = 0;
     
-    model->doodle.prev_x = -1; /* Sets the previous location state for optimized rendering, intialzed to an impossible state */
-    model->doodle.prev_y = -1;
+    model->doodle.prev_x_one = -1; /* Sets the previous location state for optimized rendering, intialzed to an impossible state */
+    model->doodle.prev_y_one = -1;
     
 
 
@@ -38,11 +38,16 @@ void initialize_model(Model *model)
 
 void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y, UINT16 newFacing)
 {
-/*
-*/
+
+    doodle->prev_x_three = doodle->prev_x_two;
+    doodle->prev_y_three = doodle->prev_y_two;
+
+    doodle->prev_x_two = doodle->prev_x_one;
+    doodle->prev_y_two = doodle->prev_y_one;
+
     doodle->prev_facing = doodle->facing;
-    doodle->prev_x = doodle->x;
-    doodle->prev_y = doodle->y;
+    doodle->prev_x_one = doodle->x;
+    doodle->prev_y_one = doodle->y;
 
 
     doodle->facing = newFacing;
@@ -91,7 +96,7 @@ void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y, UINT8 selec
 
 UINT8 has_doodle_moved(Doodle *doodle)
 {
-    if(doodle->prev_x != doodle->x || doodle->prev_y != doodle->y || doodle->prev_facing != doodle->facing)
+    if(doodle->prev_x_one != doodle->x || doodle->prev_y_one != doodle->y || doodle->prev_facing != doodle->facing)
         return 1;
 
     return 0;

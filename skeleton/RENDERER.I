@@ -14,7 +14,9 @@ typedef unsigned long UINT32;
 
 typedef struct
 {
-    UINT16 prev_x, prev_y;
+    UINT16 prev_x_one, prev_y_one;
+    UINT16 prev_x_two, prev_y_two;
+    UINT16 prev_x_three, prev_y_three;
     UINT16 x, y;
     UINT16 facing;
     UINT16 prev_facing;
@@ -203,9 +205,19 @@ void render(Model *model, UINT32 *base)
 
     if(has_doodle_moved(&(model->doodle)) == 1)
     {
-        clear_bitmap_32(base, model->doodle.prev_x, model->doodle.prev_y, clear_bitmap, 55 );
+        clear_bitmap_32(base, model->doodle.prev_x_one, model->doodle.prev_y_one, clear_bitmap, 55 );
+        if(model->doodle.prev_x_one != model->doodle.prev_x_two || model->doodle.prev_y_one != model->doodle.prev_y_two)
+            clear_bitmap_32(base, model->doodle.prev_x_two, model->doodle.prev_y_two, clear_bitmap, 55 );
+
+        if(model->doodle.prev_x_three != model->doodle.prev_x_two || model->doodle.prev_y_three != model->doodle.prev_y_two)
+            clear_bitmap_32(base, model->doodle.prev_x_three, model->doodle.prev_y_three, clear_bitmap, 55 );
+
         render_doodle(&(model->doodle), base);
-# 31 "renderer.c"
+
+        model->doodle.prev_x_three = model->doodle.prev_x_one;
+        model->doodle.prev_y_three = model->doodle.prev_y_one;
+        model->doodle.prev_x_two = model->doodle.prev_x_one;
+        model->doodle.prev_y_two = model->doodle.prev_y_one;
     }
 }
 

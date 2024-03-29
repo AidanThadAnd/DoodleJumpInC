@@ -165,8 +165,8 @@ void syncModel(Model *modelSrc, Model *modelDst)
 
     modelDst->doodle.x = modelSrc->doodle.x;
     modelDst->doodle.y = modelSrc->doodle.y;
-    modelDst->doodle.prev_x = modelSrc->doodle.prev_x;
-    modelDst->doodle.prev_y = modelSrc->doodle.prev_y;
+    modelDst->doodle.prev_x_one = modelSrc->doodle.prev_x_one;
+    modelDst->doodle.prev_y_one = modelSrc->doodle.prev_y_one;
     modelDst->doodle.facing = modelSrc->doodle.facing;
     modelDst->doodle.prev_facing = modelSrc->doodle.prev_facing;
 

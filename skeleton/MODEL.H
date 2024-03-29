@@ -81,7 +81,9 @@ Purpose:
 #define DOODLE_HORIZONTAL_MOVEMENT 32
 typedef struct 
 {
-    UINT16 prev_x, prev_y;  
+    UINT16 prev_x_one, prev_y_one;
+    UINT16 prev_x_two, prev_y_two;
+    UINT16 prev_x_three, prev_y_three;
     UINT16 x, y; 
     UINT16 facing;
     UINT16 prev_facing;

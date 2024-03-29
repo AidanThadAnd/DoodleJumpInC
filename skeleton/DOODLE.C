@@ -107,16 +107,16 @@ int main() {
             if(useDoubleBuffer == 1)
                 {
                     render(modelOnePtr, (UINT32*)page2);
-                    Vsync();
                     Setscreen(-1, page2, -1);
+                    Vsync();
                     useDoubleBuffer = 0;
                     syncModel(modelTwoPtr, modelOnePtr);
                 }
                 else
                 {
                     render(modelTwoPtr, (UINT32*)page1);
-                    Vsync();
                     Setscreen(-1, page1, -1);
+                    Vsync();
                     useDoubleBuffer = 1;
                     syncModel(modelOnePtr, modelTwoPtr);
                 }
@@ -134,10 +134,14 @@ void syncModel(Model *modelSrc, Model *modelDst)
     UINT8 i;
     Platform *srcPlatform, *dstPlatform;
 
+
+
     modelDst->doodle.x = modelSrc->doodle.x;
     modelDst->doodle.y = modelSrc->doodle.y;
-    modelDst->doodle.prev_x = modelSrc->doodle.prev_x;
-    modelDst->doodle.prev_y = modelSrc->doodle.prev_y;
+    modelDst->doodle.prev_x_one = modelSrc->doodle.prev_x_one;
+    modelDst->doodle.prev_y_one = modelSrc->doodle.prev_y_one;
+    modelDst->doodle.prev_x_two = modelSrc->doodle.prev_x_two;
+    modelDst->doodle.prev_y_two = modelSrc->doodle.prev_y_two;
     modelDst->doodle.facing = modelSrc->doodle.facing;
     modelDst->doodle.prev_facing = modelSrc->doodle.prev_facing;
 
@@ -159,11 +163,6 @@ void syncModel(Model *modelSrc, Model *modelDst)
         srcPlatform++;
         dstPlatform++;     
     }
-}
-
-void compareAndReplot(Model *modelSrc, Model *modelDst)
-{
-
 }
 
 
