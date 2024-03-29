@@ -21,10 +21,12 @@ void render(Model *model, UINT32 *base)
     {   
         clear_bitmap_32(base, model->doodle.prev_x, model->doodle.prev_y, clear_bitmap, DOODLE_HEIGHT);
         render_doodle(&(model->doodle), base);
+/*
 
         model->doodle.prev_facing = model->doodle.facing;
         model->doodle.prev_x = model->doodle.x;
         model->doodle.prev_y = model->doodle.y;
+*/
         
     }
 }
