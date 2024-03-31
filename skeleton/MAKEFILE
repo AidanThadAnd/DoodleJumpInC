@@ -54,3 +54,7 @@ tst_rend.o: tst_rend.c renderer.h
 
 renderer.o: renderer.c renderer.h model.h bitmap.h raster.h
 	cc68x -g -c renderer.c
+
+clean:
+	$(RM) *.o *.tos
+
