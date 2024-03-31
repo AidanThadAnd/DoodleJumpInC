@@ -13,14 +13,12 @@ typedef unsigned char bool;
 # 78 "./MODEL.H" 2
 # 1 "./system.h" 1
 # 79 "./MODEL.H" 2
-
-
-
-
+# 85 "./MODEL.H"
 typedef struct
 {
-    UINT16 prev_x, prev_y;
     UINT16 x, y;
+    UINT16 prev_x, prev_y;
+    int velocity;
     UINT16 facing;
     UINT16 prev_facing;
 } Doodle;

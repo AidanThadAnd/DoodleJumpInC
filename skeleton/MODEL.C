@@ -13,6 +13,8 @@ void initialize_model(Model *model)
     model->doodle.prev_x = -1; /* Sets the previous location state for optimized rendering, intialzed to an impossible state */
     model->doodle.prev_y = -1;
 
+    model->doodle.velocity = -1
+
 
 
     /* Initialize platforms */

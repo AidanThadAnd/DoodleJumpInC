@@ -28,7 +28,6 @@
 #include "renderer.h"
 #include <stdio.h>
 #include <osbind.h>
-#include "BITMAP.H"
 
 UINT8 double_buffer[432][80] = {0};
 
@@ -96,6 +95,8 @@ int main() {
                     double_buffer_render(modelTwoPtr, modelOnePtr, (UINT32*)page1);
                     Setscreen(-1, page1, -1);
                     Vsync();
+
+                    doodle_vertical_movement(modelOnePtr);
                     useDoubleBuffer = true;
                     syncModel(modelOnePtr, modelTwoPtr);
                 }
@@ -104,6 +105,8 @@ int main() {
                     double_buffer_render(modelOnePtr, modelTwoPtr, (UINT32*)page2);
                     Setscreen(-1, page2, -1);
                     Vsync();
+
+                    doodle_vertical_movement(modelOnePtr);
                     useDoubleBuffer = false;
                     syncModel(modelTwoPtr, modelOnePtr);
                 }
@@ -123,13 +126,19 @@ void syncModel(Model *modelSrc, Model *modelDst)
 
     modelDst->doodle.x = modelSrc->doodle.x;
     modelDst->doodle.y = modelSrc->doodle.y;
+
     modelDst->doodle.prev_x = modelSrc->doodle.prev_x;
     modelDst->doodle.prev_y = modelSrc->doodle.prev_y;
+
     modelDst->doodle.facing = modelSrc->doodle.facing;
     modelDst->doodle.prev_facing = modelSrc->doodle.prev_facing;
 
+    modelDst->doodle.velocity = modelSrc->doodle.velocity;
+
+
     modelDst->monster.x = modelSrc->monster.x;
     modelDst->monster.y = modelSrc->monster.y;
+
     modelDst->monster.prev_x = modelSrc->monster.prev_x;
     modelDst->monster.prev_y = modelSrc->monster.prev_y;
 

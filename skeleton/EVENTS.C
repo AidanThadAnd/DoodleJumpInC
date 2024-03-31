@@ -40,3 +40,45 @@ bool check_collision_monster(Doodle *doodle, Monster *monster)
 }
 
 
+
+
+/* 
+Scaling is going to look werid as going from 5 -> -5 won't be smooth as it'll slow down then speed it.
+Maybe the use of a bool to represent the doodle falling then velocity will only be 0->5 will fix this scaling issue
+*/
+void doodle_vertical_movement(Doodle *doodle)
+{
+    if(check_collision_doodle_platform)
+    {
+        doodle->velocity = MAX_VELOCITY;
+        move_doodle(doodle, 0, doodle->velocity, doodle->facing);
+    }
+
+    if(doodle->velocity == -MAX_VELOCITY || doodle->velocity == MAX_VELOCITY)
+    {
+        move_doodle(doodle, 0, doodle->velocity, doodle->facing);
+        return;
+    }
+
+    if(is_doodle_falling && doodle->velocity > -MAX_VELOCITY)
+    {
+        doodle->velocity -= 1;
+        move_doodle(doodle, 0, doodle->velocity, doodle->facing);
+        return;
+    }
+
+    if(!is_doodle_falling && doodle->velocity < MAX_VELOCITY)
+    {
+        doodle->velocity += 1;
+        move_doodle(doodle, 0, doodle->velocity, doodle->facing);
+        return;
+    }
+
+}
+
+bool is_doodle_falling(Doodle *doodle)
+{
+    if(doodle->velocity < 0)
+        return true;
+    return false;
+}
