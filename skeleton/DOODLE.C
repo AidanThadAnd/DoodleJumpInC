@@ -33,33 +33,30 @@
 UINT8 double_buffer[432][80] = {0};
 
 UINT32 get_time();
-void delay(int milliseconds);
 void input(Model *model, char *pressedKey);
 void syncModel(Model *modelSrc, Model *modelDst);
 
 int main() {
+    UINT8 *page1 = Physbase();
     UINT8 *page2 = &double_buffer[0][0];
     UINT8 i;
+    UINT8 confirmedInput;
+
     bool useDoubleBuffer = true;
+
     UINT32 timeThen, timeNow, timeElapsed;
-    Model modelOne;
-    Model modelTwo;
+
+    Model modelOne, modelTwo;
     Model *modelOnePtr = &modelOne;
     Model *modelTwoPtr = &modelTwo;
-    UINT8 confirmedInput;
-    UINT8 *page1 = Physbase();
+
     char pressedKey = 0;
+
 
     initialize_model(modelOnePtr);
     initialize_model(modelTwoPtr);
 
-    page2 = (UINT8*)((size_t)page2 | 0xff ) + 1;
-
-    clear_screen(page2);
-
-    printf("Value of page2: %p\n", page2);
-
-
+    page2 = (UINT8*)((size_t)page2 | 0xff ) + 1; /* finding page aligned address for second page*/
 
     /*slight movement to all objects are required as the rendering optimzation requires some movement from initlization of objects 
     to prevent redrawing of still objects  */
@@ -69,22 +66,17 @@ int main() {
     }
     move_monster(&(modelOnePtr->monster), 8, 8);
 
-    for(i=0; i<MAX_PLATFORMS;i++)
-    {
-        move_platform_relative(modelOnePtr->platforms, 5, 5, i);
-    }
 
-
+    /* prepering pages and models for main game loop*/
     clear_screen(page1);
+    clear_screen(page2);
+    syncModel(modelOnePtr, modelTwoPtr);
+
     render(modelOnePtr, (UINT32*)page1);  /* Render the initial state of the model */
     
     
+
     timeThen = get_time();
-
-
-    syncModel(modelOnePtr, modelTwoPtr);
-
-
     while (pressedKey != 'q') { /* Main game loop */
 
         if(useDoubleBuffer)
@@ -174,6 +166,9 @@ void input(Model *model, char *pressedKey)
 }
 
 /*
+
+TODO: Investigate the weird slowdown issue with using Cconis in a wrapper function
+
 bool isKeyPressed()
 {
     if(Cconis())
