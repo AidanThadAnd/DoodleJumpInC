@@ -1,9 +1,4 @@
-#include "MODEL.H"
-#include "RASTER.H"
-#include "BITMAP.H"
 #include "RENDERER.H"
-
-#include <stdio.h>
 
 void render(Model *model, UINT32 *base)
 {

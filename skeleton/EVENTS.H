@@ -37,8 +37,9 @@ Functions:
 #ifndef EVENTS_H
 #define EVENTS_H
 
-#include "model.h"
-#include "TYPES.H"
+#include "MODEL.H"
+#include "BITMAP.H"
+#include "system.h"
 
 void doodle_input(Doodle *character, char key);
 bool check_collision_doodle_platform(Doodle *d, Platform *p);

@@ -76,6 +76,7 @@ Purpose:
 #define MODEL_H
 
 #include "TYPES.H"
+#include "system.h"
 
 #define MAX_PLATFORMS 15
 #define DOODLE_HORIZONTAL_MOVEMENT 32

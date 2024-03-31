@@ -1,7 +1,4 @@
 #include "events.h"
-#include "MODEL.H"
-#include "BITMAP.H"
-#include "system.h"
 
 void doodle_input(Doodle *character, char key)
 {
