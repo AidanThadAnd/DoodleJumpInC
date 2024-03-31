@@ -38,10 +38,11 @@ Functions:
 #define EVENTS_H
 
 #include "model.h"
+#include "TYPES.H"
 
 void doodle_input(Doodle *character, char key);
-int check_collision_doodle_platform(Doodle *d, Platform *p);
-int check_collision_monster(Doodle *d, Monster *m);
+bool check_collision_doodle_platform(Doodle *d, Platform *p);
+bool check_collision_monster(Doodle *d, Monster *m);
 
 #endif
 

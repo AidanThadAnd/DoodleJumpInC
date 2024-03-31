@@ -7,6 +7,8 @@
 typedef unsigned char UINT8;
 typedef unsigned int  UINT16;
 typedef unsigned long UINT32;
+
+typedef unsigned char bool;
 # 78 "./MODEL.H" 2
 
 
@@ -195,14 +197,14 @@ void render(Model *model, UINT32 *base)
     int multipleDoodleDeletions;
     render_platform(model->platforms, base);
 
-    if(has_monster_moved(&(model->monster)) == 1)
+    if(has_monster_moved(&(model->monster)))
     {
         clear_bitmap_32(base, model->monster.prev_x, model->monster.prev_y, clear_bitmap, 35 );
         render_monster(&(model->monster), base);
     }
 
 
-    if(has_doodle_moved(&(model->doodle)) == 1)
+    if(has_doodle_moved(&(model->doodle)))
     {
         clear_bitmap_32(base, model->doodle.prev_x, model->doodle.prev_y, clear_bitmap, 55 );
 

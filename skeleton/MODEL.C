@@ -87,28 +87,28 @@ void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y, UINT8 selec
 }
 
 
-UINT8 has_doodle_moved(Doodle *doodle)
+bool has_doodle_moved(Doodle *doodle)
 {
     if(doodle->prev_x != doodle->x || doodle->prev_y != doodle->y || doodle->prev_facing != doodle->facing)
-        return 1;
+        return true;
 
-    return 0;
+    return false;
 }
 
-UINT8 has_monster_moved(Monster *monster)
+bool has_monster_moved(Monster *monster)
 {
     if(monster->prev_x != monster->x || monster->prev_y != monster->y)
-        return 1;
+        return true;
 
-    return 0;
+    return false;
 }
 
-UINT8 has_platform_moved(Platform *platform)
+bool has_platform_moved(Platform *platform)
 {
     if(platform->prev_x != platform->x || platform->prev_y != platform->y)
-        return 1;
+        return true;
 
     
     
-    return 0;
+    return false;
 }

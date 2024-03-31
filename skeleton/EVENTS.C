@@ -18,28 +18,28 @@ void doodle_input(Doodle *character, char key)
     }
 }
  
-int check_collision_doodle_platform(Doodle *doodle, Platform *platform)
+bool check_collision_doodle_platform(Doodle *doodle, Platform *platform)
 {
     if (doodle->y + DOODLE_HEIGHT > platform->y &&
         doodle->y < platform->y + PLATFORM_HEIGHT &&
         doodle->x + DOODLE_LEG_WIDTH > platform->x && 
         doodle->x < platform->x + PLATFORM_WIDTH)   
     {
-        return 1;
+        return true;
     }
-        return 0;
+        return false;
 }
 
-int check_collision_monster(Doodle *doodle, Monster *monster)
+bool check_collision_monster(Doodle *doodle, Monster *monster)
 {
     if (doodle->y + DOODLE_HEIGHT > monster->y &&
         doodle->y < monster->y + MONSTER_HEIGHT &&
         doodle->x + DOODLE_WIDTH > monster->x && 
         doodle->x < monster->x + MONSTER_WIDTH)   
     {
-        return 1;
+        return true;
     }
-        return 0;
+        return false;
 }
 
 

@@ -40,7 +40,7 @@ void syncModel(Model *modelSrc, Model *modelDst);
 int main() {
     UINT8 *page2 = &double_buffer[0][0];
     UINT8 i;
-    int useDoubleBuffer = 1;
+    bool useDoubleBuffer = true;
     UINT32 timeThen, timeNow, timeElapsed;
     Model modelOne;
     Model modelTwo;
@@ -56,10 +56,7 @@ int main() {
     page2 = (UINT8*)((size_t)page2 | 0xff ) + 1;
 
     clear_screen(page2);
-    /*
-    printf("Value of page2: %p\n", page2);
-    page2 = (UINT8*)(((size_t)page2 + 255) & ~255);
-    */
+
     printf("Value of page2: %p\n", page2);
 
 
@@ -83,19 +80,17 @@ int main() {
     
     
     timeThen = get_time();
-/*
-    printf("Model 1 x: %d  Model 2 x: %d\n", modelOnePtr->monster.prev_x, modelTwoPtr->monster.prev_x);
-*/
+
 
     syncModel(modelOnePtr, modelTwoPtr);
 
 
     while (pressedKey != 'q') { /* Main game loop */
 
-        if(useDoubleBuffer == 0)
-            input(modelTwoPtr, &pressedKey);
-        else
+        if(useDoubleBuffer)
             input(modelOnePtr, &pressedKey);
+        else
+            input(modelTwoPtr, &pressedKey);
             
 
         timeNow = get_time();
@@ -104,21 +99,21 @@ int main() {
         if(timeElapsed > 0)
         {
             Vsync();
-            if(useDoubleBuffer == 0)
-                {
-                    double_buffer_render(modelOnePtr, modelTwoPtr, (UINT32*)page2);
-                    Setscreen(-1, page2, -1);
-                    Vsync();
-                    useDoubleBuffer = 0;
-                    syncModel(modelTwoPtr, modelOnePtr);
-                }
-                else
+            if(useDoubleBuffer)
                 {
                     double_buffer_render(modelTwoPtr, modelOnePtr, (UINT32*)page1);
                     Setscreen(-1, page1, -1);
                     Vsync();
-                    useDoubleBuffer = 1;
+                    useDoubleBuffer = true;
                     syncModel(modelOnePtr, modelTwoPtr);
+                }
+                else
+                {
+                    double_buffer_render(modelOnePtr, modelTwoPtr, (UINT32*)page2);
+                    Setscreen(-1, page2, -1);
+                    Vsync();
+                    useDoubleBuffer = false;
+                    syncModel(modelTwoPtr, modelOnePtr);
                 }
         }
         timeThen = get_time();
@@ -133,8 +128,6 @@ void syncModel(Model *modelSrc, Model *modelDst)
 {
     UINT8 i;
     Platform *srcPlatform, *dstPlatform;
-
-
 
     modelDst->doodle.x = modelSrc->doodle.x;
     modelDst->doodle.y = modelSrc->doodle.y;
