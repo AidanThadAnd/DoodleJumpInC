@@ -92,7 +92,7 @@ int main() {
 
     while (pressedKey != 'q') { /* Main game loop */
 
-        if(useDoubleBuffer == 1)
+        if(useDoubleBuffer == 0)
             input(modelTwoPtr, &pressedKey);
         else
             input(modelOnePtr, &pressedKey);
@@ -104,12 +104,12 @@ int main() {
         if(timeElapsed > 0)
         {
             Vsync();
-            if(useDoubleBuffer == 1)
+            if(useDoubleBuffer == 0)
                 {
                     double_buffer_render(modelOnePtr, modelTwoPtr, (UINT32*)page2);
                     Setscreen(-1, page2, -1);
                     Vsync();
-                    useDoubleBuffer = 1;
+                    useDoubleBuffer = 0;
                     syncModel(modelTwoPtr, modelOnePtr);
                 }
                 else
@@ -138,8 +138,8 @@ void syncModel(Model *modelSrc, Model *modelDst)
 
     modelDst->doodle.x = modelSrc->doodle.x;
     modelDst->doodle.y = modelSrc->doodle.y;
-    modelDst->doodle.prev_x_one = modelSrc->doodle.prev_x_one;
-    modelDst->doodle.prev_y_one = modelSrc->doodle.prev_y_one;
+    modelDst->doodle.prev_x = modelSrc->doodle.prev_x;
+    modelDst->doodle.prev_y = modelSrc->doodle.prev_y;
     modelDst->doodle.facing = modelSrc->doodle.facing;
     modelDst->doodle.prev_facing = modelSrc->doodle.prev_facing;
 

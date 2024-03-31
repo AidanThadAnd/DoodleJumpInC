@@ -19,39 +19,27 @@ void render(Model *model, UINT32 *base)
     /*Comparing to previous state so that stationary objects are not redrawn*/
     if(has_doodle_moved(&(model->doodle)) == 1)
     {   
-        clear_bitmap_32(base, model->doodle.prev_x_one, model->doodle.prev_y_one, clear_bitmap, DOODLE_HEIGHT);
-        if(model->doodle.prev_x_one != model->doodle.prev_x_two || model->doodle.prev_y_one != model->doodle.prev_y_two)
-            clear_bitmap_32(base, model->doodle.prev_x_two, model->doodle.prev_y_two, clear_bitmap, DOODLE_HEIGHT);
-
-        if(model->doodle.prev_x_three != model->doodle.prev_x_two || model->doodle.prev_y_three != model->doodle.prev_y_two)
-            clear_bitmap_32(base, model->doodle.prev_x_three, model->doodle.prev_y_three, clear_bitmap, DOODLE_HEIGHT);
+        clear_bitmap_32(base, model->doodle.prev_x, model->doodle.prev_y, clear_bitmap, DOODLE_HEIGHT);
 
         render_doodle(&(model->doodle), base);
-
-        model->doodle.prev_x_three = model->doodle.prev_x_one;
-        model->doodle.prev_y_three = model->doodle.prev_y_one;
-        model->doodle.prev_x_two = model->doodle.prev_x_one;
-        model->doodle.prev_y_two = model->doodle.prev_y_one;
     }
 }
 
-void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *base)
+void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *baseCurr)
 {
-    int multipleDoodleDeletions;
-
-    render_platform(modelNew->platforms, base);
+    render_platform(modelNew->platforms, baseCurr);
 
     if(modelOld->monster.x != modelNew->monster.x || modelOld->monster.y != modelNew->monster.y)
     {
-        clear_bitmap_32(base, modelOld->monster.x, modelOld->monster.y, clear_bitmap, MONSTER_HEIGHT);
-        render_monster(&(modelNew->monster), base);
+        clear_bitmap_32(baseCurr, modelOld->monster.x, modelOld->monster.y, clear_bitmap, MONSTER_HEIGHT);
+        render_monster(&(modelNew->monster), baseCurr);
     }
 
     /*Comparing to previous state so that stationary objects are not redrawn*/
     if(modelOld->doodle.x != modelNew->doodle.x || modelOld->doodle.y != modelNew->doodle.y)
     {
-        clear_bitmap_32(base, modelOld->doodle.x, modelOld->doodle.y, clear_bitmap, DOODLE_HEIGHT);
-        render_doodle(&(modelNew->doodle), base);
+        clear_bitmap_32(baseCurr, modelOld->doodle.x, modelOld->doodle.y, clear_bitmap, DOODLE_HEIGHT);
+        render_doodle(&(modelNew->doodle), baseCurr);
     }
 }
 
