@@ -10,10 +10,15 @@ int main()
     int j;
     int loop;
     UINT32 *base = Physbase();
+    Model instantiateModel;
+    Model *model = &instantiateModel;
 
-    Model *model = initialize_model();
     Platform *platform = model->platforms;
     Platform *save = platform;
+    
+
+    initialize_model(model);
+    
 
     loop = 0;
     clear_screen((UINT8*)base);
@@ -24,13 +29,22 @@ int main()
     Changing models 
     */
 
+    move_monster(&(model->monster), 8, 0);
+
    for(i=0; i <= 400; i++)
    {
-    move_doodle(&(model->doodle), 8, 0);
-    move_monster(&(model->monster), 8, 0);
-    move_platform_absolute(model->platforms, 300, 200, 1);
+    move_doodle(&(model->doodle), 8, 0,0);
+    move_platform_absolute(model->platforms, i, i, 5);
     render(model, base);
+    Vsync();
    }
-   
+
+   for(j=0; j <=400; j++)
+   {
+        move_monster(&(model->monster), 8, -1);
+        render(model,base);
+        Vsync();
+   }
+    
     return 0;
 }

@@ -2,19 +2,17 @@
 #include "system.h"
 
 
-Model* initialize_model()
+void initialize_model(Model *model)
 {
-    Model *model;
     int i;
     /* Initialize Doodle character */
     model->doodle.x = SCREEN_WIDTH / 2;
-    model->doodle.y = SCREEN_HEIGHT / 2;
+    model->doodle.y = (SCREEN_HEIGHT-64) / 2;
     model->doodle.facing = 1; /* Assuming initially facing right */
-
+    model->doodle.prev_facing = 0;
     
-    model->doodle.prev_x = -1; /* Sets the previous location state for optimized rendering, intialzed to an impossible state */
-    model->doodle.prev_y = -1;
-    
+    model->doodle.prev_x_one = -1; /* Sets the previous location state for optimized rendering, intialzed to an impossible state */
+    model->doodle.prev_y_one = -1;
 
 
 
@@ -34,17 +32,18 @@ Model* initialize_model()
 
     model->monster.prev_x = -1;
     model->monster.prev_y = -1;
-    
-    return model;
 }
 
 
-void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y)
+void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y, UINT16 newFacing)
 {
-    doodle->prev_x = doodle->x;
-    doodle->prev_y = doodle->y;
+
+    doodle->prev_facing = doodle->facing;
+    doodle->prev_x_one = doodle->x;
+    doodle->prev_y_one = doodle->y;
 
 
+    doodle->facing = newFacing;
     doodle->x += displacement_x;
     doodle->y += displacement_y;
 }
@@ -53,14 +52,14 @@ void move_platform_relative(Platform *platform, UINT16 displacement_x, UINT16 di
 {
     UINT8 i;
 
-    for(i=0; i<selected_platform;i++)
+    for(i=0; i<=selected_platform;i++)
         platform++;
 
     platform->prev_x = platform->x;
     platform->prev_y = platform->y;
 
-    platform->x += displacement_x;
-    platform->y += displacement_y;
+    platform->x = displacement_x + platform->x;
+    platform->y = displacement_y + platform->y;
 }
 
 void move_monster(Monster *monster, UINT16 displacement_x, UINT16 displacement_y)
@@ -76,7 +75,7 @@ void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y, UINT8 selec
 {
     UINT8 i;
 
-    for(i=0; i<selected_platform;i++)
+    for(i=0; i<=selected_platform;i++)
         platforms++;
 
 
@@ -90,7 +89,7 @@ void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y, UINT8 selec
 
 UINT8 has_doodle_moved(Doodle *doodle)
 {
-    if(doodle->prev_x != doodle->x || doodle->prev_y != doodle->y)
+    if(doodle->prev_x_one != doodle->x || doodle->prev_y_one != doodle->y || doodle->prev_facing != doodle->facing)
         return 1;
 
     return 0;
@@ -108,6 +107,8 @@ UINT8 has_platform_moved(Platform *platform)
 {
     if(platform->prev_x != platform->x || platform->prev_y != platform->y)
         return 1;
+
+    
     
     return 0;
 }

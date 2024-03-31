@@ -6,6 +6,11 @@ void plot_bitmap_8(UINT16 *base, int x, int y, const UINT8 *bitmap, unsigned int
     UINT16 *loc = base + (y * 40) + (x >> 4);
     int row;
        
+	if(y+height > SCREEN_HEIGHT)
+	{
+		height = SCREEN_HEIGHT-y-1;
+	}
+	
     for (row = 0; row < height; row++)
     {
         *loc |= bitmap[row];
@@ -17,6 +22,11 @@ void plot_bitmap_16(UINT16 *base, int x, int y, const UINT16 *bitmap, unsigned i
 {
     UINT16 *loc = base + (y * 40) + (x >> 4);
     int row;    
+
+	if(y+height > SCREEN_HEIGHT)
+	{
+		height = SCREEN_HEIGHT-y-1;
+	}
 
     for (row = 0; row < height; row++)
     {
@@ -38,9 +48,34 @@ void plot_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, int height
 
 	if(y+height > SCREEN_HEIGHT)
 	{
-		height = SCREEN_HEIGHT-y;
+		height = SCREEN_HEIGHT-y-1;
 	}
 
+	for (rows = 0; rows < height; rows++) {
+		for(cols = 0; cols < 2; cols++) {
+			*loc = *loc | *(bitmap)++;
+			*loc = ~(*loc ^ 0xFFFFFFFF);
+			loc++;
+		}
+		loc += 18;
+	}
+}
+
+void clear_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, int height)
+{
+	int rows;
+	int cols;
+
+	UINT32 *loc = base + (y * 20) + (x>>5);
+
+	if(y >= SCREEN_HEIGHT)
+		return;
+
+	if(y+height > SCREEN_HEIGHT)
+	{
+		height = SCREEN_HEIGHT-y-1;
+	}
+	
 	for (rows = 0; rows < height; rows++) {
 		for(cols = 0; cols < 2; cols++) {
 			*loc |= *(bitmap)++;

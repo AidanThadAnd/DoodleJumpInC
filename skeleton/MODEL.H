@@ -78,12 +78,15 @@ Purpose:
 #include "TYPES.H"
 
 #define MAX_PLATFORMS 15
-
+#define DOODLE_HORIZONTAL_MOVEMENT 32
 typedef struct 
 {
-    UINT16 prev_x, prev_y;  
+    UINT16 prev_x_one, prev_y_one;
+    UINT16 prev_x_two, prev_y_two;
+    UINT16 prev_x_three, prev_y_three;
     UINT16 x, y; 
     UINT16 facing;
+    UINT16 prev_facing;
 } Doodle;
 
 typedef struct 
@@ -104,9 +107,9 @@ typedef struct {
     Platform platforms[MAX_PLATFORMS];  
 } Model;
 
-Model* initialize_model();
+void initialize_model(Model *model);
 
-void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y);
+void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y, UINT16 newFacing);
 void move_monster(Monster *monster, UINT16 displacement_x, UINT16 displacement_y);
 void move_platform_relative(Platform *platform, UINT16 displacement_x, UINT16 displacement_y, UINT8 selected_platform);
 void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y, UINT8 selected_platform);

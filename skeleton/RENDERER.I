@@ -7,16 +7,19 @@
 typedef unsigned char UINT8;
 typedef unsigned int  UINT16;
 typedef unsigned long UINT32;
-# 60 "./MODEL.H" 2
+# 78 "./MODEL.H" 2
 
 
 
 
 typedef struct
 {
-    UINT16 prev_x, prev_y;
+    UINT16 prev_x_one, prev_y_one;
+    UINT16 prev_x_two, prev_y_two;
+    UINT16 prev_x_three, prev_y_three;
     UINT16 x, y;
     UINT16 facing;
+    UINT16 prev_facing;
 } Doodle;
 
 typedef struct
@@ -37,9 +40,9 @@ typedef struct {
     Platform platforms[15 ];
 } Model;
 
-Model* initialize_model();
+void initialize_model(Model *model);
 
-void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y);
+void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y, UINT16 newFacing);
 void move_monster(Monster *monster, UINT16 displacement_x, UINT16 displacement_y);
 void move_platform_relative(Platform *platform, UINT16 displacement_x, UINT16 displacement_y, UINT8 selected_platform);
 void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y, UINT8 selected_platform);
@@ -58,6 +61,7 @@ UINT8 has_platform_moved(Platform *platform);
 void plot_bitmap_8(UINT16 *base, int x, int y, const UINT8 *bitmap, unsigned int height);
 void plot_bitmap_16(UINT16 *base, int x, int y, const UINT16 *bitmap, unsigned int height);
 void plot_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, int height);
+void clear_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, int height);
 void plot_horizontal_line(UINT8 *base, int y);
 void clear_screen(UINT8 *base);
 void clear_horizontal_line_8(UINT8* base, int x, int y, int length);
@@ -75,17 +79,18 @@ extern const UINT32 clear_bitmap[];
 # 3 "renderer.c" 2
 # 1 "./RENDERER.H" 1
 # 1 "./MODEL.H" 1
-# 4 "./RENDERER.H" 2
+# 41 "./RENDERER.H" 2
 # 1 "./RASTER.H" 1
-# 5 "./RENDERER.H" 2
+# 42 "./RENDERER.H" 2
 # 1 "./BITMAP.H" 1
-# 6 "./RENDERER.H" 2
+# 43 "./RENDERER.H" 2
 
 
 void render(const Model *model, UINT32 *base);
 void render_doodle(const Doodle *doodle, UINT32 *base);
 void render_monster(const Monster *monster, UINT32 *base);
 void render_platform(Platform *platform, UINT32 *base);
+void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *base);
 # 4 "renderer.c" 2
 # 1 "C:/c68/include/stdio.h" 1
 # 1 "C:/c68/include/compiler.h" 1
@@ -187,41 +192,73 @@ extern	FILE	_iob[];
 # 6 "renderer.c" 2
 
 
-void render(const Model *model, UINT32 *base)
+void render(Model *model, UINT32 *base)
 {
+    int multipleDoodleDeletions;
     render_platform(model->platforms, base);
 
     if(has_monster_moved(&(model->monster)) == 1)
     {
-        plot_bitmap_32(base, model->monster.prev_x, model->monster.prev_y, clear_bitmap, 64 );
+        clear_bitmap_32(base, model->monster.prev_x, model->monster.prev_y, clear_bitmap, 35 );
         render_monster(&(model->monster), base);
     }
 
 
-
     if(has_doodle_moved(&(model->doodle)) == 1)
     {
-        plot_bitmap_32(base, model->doodle.prev_x, model->doodle.prev_y, clear_bitmap, 64 );
+        clear_bitmap_32(base, model->doodle.prev_x_one, model->doodle.prev_y_one, clear_bitmap, 55 );
+        if(model->doodle.prev_x_one != model->doodle.prev_x_two || model->doodle.prev_y_one != model->doodle.prev_y_two)
+            clear_bitmap_32(base, model->doodle.prev_x_two, model->doodle.prev_y_two, clear_bitmap, 55 );
+
+        if(model->doodle.prev_x_three != model->doodle.prev_x_two || model->doodle.prev_y_three != model->doodle.prev_y_two)
+            clear_bitmap_32(base, model->doodle.prev_x_three, model->doodle.prev_y_three, clear_bitmap, 55 );
+
         render_doodle(&(model->doodle), base);
+
+        model->doodle.prev_x_three = model->doodle.prev_x_one;
+        model->doodle.prev_y_three = model->doodle.prev_y_one;
+        model->doodle.prev_x_two = model->doodle.prev_x_one;
+        model->doodle.prev_y_two = model->doodle.prev_y_one;
+    }
+}
+
+void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *base)
+{
+    int multipleDoodleDeletions;
+    printf("We got here \n \n \n");
+    render_platform(modelNew->platforms, base);
+
+    if(modelOld->monster.x != modelNew->monster.x || modelOld->monster.y != modelNew->monster.y)
+    {
+        clear_bitmap_32(base, modelOld->monster.x, modelOld->monster.y, clear_bitmap, 35 );
+        render_monster(&(modelNew->monster), base);
+    }
+
+
+    if(modelOld->doodle.x != modelNew->doodle.x || modelOld->doodle.y != modelNew->doodle.y)
+    {   printf("We got here \n \n \n");
+        clear_bitmap_32(base, modelOld->doodle.x, modelOld->doodle.y, clear_bitmap, 55 );
+        printf("We got here \n \n \n");
+        render_doodle(&(modelNew->doodle), base);
     }
 }
 
 
-void render_doodle(const Doodle *doodle, UINT32 *base)
+void render_doodle(Doodle *doodle, UINT32 *base)
 {
-
     if(doodle->facing == 1)
-        plot_bitmap_32(base, doodle->x, doodle->y, doodle_bitmap_right, 64 );
+        plot_bitmap_32(base, doodle->x, doodle->y, doodle_bitmap_right, 55 );
     else
-        plot_bitmap_32(base, doodle->x, doodle->y, doodle_bitmap_left, 64 );
+        plot_bitmap_32(base, doodle->x, doodle->y, doodle_bitmap_left, 55 );
 
 }
 
 
-void render_monster(const Monster *monster, UINT32 *base)
+void render_monster(Monster *monster, UINT32 *base)
 {
 
-    plot_bitmap_32(base, monster->x, monster->y, monster_bitmap, 64 );
+    plot_bitmap_32(base, monster->x, monster->y, monster_bitmap, 35 );
+
 
 }
 
@@ -234,8 +271,9 @@ void render_platform(Platform *platforms, UINT32 *base)
     for(i = 0; i < 15 ; i++){
         if(has_platform_moved(platforms) == 1)
         {
-            plot_bitmap_32(base, platforms->prev_x, platforms->prev_y, clear_bitmap, 24 );
-            plot_bitmap_32(base, platforms->x, platforms->y, platform_bitmap, 24 );
+            clear_bitmap_32(base, platforms->prev_x, platforms->prev_y, clear_bitmap, 22 );
+            plot_bitmap_32(base, platforms->x, platforms->y, platform_bitmap, 22 );
+
         }
             platforms ++;
     }

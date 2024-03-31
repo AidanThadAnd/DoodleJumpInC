@@ -34,7 +34,7 @@ void test_plot_bitmap_32(UINT32 *base, const UINT32 *bitmap, const unsigned int 
 int main()
 {
 	int i;
-    UINT32 *base  = Physbase();
+    UINT8 *base  = Physbase();
 	
 	const UINT8* glyph_A = GLYPH_START('A');
 
@@ -45,8 +45,9 @@ int main()
 	test_plot_bitmap_32(base, monster_bitmap, MONSTER_HEIGHT);
     test_plot_bitmap_32(base, platform_bitmap, PLATFORM_HEIGHT);
     test_plot_bitmap_32(base, broken_platform_bitmap, PLATFORM_HEIGHT);
-    test_plot_bitmap_32(base, doodle_bitmap_right, DOODLE_HEIGHT);
     test_plot_bitmap_32(base, doodle_bitmap_left, DOODLE_HEIGHT);
+
+    test_plot_bitmap_32(base, doodle_bitmap_right, DOODLE_HEIGHT);
 	
 
 	return 0;

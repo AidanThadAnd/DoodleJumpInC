@@ -42,16 +42,11 @@ int main() {
     UINT8 i;
     int useDoubleBuffer = 1;
     UINT32 timeThen, timeNow, timeElapsed;
-    Model modelOne;
-    Model modelTwo;
-    Model *modelOnePtr = &modelOne;
-    Model *modelTwoPtr = &modelTwo;
-    UINT8 confirmedInput;
+    Model *modelOne = initialize_model();
+    Model *modelTwo = initialize_model();
     UINT8 *page1 = Physbase();
     char pressedKey = 0;
 
-    initialize_model(modelOnePtr);
-    initialize_model(modelTwoPtr);
 
     page2 = (UINT8*)((size_t)page2 | 0xff ) + 1;
 
@@ -68,34 +63,68 @@ int main() {
     to prevent redrawing of still objects  */
     for(i=0; i<MAX_PLATFORMS;i++)
     {
-        move_platform_relative(modelOnePtr->platforms, 1, 1, i);
+        move_platform_relative(modelOne->platforms, 1, 1, i);
     }
-    move_monster(&(modelOnePtr->monster), 8, 8);
+    move_monster(&(modelOne->monster),1,1);
+
 
     for(i=0; i<MAX_PLATFORMS;i++)
     {
-        move_platform_relative(modelOnePtr->platforms, 5, 5, i);
+        move_platform_relative(modelOne->platforms, 5, 5, i);
     }
 
 
-    clear_screen(page1);
-    render(modelOnePtr, (UINT32*)page1);  /* Render the initial state of the model */
-    
-    
-    timeThen = get_time();
+
 /*
-    printf("Model 1 x: %d  Model 2 x: %d\n", modelOnePtr->monster.prev_x, modelTwoPtr->monster.prev_x);
+    plot_bitmap_32(page2, SCREEN_WIDTH/2, SCREEN_HEIGHT-DOODLE_HEIGHT+32, doodle_bitmap_right, DOODLE_HEIGHT);
+    clear_screen(page2);
+
+    render(model, page2);
+    Setscreen(-1, page2, -1);
+    Vsync();
+
+    while (pressedKey != 'q') { 
+        input(model, &pressedKey);
+    }
+
+
+    Setscreen(-1, page1, -1);
+    Vsync();
 */
 
-    syncModel(modelOnePtr, modelTwoPtr);
+/*
+*/
 
+
+/*
+while (pressedKey != 'q') { 
+        timeThen = get_time();
+        input(model, &pressedKey);
+        render(model,page1);
+        
+        timeNow = get_time();
+        timeElapsed = timeNow - timeThen;
+        if(timeElapsed > 0)
+        {
+            Setscreen(-1, page1, -1);
+            Vsync();
+        }
+    }
+*/
+
+    clear_screen(page1);
+    render(modelOne, page1);  /* Render the initial state of the model */
+    syncModel(modelOne, modelTwo);
+    timeThen = get_time();
+    modelTwo = modelOne;
 
     while (pressedKey != 'q') { /* Main game loop */
+    
 
         if(useDoubleBuffer == 1)
-            input(modelTwoPtr, &pressedKey);
+            input(modelOne, &pressedKey);
         else
-            input(modelOnePtr, &pressedKey);
+            input(modelTwo, &pressedKey);
             
 
         timeNow = get_time();
@@ -103,28 +132,26 @@ int main() {
 
         if(timeElapsed > 0)
         {
-            Vsync();
             if(useDoubleBuffer == 1)
                 {
-                    double_buffer_render(modelOnePtr, modelTwoPtr, (UINT32*)page2);
+                    render(modelTwo, page2);
                     Setscreen(-1, page2, -1);
                     Vsync();
-                    useDoubleBuffer = 1;
-                    syncModel(modelTwoPtr, modelOnePtr);
+                    useDoubleBuffer = 0;
                 }
                 else
                 {
-                    double_buffer_render(modelTwoPtr, modelOnePtr, (UINT32*)page1);
+                    render(modelOne,page1);
                     Setscreen(-1, page1, -1);
                     Vsync();
                     useDoubleBuffer = 1;
-                    syncModel(modelOnePtr, modelTwoPtr);
+
                 }
         }
         timeThen = get_time();
     }
+
     Setscreen(-1, page1, -1);
-    Vsync();
 
     return 0;
 }
@@ -148,6 +175,8 @@ void syncModel(Model *modelSrc, Model *modelDst)
     modelDst->monster.prev_x = modelSrc->monster.prev_x;
     modelDst->monster.prev_y = modelSrc->monster.prev_y;
 
+
+/*
     srcPlatform = (modelSrc->platforms);
     dstPlatform = (modelDst->platforms);
 
@@ -161,6 +190,8 @@ void syncModel(Model *modelSrc, Model *modelDst)
         srcPlatform++;
         dstPlatform++;     
     }
+*/
+
 }
 
 
