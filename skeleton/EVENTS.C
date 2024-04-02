@@ -22,16 +22,11 @@ bool check_collision_doodle_platform(Doodle *doodle, Platform *platform)
     int heightDifference;
     int distanceFromPlatform;
     bool foundPlatform = false;
-
-
-/*
-Potentially if the y values are not exactly the same == may not work
-*/
     
     for(i=0; i<MAX_PLATFORMS && !foundPlatform; i++)
     {
     heightDifference = platform->y + 1 - (doodle->y + DOODLE_HEIGHT);
-        if(heightDifference < MAX_VELOCITY-3 && heightDifference > -MAX_VELOCITY+3)
+        if(heightDifference < MAX_VELOCITY && heightDifference > -MAX_VELOCITY)
             foundPlatform = true;
         else
             platform++;

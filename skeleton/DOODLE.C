@@ -86,7 +86,10 @@ int main() {
         {
             input(modelTwoPtr, &pressedKey);
         }
-            
+        /*
+        if(modelOnePtr->doodle.y > 5)
+            move_doodle(&(modelOnePtr), (modelOnePtr->doodle.x), 1, modelOnePtr->doodle.facing);
+        */
 
         timeNow = get_time();
         timeElapsed = timeNow - timeThen;
@@ -96,6 +99,8 @@ int main() {
             Vsync();
             if(useDoubleBuffer)
                 {
+                    /*
+                    */
                     doodle_vertical_movement(modelOnePtr);
                     double_buffer_render(modelTwoPtr, modelOnePtr, (UINT32*)page1);
                     
@@ -106,6 +111,8 @@ int main() {
                 }
                 else
                 {
+                    /*
+                    */
                     doodle_vertical_movement(modelTwoPtr);
                     double_buffer_render(modelOnePtr, modelTwoPtr, (UINT32*)page2);
                     

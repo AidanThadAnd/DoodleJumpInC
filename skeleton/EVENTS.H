@@ -41,7 +41,7 @@ Functions:
 #include "system.h"
 #include "TYPES.H"
 #include "BITMAP.H"
-#define MAX_VELOCITY 15
+#define MAX_VELOCITY 12
 
 
 void doodle_input(Doodle *character, char key);
