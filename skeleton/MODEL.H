@@ -78,14 +78,12 @@ Purpose:
 #include "TYPES.H"
 #include "system.h"
 
-#define GRAVITY 1
-#define MAX_VELOCITY 5
 #define MAX_PLATFORMS 15
 #define DOODLE_HORIZONTAL_MOVEMENT 32
 typedef struct 
 {
-    UINT16 x, y; 
-    UINT16 prev_x, prev_y;
+    int x, y; 
+    int prev_x, prev_y;
     int velocity;
     bool isFalling;
     UINT16 facing;
@@ -94,14 +92,14 @@ typedef struct
 
 typedef struct 
 {
-    UINT16 prev_x, prev_y;
-    UINT16 x, y; 
+    int prev_x, prev_y;
+    int x, y; 
 } Monster;
 
 typedef struct 
 {
-    UINT16 prev_x, prev_y;
-    UINT16 x, y; 
+    int prev_x, prev_y;
+    int x, y; 
 } Platform;
 
 typedef struct {

@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <osbind.h>
 
-UINT8 double_buffer[412][80] = {0};
+UINT8 double_buffer[424][80] = {0};
 
 UINT32 get_time();
 void input(Model *model, char *pressedKey);

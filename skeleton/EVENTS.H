@@ -41,12 +41,13 @@ Functions:
 #include "system.h"
 #include "TYPES.H"
 #include "BITMAP.H"
+#define MAX_VELOCITY 15
 
 
 void doodle_input(Doodle *character, char key);
 bool check_collision_doodle_platform(Doodle *d, Platform *p);
 bool check_collision_monster(Doodle *d, Monster *m);
-void doodle_vertical_movement(Doodle *doodle);
+void doodle_vertical_movement(Model *model);
 
 #endif
 

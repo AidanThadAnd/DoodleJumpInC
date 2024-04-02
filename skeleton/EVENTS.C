@@ -17,18 +17,56 @@ void doodle_input(Doodle *character, char key)
 }
  
 bool check_collision_doodle_platform(Doodle *doodle, Platform *platform)
-{/*
-    if (doodle->y + DOODLE_HEIGHT > platform->y &&
-        doodle->y < platform->y + PLATFORM_HEIGHT &&
-        doodle->x + DOODLE_LEG_WIDTH > platform->x && 
-        doodle->x < platform->x + PLATFORM_WIDTH)
+{
+    UINT8 i;
+    int heightDifference;
+    int distanceFromPlatform;
+    bool foundPlatform = false;
+
+
+/*
+Potentially if the y values are not exactly the same == may not work
 */
-    if(doodle->y >= SCREEN_HEIGHT-5)   
+    
+    for(i=0; i<MAX_PLATFORMS && !foundPlatform; i++)
     {
-        return true;
+    heightDifference = platform->y + 1 - (doodle->y + DOODLE_HEIGHT);
+        if(heightDifference < MAX_VELOCITY-3 && heightDifference > -MAX_VELOCITY+3)
+            foundPlatform = true;
+        else
+            platform++;
+            
     }
+
+    if(!foundPlatform)
         return false;
+
+
+    distanceFromPlatform = (doodle->x + DOODLE_WIDTH) - (platform->x - PLATFORM_WIDTH);
+    if (distanceFromPlatform > 0 && distanceFromPlatform < 80)
+        {
+            return true;
+        }
+        return false;
+
 }
+/*
+
+Doodle is at x=200
+Platform is at x=220
+
+Doodle is 32 wide
+platform is 10 wide
+
+doodle->x + doodle width = 232
+
+platform->x + platform width = 230
+
+platform goes from 220 --- 230
+Doodle is 200 --- 232
+
+*/
+
 
 bool check_collision_monster(Doodle *doodle, Monster *monster)
 {
@@ -49,13 +87,18 @@ bool check_collision_monster(Doodle *doodle, Monster *monster)
 Scaling is going to look werid as going from 5 -> -5 won't be smooth as it'll slow down then speed it.
 Maybe the use of a bool to represent the doodle falling then velocity will only be 0->5 will fix this scaling issue
 */
-void doodle_vertical_movement(Doodle *doodle)
+void doodle_vertical_movement(Model *model)
 {
-    if(check_collision_doodle_platform(doodle, &doodle))
+    Doodle *doodle = &(model->doodle);
+    Platform *platformsArray = model->platforms;
+    Monster *monster = &(model->monster);
+
+
+    if(check_collision_doodle_platform(doodle, platformsArray))
     {
         doodle->velocity = MAX_VELOCITY;
         doodle->isFalling = false;
-        move_doodle(doodle, 0, (doodle->velocity)*40, doodle->facing);
+        move_doodle(doodle, 0, -(doodle->velocity), doodle->facing);
         return;
     }
 
@@ -64,10 +107,10 @@ void doodle_vertical_movement(Doodle *doodle)
         case(MAX_VELOCITY):
         {
             if(doodle->isFalling)
-                move_doodle(doodle, 0, -(doodle->velocity), doodle->facing);
+                move_doodle(doodle, 0, doodle->velocity, doodle->facing);
             else
             {
-                move_doodle(doodle, 0, doodle->velocity, doodle->facing);
+                move_doodle(doodle, 0, -(doodle->velocity), doodle->facing);
                 doodle->velocity -= 1;
             }
         }
@@ -82,12 +125,12 @@ void doodle_vertical_movement(Doodle *doodle)
         {
             if(doodle->isFalling)
             {
-                move_doodle(doodle, 0, -(doodle->velocity), doodle->facing);
+                move_doodle(doodle, 0, (doodle->velocity), doodle->facing);
                 doodle->velocity++;
             }
             else
             {
-                move_doodle(doodle, 0, doodle->velocity, doodle->facing);
+                move_doodle(doodle, 0, -(doodle->velocity), doodle->facing);
                 doodle->velocity-= 1;
             }
         }

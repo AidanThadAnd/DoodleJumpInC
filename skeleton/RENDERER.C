@@ -23,8 +23,8 @@ void render(Model *model, UINT32 *base)
 void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *base)
 {
     UINT8 i;
-    Platform *oldModelPlatforms = &(modelOld->platforms);
-    Platform *newModelPlatforms= &(modelNew->platforms);
+    Platform *oldModelPlatforms = modelOld->platforms;
+    Platform *newModelPlatforms= modelNew->platforms;
 
 
     for(i = 0; i < MAX_PLATFORMS; i++){
