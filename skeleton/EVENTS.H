@@ -47,7 +47,6 @@ void doodle_input(Doodle *character, char key);
 bool check_collision_doodle_platform(Doodle *d, Platform *p);
 bool check_collision_monster(Doodle *d, Monster *m);
 void doodle_vertical_movement(Doodle *doodle);
-bool is_doodle_falling(Doodle *doodle);
 
 #endif
 

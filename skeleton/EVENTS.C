@@ -1,4 +1,5 @@
 #include "events.h"
+#include <stdio.h>
 
 void doodle_input(Doodle *character, char key)
 {
@@ -16,11 +17,13 @@ void doodle_input(Doodle *character, char key)
 }
  
 bool check_collision_doodle_platform(Doodle *doodle, Platform *platform)
-{
+{/*
     if (doodle->y + DOODLE_HEIGHT > platform->y &&
         doodle->y < platform->y + PLATFORM_HEIGHT &&
         doodle->x + DOODLE_LEG_WIDTH > platform->x && 
-        doodle->x < platform->x + PLATFORM_WIDTH)   
+        doodle->x < platform->x + PLATFORM_WIDTH)
+*/
+    if(doodle->y >= SCREEN_HEIGHT-5)   
     {
         return true;
     }
@@ -48,37 +51,46 @@ Maybe the use of a bool to represent the doodle falling then velocity will only 
 */
 void doodle_vertical_movement(Doodle *doodle)
 {
-    if(check_collision_doodle_platform)
+    if(check_collision_doodle_platform(doodle, &doodle))
     {
         doodle->velocity = MAX_VELOCITY;
-        move_doodle(doodle, 0, doodle->velocity, doodle->facing);
-    }
-
-    if(doodle->velocity == -MAX_VELOCITY || doodle->velocity == MAX_VELOCITY)
-    {
-        move_doodle(doodle, 0, doodle->velocity, doodle->facing);
+        doodle->isFalling = false;
+        move_doodle(doodle, 0, (doodle->velocity)*40, doodle->facing);
         return;
     }
 
-    if(is_doodle_falling && doodle->velocity > -MAX_VELOCITY)
+    switch(doodle->velocity)
     {
-        doodle->velocity -= 1;
-        move_doodle(doodle, 0, doodle->velocity, doodle->facing);
-        return;
+        case(MAX_VELOCITY):
+        {
+            if(doodle->isFalling)
+                move_doodle(doodle, 0, -(doodle->velocity), doodle->facing);
+            else
+            {
+                move_doodle(doodle, 0, doodle->velocity, doodle->facing);
+                doodle->velocity -= 1;
+            }
+        }
+        break;
+        case(0):
+        {
+            doodle->isFalling = true;
+            doodle->velocity++;
+        }
+        break;
+        default:
+        {
+            if(doodle->isFalling)
+            {
+                move_doodle(doodle, 0, -(doodle->velocity), doodle->facing);
+                doodle->velocity++;
+            }
+            else
+            {
+                move_doodle(doodle, 0, doodle->velocity, doodle->facing);
+                doodle->velocity-= 1;
+            }
+        }
+        break;
     }
-
-    if(!is_doodle_falling && doodle->velocity < MAX_VELOCITY)
-    {
-        doodle->velocity += 1;
-        move_doodle(doodle, 0, doodle->velocity, doodle->facing);
-        return;
-    }
-
-}
-
-bool is_doodle_falling(Doodle *doodle)
-{
-    if(doodle->velocity < 0)
-        return true;
-    return false;
 }

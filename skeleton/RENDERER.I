@@ -19,6 +19,7 @@ typedef struct
     UINT16 x, y;
     UINT16 prev_x, prev_y;
     int velocity;
+    bool isFalling;
     UINT16 facing;
     UINT16 prev_facing;
 } Doodle;
@@ -48,9 +49,9 @@ void move_monster(Monster *monster, UINT16 displacement_x, UINT16 displacement_y
 void move_platform_relative(Platform *platform, UINT16 displacement_x, UINT16 displacement_y, UINT8 selected_platform);
 void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y, UINT8 selected_platform);
 
-UINT8 has_doodle_moved(Doodle *doodle);
-UINT8 has_monster_moved(Monster *monster);
-UINT8 has_platform_moved(Platform *platform);
+bool has_doodle_moved(Doodle *doodle);
+bool has_monster_moved(Monster *monster);
+bool has_platform_moved(Platform *platform);
 # 41 "./RENDERER.H" 2
 # 1 "./RASTER.H" 1
 # 1 "./types.h" 1
@@ -108,21 +109,34 @@ void render(Model *model, UINT32 *base)
     }
 }
 
-void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *baseCurr)
+void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *base)
 {
-    render_platform(modelNew->platforms, baseCurr);
+    UINT8 i;
+    Platform *oldModelPlatforms = &(modelOld->platforms);
+    Platform *newModelPlatforms= &(modelNew->platforms);
+
+
+    for(i = 0; i < 15 ; i++){
+        if(newModelPlatforms->x != oldModelPlatforms->x || newModelPlatforms->y != oldModelPlatforms->y)
+        {
+            clear_bitmap_32(base, oldModelPlatforms->x, oldModelPlatforms->y, clear_bitmap, 22 );
+            plot_bitmap_32(base, newModelPlatforms->x, newModelPlatforms->y, platform_bitmap, 22 );
+        }
+            newModelPlatforms++;
+            oldModelPlatforms++;
+    }
 
     if(modelOld->monster.x != modelNew->monster.x || modelOld->monster.y != modelNew->monster.y)
     {
-        clear_bitmap_32(baseCurr, modelOld->monster.x, modelOld->monster.y, clear_bitmap, 35 );
-        render_monster(&(modelNew->monster), baseCurr);
+        clear_bitmap_32(base, modelOld->monster.x, modelOld->monster.y, clear_bitmap, 35 );
+        render_monster(&(modelNew->monster), base);
     }
 
 
     if(modelOld->doodle.x != modelNew->doodle.x || modelOld->doodle.y != modelNew->doodle.y)
     {
-        clear_bitmap_32(baseCurr, modelOld->doodle.x, modelOld->doodle.y, clear_bitmap, 55 );
-        render_doodle(&(modelNew->doodle), baseCurr);
+        clear_bitmap_32(base, modelOld->doodle.x, modelOld->doodle.y, clear_bitmap, 55 );
+        render_doodle(&(modelNew->doodle), base);
     }
 }
 
@@ -150,8 +164,8 @@ void render_platform(Platform *platforms, UINT32 *base)
 {
     int i;
 
-    for(i = 0; i < 15 ; i++){
-        if(has_platform_moved(platforms) == 1)
+    for(i = 0; i <= 15 ; i++){
+        if(has_platform_moved(platforms))
         {
             clear_bitmap_32(base, platforms->prev_x, platforms->prev_y, clear_bitmap, 22 );
             plot_bitmap_32(base, platforms->x, platforms->y, platform_bitmap, 22 );

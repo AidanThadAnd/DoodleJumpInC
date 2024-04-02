@@ -13,12 +13,13 @@ void initialize_model(Model *model)
     model->doodle.prev_x = -1; /* Sets the previous location state for optimized rendering, intialzed to an impossible state */
     model->doodle.prev_y = -1;
 
-    model->doodle.velocity = -1
+    model->doodle.velocity = 0;
+    model->doodle.isFalling = true;
 
 
 
     /* Initialize platforms */
-    for (i = 0; i < MAX_PLATFORMS; ++i) {
+    for (i = 0; i < MAX_PLATFORMS; i++) {
         model->platforms[i].x = i * 100;
         model->platforms[i].y = SCREEN_HEIGHT - (i * 40);
 

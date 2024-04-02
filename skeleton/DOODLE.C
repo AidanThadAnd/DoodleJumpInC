@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <osbind.h>
 
-UINT8 double_buffer[432][80] = {0};
+UINT8 double_buffer[412][80] = {0};
 
 UINT32 get_time();
 void input(Model *model, char *pressedKey);
@@ -79,9 +79,13 @@ int main() {
     while (pressedKey != 'q') { /* Main game loop */
 
         if(useDoubleBuffer)
+        {
             input(modelOnePtr, &pressedKey);
+        }
         else
+        {
             input(modelTwoPtr, &pressedKey);
+        }
             
 
         timeNow = get_time();
@@ -92,21 +96,21 @@ int main() {
             Vsync();
             if(useDoubleBuffer)
                 {
+                    doodle_vertical_movement(modelOnePtr);
                     double_buffer_render(modelTwoPtr, modelOnePtr, (UINT32*)page1);
+                    
                     Setscreen(-1, page1, -1);
                     Vsync();
-
-                    doodle_vertical_movement(modelOnePtr);
                     useDoubleBuffer = true;
                     syncModel(modelOnePtr, modelTwoPtr);
                 }
                 else
                 {
+                    doodle_vertical_movement(modelTwoPtr);
                     double_buffer_render(modelOnePtr, modelTwoPtr, (UINT32*)page2);
+                    
                     Setscreen(-1, page2, -1);
                     Vsync();
-
-                    doodle_vertical_movement(modelOnePtr);
                     useDoubleBuffer = false;
                     syncModel(modelTwoPtr, modelOnePtr);
                 }
@@ -134,6 +138,7 @@ void syncModel(Model *modelSrc, Model *modelDst)
     modelDst->doodle.prev_facing = modelSrc->doodle.prev_facing;
 
     modelDst->doodle.velocity = modelSrc->doodle.velocity;
+    modelDst->doodle.isFalling = modelSrc->doodle.isFalling;
 
 
     modelDst->monster.x = modelSrc->monster.x;

@@ -87,6 +87,7 @@ typedef struct
     UINT16 x, y; 
     UINT16 prev_x, prev_y;
     int velocity;
+    bool isFalling;
     UINT16 facing;
     UINT16 prev_facing;
 } Doodle;
@@ -116,9 +117,9 @@ void move_monster(Monster *monster, UINT16 displacement_x, UINT16 displacement_y
 void move_platform_relative(Platform *platform, UINT16 displacement_x, UINT16 displacement_y, UINT8 selected_platform);
 void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y, UINT8 selected_platform);
 
-UINT8 has_doodle_moved(Doodle *doodle);
-UINT8 has_monster_moved(Monster *monster);
-UINT8 has_platform_moved(Platform *platform);
+bool has_doodle_moved(Doodle *doodle);
+bool has_monster_moved(Monster *monster);
+bool has_platform_moved(Platform *platform);
 
 #endif
 
