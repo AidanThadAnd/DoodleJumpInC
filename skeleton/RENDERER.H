@@ -46,6 +46,6 @@ void render(const Model *model, UINT32 *base);
 void render_doodle(const Doodle *doodle, UINT32 *base);
 void render_monster(const Monster *monster, UINT32 *base);
 void render_platform(Platform *platform, UINT32 *base);
-void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *baseCurr);
+void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *baseOld, UINT32 *baseNew);
 
 #endif

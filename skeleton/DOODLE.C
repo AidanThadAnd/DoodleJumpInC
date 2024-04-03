@@ -41,7 +41,7 @@ int main() {
     UINT8 i;
     UINT8 confirmedInput;
 
-    bool useDoubleBuffer = true;
+    bool useDoubleBuffer = false;
 
     UINT32 timeThen, timeNow, timeElapsed;
 
@@ -72,6 +72,7 @@ int main() {
     syncModel(modelOnePtr, modelTwoPtr);
 
     render(modelOnePtr, (UINT32*)page1);  /* Render the initial state of the model */
+
     
     
 
@@ -100,25 +101,25 @@ int main() {
             if(useDoubleBuffer)
                 {
                     /*
-                    */
                     doodle_vertical_movement(modelOnePtr);
-                    double_buffer_render(modelTwoPtr, modelOnePtr, (UINT32*)page1);
+                    */
+                    double_buffer_render(modelTwoPtr, modelOnePtr, (UINT32*)page2, (UINT32*)page1);
                     
                     Setscreen(-1, page1, -1);
                     Vsync();
-                    useDoubleBuffer = true;
+                    useDoubleBuffer = false;
                     syncModel(modelOnePtr, modelTwoPtr);
                 }
                 else
                 {
                     /*
-                    */
                     doodle_vertical_movement(modelTwoPtr);
-                    double_buffer_render(modelOnePtr, modelTwoPtr, (UINT32*)page2);
+                    */
+                    double_buffer_render(modelOnePtr, modelTwoPtr, (UINT32*)page1, (UINT32*)page2);
                     
                     Setscreen(-1, page2, -1);
                     Vsync();
-                    useDoubleBuffer = false;
+                    useDoubleBuffer = true;
                     syncModel(modelTwoPtr, modelOnePtr);
                 }
         }

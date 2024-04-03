@@ -20,7 +20,7 @@ void render(Model *model, UINT32 *base)
     }
 }
 
-void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *base)
+void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *baseOld, UINT32 *baseNew)
 {
     UINT8 i;
     Platform *oldModelPlatforms = modelOld->platforms;
@@ -30,8 +30,8 @@ void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *base)
     for(i = 0; i < MAX_PLATFORMS; i++){
         if(newModelPlatforms->x != oldModelPlatforms->x || newModelPlatforms->y != oldModelPlatforms->y)
         {
-            clear_bitmap_32(base, oldModelPlatforms->x, oldModelPlatforms->y, clear_bitmap, PLATFORM_HEIGHT);
-            plot_bitmap_32(base, newModelPlatforms->x, newModelPlatforms->y, platform_bitmap, PLATFORM_HEIGHT);
+            clear_bitmap_32(baseOld, oldModelPlatforms->x, oldModelPlatforms->y, clear_bitmap, PLATFORM_HEIGHT);
+            plot_bitmap_32(baseNew, newModelPlatforms->x, newModelPlatforms->y, platform_bitmap, PLATFORM_HEIGHT);
         }
             newModelPlatforms++;
             oldModelPlatforms++;
@@ -39,15 +39,15 @@ void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *base)
 
     if(modelOld->monster.x != modelNew->monster.x || modelOld->monster.y != modelNew->monster.y)
     {
-        clear_bitmap_32(base, modelOld->monster.x, modelOld->monster.y, clear_bitmap, MONSTER_HEIGHT);
-        render_monster(&(modelNew->monster), base);
+        clear_bitmap_32(baseOld, modelOld->monster.x, modelOld->monster.y, clear_bitmap, MONSTER_HEIGHT);
+        render_monster(&(modelNew->monster), baseNew);
     }
 
     /*Comparing to previous state so that stationary objects are not redrawn*/
     if(modelOld->doodle.x != modelNew->doodle.x || modelOld->doodle.y != modelNew->doodle.y)
     {
-        clear_bitmap_32(base, modelOld->doodle.x, modelOld->doodle.y, clear_bitmap, DOODLE_HEIGHT);
-        render_doodle(&(modelNew->doodle), base);
+        clear_bitmap_32(baseOld, modelOld->doodle.x, modelOld->doodle.y, clear_bitmap, DOODLE_HEIGHT);
+        render_doodle(&(modelNew->doodle), baseNew);
     }
 }
 
