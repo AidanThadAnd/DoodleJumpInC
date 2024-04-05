@@ -20,7 +20,7 @@ void render(Model *model, UINT32 *base)
     }
 }
 
-void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *baseOld, UINT32 *baseNew)
+void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *baseOld, UINT32 *baseNew, bool page)
 {
     UINT8 i;
     Platform *oldModelPlatforms = modelOld->platforms;
@@ -44,9 +44,12 @@ void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *baseOld, UIN
     }
 
     /*Comparing to previous state so that stationary objects are not redrawn*/
-    if(modelOld->doodle.x != modelNew->doodle.x || modelOld->doodle.y != modelNew->doodle.y)
+    if(modelNew->doodle.prev_x != modelNew->doodle.x || modelNew->doodle.prev_y != modelNew->doodle.y)
     {
-        clear_bitmap_32(baseOld, modelOld->doodle.x, modelOld->doodle.y, clear_bitmap, DOODLE_HEIGHT);
+        clear_bitmap_32(baseNew, modelNew->doodle.prev_x, modelNew->doodle.prev_y, clear_bitmap, DOODLE_HEIGHT);
+        modelNew->doodle.prev_x = modelNew->doodle.x;
+        modelNew->doodle.prev_y = modelNew->doodle.y;
+
         render_doodle(&(modelNew->doodle), baseNew);
     }
 }

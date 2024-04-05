@@ -41,19 +41,21 @@ int main() {
     UINT8 i;
     UINT8 confirmedInput;
 
-    bool useDoubleBuffer = false;
+    bool useDoubleBuffer = true;
 
     UINT32 timeThen, timeNow, timeElapsed;
 
-    Model modelOne, modelTwo;
-    Model *modelOnePtr = &modelOne;
-    Model *modelTwoPtr = &modelTwo;
+    Model modelOne, modelTwo, modelThree;
+    Model *modelPtr = &modelOne;
+    Model *modelSnapshotOne = &modelTwo;
+    Model *modelSnapshotTwo = &modelThree;
 
     char pressedKey = 0;
 
 
-    initialize_model(modelOnePtr);
-    initialize_model(modelTwoPtr);
+    initialize_model(modelPtr);
+    initialize_model(modelSnapshotOne);
+    initialize_model(modelSnapshotTwo);
 
     page2 = (UINT8*)((size_t)page2 | 0xff ) + 1; /* finding page aligned address for second page*/
 
@@ -61,17 +63,20 @@ int main() {
     to prevent redrawing of still objects  */
     for(i=0; i<MAX_PLATFORMS;i++)
     {
-        move_platform_relative(modelOnePtr->platforms, 1, 1, i);
+        move_platform_relative(modelPtr->platforms, 1, 1, i);
     }
-    move_monster(&(modelOnePtr->monster), 8, 8);
+    move_monster(&(modelPtr->monster), 8, 8);
 
 
     /* prepering pages and models for main game loop*/
     clear_screen(page1);
     clear_screen(page2);
-    syncModel(modelOnePtr, modelTwoPtr);
+    syncModel(modelPtr, modelSnapshotOne);
+    syncModel(modelPtr, modelSnapshotTwo);
 
-    render(modelOnePtr, (UINT32*)page1);  /* Render the initial state of the model */
+    render(modelPtr, (UINT32*)page1);  /* Render the initial state of the model */
+    printf("yoyoyo");
+    render(modelPtr, (UINT32*)page2);
 
     
     
@@ -79,17 +84,11 @@ int main() {
     timeThen = get_time();
     while (pressedKey != 'q') { /* Main game loop */
 
-        if(useDoubleBuffer)
-        {
-            input(modelOnePtr, &pressedKey);
-        }
-        else
-        {
-            input(modelTwoPtr, &pressedKey);
-        }
+        input(modelPtr, &pressedKey);
+        
         /*
-        if(modelOnePtr->doodle.y > 5)
-            move_doodle(&(modelOnePtr), (modelOnePtr->doodle.x), 1, modelOnePtr->doodle.facing);
+        if(modelPtr->doodle.y > 5)
+            move_doodle(&(modelPtr), (modelPtr->doodle.x), 1, modelPtr->doodle.facing);
         */
 
         timeNow = get_time();
@@ -100,27 +99,28 @@ int main() {
             Vsync();
             if(useDoubleBuffer)
                 {
+                    syncModel(modelPtr, modelSnapshotOne);
+                    
                     /*
-                    doodle_vertical_movement(modelOnePtr);
+                    doodle_vertical_movement(modelPtr);
                     */
-                    double_buffer_render(modelTwoPtr, modelOnePtr, (UINT32*)page2, (UINT32*)page1);
+                    double_buffer_render(modelSnapshotOne, modelSnapshotTwo, (UINT32*)page2, (UINT32*)page1, useDoubleBuffer);
                     
                     Setscreen(-1, page1, -1);
                     Vsync();
                     useDoubleBuffer = false;
-                    syncModel(modelOnePtr, modelTwoPtr);
                 }
                 else
                 {
+                    syncModel(modelPtr, modelSnapshotTwo);
                     /*
-                    doodle_vertical_movement(modelTwoPtr);
+                    doodle_vertical_movement(modelSnapshotOne);
                     */
-                    double_buffer_render(modelOnePtr, modelTwoPtr, (UINT32*)page1, (UINT32*)page2);
+                    double_buffer_render(modelSnapshotTwo, modelSnapshotOne, (UINT32*)page1, (UINT32*)page2, useDoubleBuffer);
                     
                     Setscreen(-1, page2, -1);
                     Vsync();
                     useDoubleBuffer = true;
-                    syncModel(modelTwoPtr, modelOnePtr);
                 }
         }
         timeThen = get_time();
@@ -138,9 +138,6 @@ void syncModel(Model *modelSrc, Model *modelDst)
 
     modelDst->doodle.x = modelSrc->doodle.x;
     modelDst->doodle.y = modelSrc->doodle.y;
-
-    modelDst->doodle.prev_x = modelSrc->doodle.prev_x;
-    modelDst->doodle.prev_y = modelSrc->doodle.prev_y;
 
     modelDst->doodle.facing = modelSrc->doodle.facing;
     modelDst->doodle.prev_facing = modelSrc->doodle.prev_facing;
