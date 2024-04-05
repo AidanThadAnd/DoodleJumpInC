@@ -28,9 +28,8 @@
 #include "renderer.h"
 #include <stdio.h>
 #include <osbind.h>
-#include "BITMAP.H"
 
-UINT8 double_buffer[432][80] = {0};
+UINT8 double_buffer[424][80] = {0};
 
 UINT32 get_time();
 void input(Model *model, char *pressedKey);
@@ -46,15 +45,17 @@ int main() {
 
     UINT32 timeThen, timeNow, timeElapsed;
 
-    Model modelOne, modelTwo;
-    Model *modelOnePtr = &modelOne;
-    Model *modelTwoPtr = &modelTwo;
+    Model modelOne, modelTwo, modelThree;
+    Model *modelPtr = &modelOne;
+    Model *modelSnapshotOne = &modelTwo;
+    Model *modelSnapshotTwo = &modelThree;
 
     char pressedKey = 0;
 
 
-    initialize_model(modelOnePtr);
-    initialize_model(modelTwoPtr);
+    initialize_model(modelPtr);
+    initialize_model(modelSnapshotOne);
+    initialize_model(modelSnapshotTwo);
 
     page2 = (UINT8*)((size_t)page2 | 0xff ) + 1; /* finding page aligned address for second page*/
 
@@ -62,28 +63,33 @@ int main() {
     to prevent redrawing of still objects  */
     for(i=0; i<MAX_PLATFORMS;i++)
     {
-        move_platform_relative(modelOnePtr->platforms, 1, 1, i);
+        move_platform_relative(modelPtr->platforms, 1, 1, i);
     }
-    move_monster(&(modelOnePtr->monster), 8, 8);
+    move_monster(&(modelPtr->monster), 8, 8);
 
 
     /* prepering pages and models for main game loop*/
     clear_screen(page1);
     clear_screen(page2);
-    syncModel(modelOnePtr, modelTwoPtr);
+    syncModel(modelPtr, modelSnapshotOne);
+    syncModel(modelPtr, modelSnapshotTwo);
 
-    render(modelOnePtr, (UINT32*)page1);  /* Render the initial state of the model */
+    render(modelPtr, (UINT32*)page1);  /* Render the initial state of the model */
+    printf("yoyoyo");
+    render(modelPtr, (UINT32*)page2);
+
     
     
 
     timeThen = get_time();
     while (pressedKey != 'q') { /* Main game loop */
 
-        if(useDoubleBuffer)
-            input(modelOnePtr, &pressedKey);
-        else
-            input(modelTwoPtr, &pressedKey);
-            
+        input(modelPtr, &pressedKey);
+        
+        /*
+        if(modelPtr->doodle.y > 5)
+            move_doodle(&(modelPtr), (modelPtr->doodle.x), 1, modelPtr->doodle.facing);
+        */
 
         timeNow = get_time();
         timeElapsed = timeNow - timeThen;
@@ -93,19 +99,24 @@ int main() {
             Vsync();
             if(useDoubleBuffer)
                 {
-                    double_buffer_render(modelTwoPtr, modelOnePtr, (UINT32*)page1);
+                    doodle_vertical_movement(modelPtr);
+                    syncModel(modelPtr, modelSnapshotOne);
+                    
+                    double_buffer_render(modelSnapshotOne, modelSnapshotTwo, (UINT32*)page1);
+                    
                     Setscreen(-1, page1, -1);
                     Vsync();
-                    useDoubleBuffer = true;
-                    syncModel(modelOnePtr, modelTwoPtr);
+                    useDoubleBuffer = false;
                 }
                 else
                 {
-                    double_buffer_render(modelOnePtr, modelTwoPtr, (UINT32*)page2);
+                    doodle_vertical_movement(modelPtr);
+                    syncModel(modelPtr, modelSnapshotTwo);
+                    double_buffer_render(modelSnapshotTwo, modelSnapshotOne,(UINT32*)page2,);
+                    
                     Setscreen(-1, page2, -1);
                     Vsync();
-                    useDoubleBuffer = false;
-                    syncModel(modelTwoPtr, modelOnePtr);
+                    useDoubleBuffer = true;
                 }
         }
         timeThen = get_time();
@@ -123,15 +134,17 @@ void syncModel(Model *modelSrc, Model *modelDst)
 
     modelDst->doodle.x = modelSrc->doodle.x;
     modelDst->doodle.y = modelSrc->doodle.y;
-    modelDst->doodle.prev_x = modelSrc->doodle.prev_x;
-    modelDst->doodle.prev_y = modelSrc->doodle.prev_y;
+
     modelDst->doodle.facing = modelSrc->doodle.facing;
     modelDst->doodle.prev_facing = modelSrc->doodle.prev_facing;
 
+    modelDst->doodle.velocity = modelSrc->doodle.velocity;
+    modelDst->doodle.isFalling = modelSrc->doodle.isFalling;
+
+
     modelDst->monster.x = modelSrc->monster.x;
     modelDst->monster.y = modelSrc->monster.y;
-    modelDst->monster.prev_x = modelSrc->monster.prev_x;
-    modelDst->monster.prev_y = modelSrc->monster.prev_y;
+
 
     srcPlatform = (modelSrc->platforms);
     dstPlatform = (modelDst->platforms);
@@ -140,8 +153,6 @@ void syncModel(Model *modelSrc, Model *modelDst)
     {
         dstPlatform->x = srcPlatform->x;
         dstPlatform->y = srcPlatform->y;
-        dstPlatform->prev_x = srcPlatform->prev_x;
-        dstPlatform->prev_y = srcPlatform->prev_y; 
 
         srcPlatform++;
         dstPlatform++;     

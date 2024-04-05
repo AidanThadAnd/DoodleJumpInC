@@ -13,10 +13,13 @@ void initialize_model(Model *model)
     model->doodle.prev_x = -1; /* Sets the previous location state for optimized rendering, intialzed to an impossible state */
     model->doodle.prev_y = -1;
 
+    model->doodle.velocity = 0;
+    model->doodle.isFalling = true;
+
 
 
     /* Initialize platforms */
-    for (i = 0; i < MAX_PLATFORMS; ++i) {
+    for (i = 0; i < MAX_PLATFORMS; i++) {
         model->platforms[i].x = i * 100;
         model->platforms[i].y = SCREEN_HEIGHT - (i * 40);
 
@@ -34,20 +37,27 @@ void initialize_model(Model *model)
 }
 
 
-void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y, UINT16 newFacing)
+void move_doodle(Doodle *doodle, int displacement_x, int displacement_y, UINT16 newFacing)
 {
+    int screenBorderCheck;
 
     doodle->prev_facing = doodle->facing;
     doodle->prev_x = doodle->x;
     doodle->prev_y = doodle->y;
 
+    doodle->x += displacement_x;
+
+    if(doodle->x > SCREEN_WIDTH)
+        doodle->x -= SCREEN_WIDTH;
+    else 
+        if(doodle->x < SCREEN_WIDTH)
+            doodle->x += SCREEN_WIDTH;
 
     doodle->facing = newFacing;
-    doodle->x += displacement_x;
     doodle->y += displacement_y;
 }
 
-void move_platform_relative(Platform *platform, UINT16 displacement_x, UINT16 displacement_y, UINT8 selected_platform)
+void move_platform_relative(Platform *platform, int displacement_x, int displacement_y, UINT8 selected_platform)
 {
     UINT8 i;
 
@@ -61,7 +71,7 @@ void move_platform_relative(Platform *platform, UINT16 displacement_x, UINT16 di
     platform->y = displacement_y + platform->y;
 }
 
-void move_monster(Monster *monster, UINT16 displacement_x, UINT16 displacement_y)
+void move_monster(Monster *monster, int displacement_x, int displacement_y)
 {
     monster->prev_x = monster->x;
     monster->prev_y = monster->y;

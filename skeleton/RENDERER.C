@@ -20,21 +20,40 @@ void render(Model *model, UINT32 *base)
     }
 }
 
-void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *baseCurr)
+void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *base)
 {
-    render_platform(modelNew->platforms, baseCurr);
+    UINT8 i;
+    Platform *oldModelPlatforms = modelOld->platforms;
+    Platform *newModelPlatforms= modelNew->platforms;
 
-    if(modelOld->monster.x != modelNew->monster.x || modelOld->monster.y != modelNew->monster.y)
+
+    for(i = 0; i < MAX_PLATFORMS; i++){
+        if(newModelPlatforms->prev_x != newModelPlatforms->x || newModelPlatforms->prev_y != newModelPlatforms->y)
+        {
+            clear_bitmap_32(base, newModelPlatforms->prev_x, newModelPlatforms->prev_y, clear_bitmap, DOODLE_HEIGHT);
+            newModelPlatforms->prev_x = newModelPlatforms->x;
+            newModelPlatforms->prev_y = newModelPlatforms->y;
+        }
+            newModelPlatforms++;
+    }
+
+    if(modelNew->monster.prev_x != modelNew->monster.x || modelNew->monster.prev_y != modelNew->monster.y)
     {
-        clear_bitmap_32(baseCurr, modelOld->monster.x, modelOld->monster.y, clear_bitmap, MONSTER_HEIGHT);
-        render_monster(&(modelNew->monster), baseCurr);
+        clear_bitmap_32(base, modelNew->monster.prev_x, modelNew->monster.prev_y, clear_bitmap, DOODLE_HEIGHT);
+        modelNew->monster.prev_x = modelNew->monster.x;
+        modelNew->monster.prev_y = modelNew->monster.y;
+
+        render_monster(&(modelNew->monster), base);
     }
 
     /*Comparing to previous state so that stationary objects are not redrawn*/
-    if(modelOld->doodle.x != modelNew->doodle.x || modelOld->doodle.y != modelNew->doodle.y)
+    if(modelNew->doodle.prev_x != modelNew->doodle.x || modelNew->doodle.prev_y != modelNew->doodle.y)
     {
-        clear_bitmap_32(baseCurr, modelOld->doodle.x, modelOld->doodle.y, clear_bitmap, DOODLE_HEIGHT);
-        render_doodle(&(modelNew->doodle), baseCurr);
+        clear_bitmap_32(base, modelNew->doodle.prev_x, modelNew->doodle.prev_y, clear_bitmap, DOODLE_HEIGHT);
+        modelNew->doodle.prev_x = modelNew->doodle.x;
+        modelNew->doodle.prev_y = modelNew->doodle.y;
+
+        render_doodle(&(modelNew->doodle), base);
     }
 }
 
@@ -62,8 +81,8 @@ void render_platform(Platform *platforms, UINT32 *base)
 {
     int i;
 
-    for(i = 0; i < MAX_PLATFORMS; i++){
-        if(has_platform_moved(platforms) == 1)
+    for(i = 0; i <= MAX_PLATFORMS; i++){
+        if(has_platform_moved(platforms))
         {
             clear_bitmap_32(base, platforms->prev_x, platforms->prev_y, clear_bitmap, PLATFORM_HEIGHT);
             plot_bitmap_32(base, platforms->x, platforms->y, platform_bitmap, PLATFORM_HEIGHT);

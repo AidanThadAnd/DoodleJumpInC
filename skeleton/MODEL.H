@@ -82,22 +82,24 @@ Purpose:
 #define DOODLE_HORIZONTAL_MOVEMENT 32
 typedef struct 
 {
-    UINT16 prev_x, prev_y;
-    UINT16 x, y; 
+    int x, y; 
+    int prev_x, prev_y;
+    int velocity;
+    bool isFalling;
     UINT16 facing;
     UINT16 prev_facing;
 } Doodle;
 
 typedef struct 
 {
-    UINT16 prev_x, prev_y;
-    UINT16 x, y; 
+    int prev_x, prev_y;
+    int x, y; 
 } Monster;
 
 typedef struct 
 {
-    UINT16 prev_x, prev_y;
-    UINT16 x, y; 
+    int prev_x, prev_y;
+    int x, y; 
 } Platform;
 
 typedef struct {
@@ -108,14 +110,14 @@ typedef struct {
 
 void initialize_model(Model *model);
 
-void move_doodle(Doodle *doodle, UINT16 displacement_x, UINT16 displacement_y, UINT16 newFacing);
-void move_monster(Monster *monster, UINT16 displacement_x, UINT16 displacement_y);
-void move_platform_relative(Platform *platform, UINT16 displacement_x, UINT16 displacement_y, UINT8 selected_platform);
+void move_doodle(Doodle *doodle, int displacement_x, int displacement_y, UINT16 newFacing);
+void move_monster(Monster *monster, int displacement_x, int displacement_y);
+void move_platform_relative(Platform *platform, int displacement_x, int displacement_y, UINT8 selected_platform);
 void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y, UINT8 selected_platform);
 
-UINT8 has_doodle_moved(Doodle *doodle);
-UINT8 has_monster_moved(Monster *monster);
-UINT8 has_platform_moved(Platform *platform);
+bool has_doodle_moved(Doodle *doodle);
+bool has_monster_moved(Monster *monster);
+bool has_platform_moved(Platform *platform);
 
 #endif
 

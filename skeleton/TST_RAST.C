@@ -38,18 +38,22 @@ int main()
 	
 	const UINT8* glyph_A = GLYPH_START('A');
 
-    clear_screen((UINT8*)base);
 
+    clear_screen((UINT8*)base);
+/*
 	test_plot_horizontal_line((UINT8*)base);
     test_plot_bitmap_8((UINT16*)base, glyph_A, FONT_HEIGHT);
 	test_plot_bitmap_32(base, monster_bitmap, MONSTER_HEIGHT);
     test_plot_bitmap_32(base, platform_bitmap, PLATFORM_HEIGHT);
     test_plot_bitmap_32(base, broken_platform_bitmap, PLATFORM_HEIGHT);
     test_plot_bitmap_32(base, doodle_bitmap_left, DOODLE_HEIGHT);
-
     test_plot_bitmap_32(base, doodle_bitmap_right, DOODLE_HEIGHT);
-	
+*/
 
+	plot_horizontal_line(base, SCREEN_HEIGHT/2 + 1);
+	plot_bitmap_32(base, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, platform_bitmap, PLATFORM_HEIGHT);
+	
+	
 	return 0;
 }
 
