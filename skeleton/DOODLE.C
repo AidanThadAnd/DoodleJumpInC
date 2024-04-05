@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <osbind.h>
 
-UINT8 double_buffer[424][80] = {0};
+UINT8 double_buffer[448][80] = {0};
 
 UINT32 get_time();
 void input(Model *model, char *pressedKey);
@@ -95,7 +95,9 @@ int main() {
             if(useDoubleBuffer)
                 {
                     doodle_vertical_movement(modelPtr);
+                    /*
                     shift_screen_to_doodle(modelPtr);
+                    */
                     syncModel(modelPtr, modelSnapshotOne);
                     
                     double_buffer_render(modelSnapshotOne, modelSnapshotTwo, (UINT32*)page1);
@@ -107,7 +109,9 @@ int main() {
                 else
                 {
                     doodle_vertical_movement(modelPtr);
+                    /*
                     shift_screen_to_doodle(modelPtr);
+                    */
                     syncModel(modelPtr, modelSnapshotTwo);
                     double_buffer_render(modelSnapshotTwo, modelSnapshotOne,(UINT32*)page2);
                     

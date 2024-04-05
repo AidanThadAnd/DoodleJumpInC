@@ -33,6 +33,7 @@ void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *base)
             clear_bitmap_32(base, newModelPlatforms->prev_x, newModelPlatforms->prev_y, clear_bitmap, DOODLE_HEIGHT);
             newModelPlatforms->prev_x = newModelPlatforms->x;
             newModelPlatforms->prev_y = newModelPlatforms->y;
+            render_platform(newModelPlatforms, base);
         }
             newModelPlatforms++;
     }
@@ -79,15 +80,5 @@ void render_monster(Monster *monster, UINT32 *base)
 /*Note this may need to change as we plan on using decreasing amount of platforms not always the max platforms*/
 void render_platform(Platform *platforms, UINT32 *base)
 {
-    int i;
-
-    for(i = 0; i <= MAX_PLATFORMS; i++){
-        if(has_platform_moved(platforms))
-        {
-            clear_bitmap_32(base, platforms->prev_x, platforms->prev_y, clear_bitmap, PLATFORM_HEIGHT);
-            plot_bitmap_32(base, platforms->x, platforms->y, platform_bitmap, PLATFORM_HEIGHT);
-
-        }
-            platforms ++;
-    }
+    plot_bitmap_32(base, platforms->x, platforms->y, platform_bitmap, PLATFORM_HEIGHT); 
 }

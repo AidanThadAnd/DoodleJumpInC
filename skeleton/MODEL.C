@@ -64,10 +64,6 @@ void move_platform_relative(Platform *platform, int displacement_x, int displace
     for(i=0; i<=selected_platform;i++)
         platform++;
 
-    platform->prev_x = platform->x;
-    platform->prev_y = platform->y;
-
-
     platform->x = displacement_x + platform->x;
     platform->y = displacement_y + platform->y;
 
@@ -94,9 +90,6 @@ void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y, UINT8 selec
     for(i=0; i<=selected_platform;i++)
         platforms++;
 
-
-    platforms->prev_x = platforms->x;
-    platforms->prev_y = platforms->y;
 
     platforms->x = x;
     platforms->y = y;
