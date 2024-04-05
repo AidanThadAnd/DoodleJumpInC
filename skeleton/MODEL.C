@@ -64,11 +64,11 @@ void move_platform_relative(Platform *platform, int displacement_x, int displace
     for(i=0; i<=selected_platform;i++)
         platform++;
 
-    platform->prev_x = platform->x;
-    platform->prev_y = platform->y;
-
     platform->x = displacement_x + platform->x;
     platform->y = displacement_y + platform->y;
+
+    if(platform->y > SCREEN_HEIGHT)
+        platform->y -= SCREEN_HEIGHT;
 }
 
 void move_monster(Monster *monster, int displacement_x, int displacement_y)
@@ -78,6 +78,9 @@ void move_monster(Monster *monster, int displacement_x, int displacement_y)
 
     monster->x += displacement_x;
     monster->y += displacement_y;
+
+    if(monster->y > SCREEN_HEIGHT)
+        monster->y -= SCREEN_HEIGHT;
 }
 
 void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y, UINT8 selected_platform)
@@ -87,9 +90,6 @@ void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y, UINT8 selec
     for(i=0; i<=selected_platform;i++)
         platforms++;
 
-
-    platforms->prev_x = platforms->x;
-    platforms->prev_y = platforms->y;
 
     platforms->x = x;
     platforms->y = y;

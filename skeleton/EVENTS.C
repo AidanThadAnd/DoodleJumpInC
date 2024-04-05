@@ -76,12 +76,22 @@ bool check_collision_monster(Doodle *doodle, Monster *monster)
 }
 
 
+void shift_screen_to_doodle(Model *model)
+{
+    UINT8 i;
+    Platform *platformArray = model->platforms;
+    if(model->doodle.isFalling)
+        return;
 
+    move_monster(&(model->monster), 0, model->doodle.velocity);
+    
+    for(i = 0; i < MAX_PLATFORMS; i++){
+        move_platform_relative(model->platforms, 0, model->doodle.velocity, i);
+            platformArray++;
+    }
 
-/* 
-Scaling is going to look werid as going from 5 -> -5 won't be smooth as it'll slow down then speed it.
-Maybe the use of a bool to represent the doodle falling then velocity will only be 0->5 will fix this scaling issue
-*/
+}
+
 void doodle_vertical_movement(Model *model)
 {
     Doodle *doodle = &(model->doodle);
