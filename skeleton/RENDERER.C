@@ -20,7 +20,7 @@ void render(Model *model, UINT32 *base)
     }
 }
 
-void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *baseOld, UINT32 *baseNew, bool page)
+void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *baseNew)
 {
     UINT8 i;
     Platform *oldModelPlatforms = modelOld->platforms;
@@ -30,16 +30,18 @@ void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *baseOld, UIN
     for(i = 0; i < MAX_PLATFORMS; i++){
         if(newModelPlatforms->x != oldModelPlatforms->x || newModelPlatforms->y != oldModelPlatforms->y)
         {
-            clear_bitmap_32(baseOld, oldModelPlatforms->x, oldModelPlatforms->y, clear_bitmap, PLATFORM_HEIGHT);
             plot_bitmap_32(baseNew, newModelPlatforms->x, newModelPlatforms->y, platform_bitmap, PLATFORM_HEIGHT);
         }
             newModelPlatforms++;
             oldModelPlatforms++;
     }
 
-    if(modelOld->monster.x != modelNew->monster.x || modelOld->monster.y != modelNew->monster.y)
+    if(modelNew->monster.prev_x != modelNew->monster.x || modelNew->monster.prev_y != modelNew->monster.y)
     {
-        clear_bitmap_32(baseOld, modelOld->monster.x, modelOld->monster.y, clear_bitmap, MONSTER_HEIGHT);
+        clear_bitmap_32(baseNew, modelNew->monster.prev_x, modelNew->monster.prev_y, clear_bitmap, DOODLE_HEIGHT);
+        modelNew->monster.prev_x = modelNew->monster.x;
+        modelNew->monster.prev_y = modelNew->monster.y;
+
         render_monster(&(modelNew->monster), baseNew);
     }
 

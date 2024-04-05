@@ -99,12 +99,10 @@ int main() {
             Vsync();
             if(useDoubleBuffer)
                 {
+                    doodle_vertical_movement(modelPtr);
                     syncModel(modelPtr, modelSnapshotOne);
                     
-                    /*
-                    doodle_vertical_movement(modelPtr);
-                    */
-                    double_buffer_render(modelSnapshotOne, modelSnapshotTwo, (UINT32*)page2, (UINT32*)page1, useDoubleBuffer);
+                    double_buffer_render(modelSnapshotOne, modelSnapshotTwo, (UINT32*)page1);
                     
                     Setscreen(-1, page1, -1);
                     Vsync();
@@ -112,11 +110,9 @@ int main() {
                 }
                 else
                 {
+                    doodle_vertical_movement(modelPtr);
                     syncModel(modelPtr, modelSnapshotTwo);
-                    /*
-                    doodle_vertical_movement(modelSnapshotOne);
-                    */
-                    double_buffer_render(modelSnapshotTwo, modelSnapshotOne, (UINT32*)page1, (UINT32*)page2, useDoubleBuffer);
+                    double_buffer_render(modelSnapshotTwo, modelSnapshotOne,(UINT32*)page2,);
                     
                     Setscreen(-1, page2, -1);
                     Vsync();
