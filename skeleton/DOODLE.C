@@ -145,8 +145,6 @@ void syncModel(Model *modelSrc, Model *modelDst)
     modelDst->monster.x = modelSrc->monster.x;
     modelDst->monster.y = modelSrc->monster.y;
 
-    modelDst->monster.prev_x = modelSrc->monster.prev_x;
-    modelDst->monster.prev_y = modelSrc->monster.prev_y;
 
     srcPlatform = (modelSrc->platforms);
     dstPlatform = (modelDst->platforms);
@@ -155,8 +153,6 @@ void syncModel(Model *modelSrc, Model *modelDst)
     {
         dstPlatform->x = srcPlatform->x;
         dstPlatform->y = srcPlatform->y;
-        dstPlatform->prev_x = srcPlatform->prev_x;
-        dstPlatform->prev_y = srcPlatform->prev_y; 
 
         srcPlatform++;
         dstPlatform++;     

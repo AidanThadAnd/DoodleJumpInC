@@ -20,7 +20,7 @@ void render(Model *model, UINT32 *base)
     }
 }
 
-void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *baseNew)
+void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *base)
 {
     UINT8 i;
     Platform *oldModelPlatforms = modelOld->platforms;
@@ -28,31 +28,32 @@ void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *baseNew)
 
 
     for(i = 0; i < MAX_PLATFORMS; i++){
-        if(newModelPlatforms->x != oldModelPlatforms->x || newModelPlatforms->y != oldModelPlatforms->y)
+        if(newModelPlatforms->prev_x != newModelPlatforms->x || newModelPlatforms->prev_y != newModelPlatforms->y)
         {
-            plot_bitmap_32(baseNew, newModelPlatforms->x, newModelPlatforms->y, platform_bitmap, PLATFORM_HEIGHT);
+            clear_bitmap_32(base, newModelPlatforms->prev_x, newModelPlatforms->prev_y, clear_bitmap, DOODLE_HEIGHT);
+            newModelPlatforms->prev_x = newModelPlatforms->x;
+            newModelPlatforms->prev_y = newModelPlatforms->y;
         }
             newModelPlatforms++;
-            oldModelPlatforms++;
     }
 
     if(modelNew->monster.prev_x != modelNew->monster.x || modelNew->monster.prev_y != modelNew->monster.y)
     {
-        clear_bitmap_32(baseNew, modelNew->monster.prev_x, modelNew->monster.prev_y, clear_bitmap, DOODLE_HEIGHT);
+        clear_bitmap_32(base, modelNew->monster.prev_x, modelNew->monster.prev_y, clear_bitmap, DOODLE_HEIGHT);
         modelNew->monster.prev_x = modelNew->monster.x;
         modelNew->monster.prev_y = modelNew->monster.y;
 
-        render_monster(&(modelNew->monster), baseNew);
+        render_monster(&(modelNew->monster), base);
     }
 
     /*Comparing to previous state so that stationary objects are not redrawn*/
     if(modelNew->doodle.prev_x != modelNew->doodle.x || modelNew->doodle.prev_y != modelNew->doodle.y)
     {
-        clear_bitmap_32(baseNew, modelNew->doodle.prev_x, modelNew->doodle.prev_y, clear_bitmap, DOODLE_HEIGHT);
+        clear_bitmap_32(base, modelNew->doodle.prev_x, modelNew->doodle.prev_y, clear_bitmap, DOODLE_HEIGHT);
         modelNew->doodle.prev_x = modelNew->doodle.x;
         modelNew->doodle.prev_y = modelNew->doodle.y;
 
-        render_doodle(&(modelNew->doodle), baseNew);
+        render_doodle(&(modelNew->doodle), base);
     }
 }
 
