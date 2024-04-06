@@ -4,14 +4,13 @@
 #include "types.h"
 
 #define DOODLE_HEIGHT 48
-#define DOODLE_WIDTH 20
-#define DOODLE_LEG_WIDTH 48
+#define DOODLE_WIDTH 30
 
 #define MONSTER_HEIGHT 35
 #define MONSTER_WIDTH 40
 
 #define PLATFORM_HEIGHT 22
-#define PLATFORM_WIDTH 35
+#define PLATFORM_WIDTH 40
 
 
 

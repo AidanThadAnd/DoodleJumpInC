@@ -15,13 +15,14 @@ void initialize_model(Model *model)
 
     model->doodle.velocity = 0;
     model->doodle.isFalling = true;
+    model->doodle.max_y = model->doodle.y;
 
 
 
     /* Initialize platforms */
-    for (i = 0; i < MAX_PLATFORMS; i++) {
-        model->platforms[i].x = i * 100;
-        model->platforms[i].y = SCREEN_HEIGHT - (i * 40);
+    for (i = 1; i <=MAX_PLATFORMS; i++) {
+        model->platforms[i].x = i * 64;
+        model->platforms[i].y = SCREEN_HEIGHT - (i * 20);
 
         
         model->platforms[i].prev_x = -1;

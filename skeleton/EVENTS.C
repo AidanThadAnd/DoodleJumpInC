@@ -25,8 +25,8 @@ bool check_collision_doodle_platform(Doodle *doodle, Platform *platform)
     
     for(i=0; i<MAX_PLATFORMS && !foundPlatform; i++)
     {
-    heightDifference = platform->y + 1 - (doodle->y + DOODLE_HEIGHT);
-        if(heightDifference < MAX_VELOCITY && heightDifference > -MAX_VELOCITY)
+    heightDifference = platform->y - (doodle->y + DOODLE_HEIGHT);
+        if(heightDifference < MAX_VELOCITY + 10 && heightDifference > -(MAX_VELOCITY + 10))
             foundPlatform = true;
         else
             platform++;
@@ -37,8 +37,7 @@ bool check_collision_doodle_platform(Doodle *doodle, Platform *platform)
         return false;
 
 
-    distanceFromPlatform = (doodle->x + DOODLE_WIDTH) - (platform->x - PLATFORM_WIDTH);
-    if (distanceFromPlatform > 0 && distanceFromPlatform < 80)
+    if (doodle->x + DOODLE_WIDTH > platform->x && doodle->x < platform->x+PLATFORM_WIDTH)
         {
             return true;
         }
@@ -80,15 +79,17 @@ void shift_screen_to_doodle(Model *model)
 {
     UINT8 i;
     Platform *platformArray = model->platforms;
-    if(model->doodle.isFalling)
+    if(model->doodle.isFalling || model->doodle.y > model->doodle.max_y)
         return;
 
-    move_monster(&(model->monster), 0, model->doodle.velocity);
+    move_monster(&(model->monster), 0, model->doodle.velocity-2);
     
     for(i = 0; i < MAX_PLATFORMS; i++){
-        move_platform_relative(model->platforms, 0, model->doodle.velocity, i);
+        move_platform_relative(model->platforms, 0, model->doodle.velocity-2, i);
             platformArray++;
     }
+
+    
 
 }
 
@@ -124,6 +125,8 @@ void doodle_vertical_movement(Model *model)
         {
             doodle->isFalling = true;
             doodle->velocity++;
+            if(doodle->y < model->doodle.max_y)
+                model->doodle.max_y = model->doodle.y;
         }
         break;
         default:
