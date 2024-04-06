@@ -77,14 +77,16 @@ Purpose:
 
 #include "TYPES.H"
 #include "system.h"
+#include "BITMAP.H"
 
-#define MAX_PLATFORMS 15
+#define MAX_PLATFORMS 7
 #define DOODLE_HORIZONTAL_MOVEMENT 32
 typedef struct 
 {
     int x, y; 
     int prev_x, prev_y;
     int velocity;
+    int max_y;
     bool isFalling;
     UINT16 facing;
     UINT16 prev_facing;

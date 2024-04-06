@@ -40,6 +40,9 @@ int main() {
     UINT8 *page2 = &double_buffer[0][0];
     UINT8 i;
     UINT8 confirmedInput;
+    int randomNumber;
+
+
 
     bool useDoubleBuffer = true;
 
@@ -63,7 +66,7 @@ int main() {
     to prevent redrawing of still objects  */
     for(i=0; i<MAX_PLATFORMS;i++)
     {
-        move_platform_relative(modelPtr->platforms, 1, 1, i);
+        move_platform_relative(modelPtr->platforms, 1, -60, i);
     }
     move_monster(&(modelPtr->monster), 8, 8);
 
@@ -75,7 +78,7 @@ int main() {
     syncModel(modelPtr, modelSnapshotTwo);
 
     render(modelPtr, (UINT32*)page1);  /* Render the initial state of the model */
-    printf("yoyoyo");
+   
     render(modelPtr, (UINT32*)page2);
 
     
@@ -95,8 +98,8 @@ int main() {
             if(useDoubleBuffer)
                 {
                     doodle_vertical_movement(modelPtr);
-                    /*
                     shift_screen_to_doodle(modelPtr);
+                    /*
                     */
                     syncModel(modelPtr, modelSnapshotOne);
                     
@@ -109,8 +112,8 @@ int main() {
                 else
                 {
                     doodle_vertical_movement(modelPtr);
-                    /*
                     shift_screen_to_doodle(modelPtr);
+                    /*
                     */
                     syncModel(modelPtr, modelSnapshotTwo);
                     double_buffer_render(modelSnapshotTwo, modelSnapshotOne,(UINT32*)page2);
@@ -141,7 +144,7 @@ void syncModel(Model *modelSrc, Model *modelDst)
 
     modelDst->doodle.velocity = modelSrc->doodle.velocity;
     modelDst->doodle.isFalling = modelSrc->doodle.isFalling;
-
+    modelDst->doodle.max_y = modelSrc->doodle.max_y;
 
     modelDst->monster.x = modelSrc->monster.x;
     modelDst->monster.y = modelSrc->monster.y;

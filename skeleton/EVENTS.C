@@ -21,46 +21,24 @@ bool check_collision_doodle_platform(Doodle *doodle, Platform *platform)
     UINT8 i;
     int heightDifference;
     int distanceFromPlatform;
-    bool foundPlatform = false;
+
     
-    for(i=0; i<MAX_PLATFORMS && !foundPlatform; i++)
+    for(i=0; i<MAX_PLATFORMS; i++)
     {
-    heightDifference = platform->y + 1 - (doodle->y + DOODLE_HEIGHT);
-        if(heightDifference < MAX_VELOCITY && heightDifference > -MAX_VELOCITY)
-            foundPlatform = true;
+        if (doodle->x + DOODLE_WIDTH > platform->x && doodle->x + 5 < platform->x+PLATFORM_WIDTH)
+        {
+            heightDifference = platform->y - (doodle->y + DOODLE_HEIGHT);
+            if(heightDifference < MAX_VELOCITY+10 && heightDifference > -(MAX_VELOCITY+10))
+                return true;
+
+        }
         else
             platform++;
             
     }
-
-    if(!foundPlatform)
-        return false;
-
-
-    distanceFromPlatform = (doodle->x + DOODLE_WIDTH) - (platform->x - PLATFORM_WIDTH);
-    if (distanceFromPlatform > 0 && distanceFromPlatform < 80)
-        {
-            return true;
-        }
-        return false;
-
+    return false;
 }
-/*
 
-Doodle is at x=200
-Platform is at x=220
-
-Doodle is 32 wide
-platform is 10 wide
-
-doodle->x + doodle width = 232
-
-platform->x + platform width = 230
-
-platform goes from 220 --- 230
-Doodle is 200 --- 232
-
-*/
 
 
 bool check_collision_monster(Doodle *doodle, Monster *monster)
@@ -79,16 +57,17 @@ bool check_collision_monster(Doodle *doodle, Monster *monster)
 void shift_screen_to_doodle(Model *model)
 {
     UINT8 i;
-    Platform *platformArray = model->platforms;
-    if(model->doodle.isFalling)
+    
+    if(model->doodle.isFalling || model->doodle.y > model->doodle.max_y)
         return;
 
     move_monster(&(model->monster), 0, model->doodle.velocity);
     
     for(i = 0; i < MAX_PLATFORMS; i++){
         move_platform_relative(model->platforms, 0, model->doodle.velocity, i);
-            platformArray++;
     }
+
+    move_doodle(&(model->doodle), 0, model->doodle.velocity, model->doodle.facing);
 
 }
 
@@ -97,8 +76,7 @@ void doodle_vertical_movement(Model *model)
     Doodle *doodle = &(model->doodle);
     Platform *platformsArray = model->platforms;
     Monster *monster = &(model->monster);
-
-
+    
     if(check_collision_doodle_platform(doodle, platformsArray))
     {
         doodle->velocity = MAX_VELOCITY;
@@ -106,6 +84,8 @@ void doodle_vertical_movement(Model *model)
         move_doodle(doodle, 0, -(doodle->velocity), doodle->facing);
         return;
     }
+
+
 
     switch(doodle->velocity)
     {
@@ -124,6 +104,8 @@ void doodle_vertical_movement(Model *model)
         {
             doodle->isFalling = true;
             doodle->velocity++;
+            if(doodle->y < model->doodle.max_y)
+                model->doodle.max_y = model->doodle.y;
         }
         break;
         default:

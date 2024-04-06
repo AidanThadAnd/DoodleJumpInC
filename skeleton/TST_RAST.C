@@ -44,15 +44,15 @@ int main()
 	test_plot_horizontal_line((UINT8*)base);
     test_plot_bitmap_8((UINT16*)base, glyph_A, FONT_HEIGHT);
 	test_plot_bitmap_32(base, monster_bitmap, MONSTER_HEIGHT);
-    test_plot_bitmap_32(base, platform_bitmap, PLATFORM_HEIGHT);
     test_plot_bitmap_32(base, broken_platform_bitmap, PLATFORM_HEIGHT);
     test_plot_bitmap_32(base, doodle_bitmap_left, DOODLE_HEIGHT);
+    test_plot_bitmap_32(base, platform_bitmap, PLATFORM_HEIGHT);
+	plot_horizontal_line(base, SCREEN_HEIGHT/2 + 1);
     test_plot_bitmap_32(base, doodle_bitmap_right, DOODLE_HEIGHT);
 */
+	plot_bitmap_32(base, 0, SCREEN_HEIGHT/2, platform_bitmap, PLATFORM_HEIGHT);
 
-	plot_horizontal_line(base, SCREEN_HEIGHT/2 + 1);
-	plot_bitmap_32(base, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, platform_bitmap, PLATFORM_HEIGHT);
-	
+	plot_bitmap_32(base, 58, (SCREEN_HEIGHT/2)-DOODLE_HEIGHT+5, doodle_bitmap_right, DOODLE_HEIGHT);
 	
 	return 0;
 }
@@ -166,5 +166,7 @@ void test_plot_bitmap_32(UINT32 *base, const UINT32 *bitmap, const unsigned int 
 		for(j = 0; j < SCREEN_HEIGHT+64; j+=64)
 			plot_bitmap_32(base, i, j, bitmap, height);
     
+	/*
 	clear_screen((UINT8*)base);
+	*/
 }
