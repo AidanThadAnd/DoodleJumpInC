@@ -4,6 +4,7 @@
 void initialize_model(Model *model)
 {
     int i;
+    int randomNumber;
     /* Initialize Doodle character */
     model->doodle.x = SCREEN_WIDTH / 2;
     model->doodle.y = (SCREEN_HEIGHT-64) / 2;
@@ -18,17 +19,19 @@ void initialize_model(Model *model)
     model->doodle.max_y = model->doodle.y;
 
 
-
+    randomNumber = Random();
+    randomNumber = randomNumber % 10;
 
 
     /* Initialize platforms */
-    for (i =0; i <MAX_PLATFORMS; i++) {
-        model->platforms[i].x = i * 128;
-        model->platforms[i].y = SCREEN_HEIGHT - (i * 20);
+    for (i=0; i <MAX_PLATFORMS; i++) {
+        model->platforms[i].x = i * 64;
+        model->platforms[i].y = (i * 60);
 
-        
         model->platforms[i].prev_x = -1;
         model->platforms[i].prev_y = -1;
+        
+        model->platforms[i].off_screen = false;
     }
     model->platforms[0].x = model->doodle.x;
     model->platforms[0].y = model->doodle.y + DOODLE_HEIGHT*3;
@@ -76,7 +79,13 @@ void move_platform_relative(Platform *platform, int displacement_x, int displace
     platform->y = displacement_y + platform->y;
 
     if(platform->y > SCREEN_HEIGHT)
-        platform->y -= SCREEN_HEIGHT;
+        platform->off_screen = true;
+
+    if(platform->x > SCREEN_WIDTH)
+    {
+        platform->x -= SCREEN_WIDTH;
+    }
+
 }
 
 void move_monster(Monster *monster, int displacement_x, int displacement_y)
@@ -88,19 +97,25 @@ void move_monster(Monster *monster, int displacement_x, int displacement_y)
     monster->y += displacement_y;
 
     if(monster->y > SCREEN_HEIGHT)
-        monster->y -= SCREEN_HEIGHT;
+        monster->off_screen = true;
+
+    if(monster->x > SCREEN_WIDTH)
+    {
+        monster->x -= SCREEN_WIDTH;
+    }
 }
 
-void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y, UINT8 selected_platform)
+void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y)
 {
     UINT8 i;
 
-    for(i=0; i<selected_platform;i++)
-        platforms++;
-
-
     platforms->x = x;
     platforms->y = y;
+
+    if(platforms->x > SCREEN_WIDTH)
+    { 
+        platforms->x -= SCREEN_WIDTH;
+    }
 }
 
 

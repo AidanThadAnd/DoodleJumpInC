@@ -40,9 +40,7 @@ int main() {
     UINT8 *page2 = &double_buffer[0][0];
     UINT8 i;
     UINT8 confirmedInput;
-    int randomNumber;
-
-
+    int seed;
 
     bool useDoubleBuffer = true;
 
@@ -55,6 +53,7 @@ int main() {
 
     char pressedKey = 0;
 
+    seed = Random();
 
     initialize_model(modelPtr);
     initialize_model(modelSnapshotOne);
@@ -101,6 +100,8 @@ int main() {
                     shift_screen_to_doodle(modelPtr);
                     /*
                     */
+                    replace_off_screen(modelPtr, seed);
+                    seed = seed*3;
                     syncModel(modelPtr, modelSnapshotOne);
                     
                     double_buffer_render(modelSnapshotOne, modelSnapshotTwo, (UINT32*)page1);
@@ -115,6 +116,8 @@ int main() {
                     shift_screen_to_doodle(modelPtr);
                     /*
                     */
+                    replace_off_screen(modelPtr, seed);
+                    seed = seed*3;
                     syncModel(modelPtr, modelSnapshotTwo);
                     double_buffer_render(modelSnapshotTwo, modelSnapshotOne,(UINT32*)page2);
                     

@@ -15,6 +15,26 @@ void doodle_input(Doodle *character, char key)
             break;
     }
 }
+
+void replace_off_screen(Model *model, int seed)
+{
+    UINT8 i;
+    UINT8 totalPlatformsMoved = 1;
+
+    seed = seed % 10;
+
+    for(i=0; i<MAX_PLATFORMS; i++)
+    {
+        if(model->platforms[i].off_screen)
+        {
+
+            move_platform_absolute(&(model->platforms[i]), (seed*64), 0);
+            model->platforms[i].off_screen = false;
+
+            totalPlatformsMoved++;
+        }
+    }
+}
  
 bool check_collision_doodle_platform(Doodle *doodle, Platform *platform)
 {
@@ -77,7 +97,7 @@ void doodle_vertical_movement(Model *model)
     Platform *platformsArray = model->platforms;
     Monster *monster = &(model->monster);
     
-    if(check_collision_doodle_platform(doodle, platformsArray))
+    if(check_collision_doodle_platform(doodle, platformsArray) && model->doodle.isFalling)
     {
         doodle->velocity = MAX_VELOCITY;
         doodle->isFalling = false;

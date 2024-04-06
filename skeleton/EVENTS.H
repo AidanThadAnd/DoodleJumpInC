@@ -41,6 +41,7 @@ Functions:
 #include "system.h"
 #include "TYPES.H"
 #include "BITMAP.H"
+#include <osbind.h>
 #define MAX_VELOCITY 14
 
 
@@ -49,6 +50,7 @@ bool check_collision_doodle_platform(Doodle *d, Platform *p);
 bool check_collision_monster(Doodle *d, Monster *m);
 void doodle_vertical_movement(Model *model);
 void shift_screen_to_doodle(Model *model);
+void replace_off_screen(Model *model, int seed);
 
 #endif
 
