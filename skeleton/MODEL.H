@@ -77,6 +77,7 @@ Purpose:
 
 #include "TYPES.H"
 #include "system.h"
+#include "BITMAP.H"
 
 #define MAX_PLATFORMS 7
 #define DOODLE_HORIZONTAL_MOVEMENT 32

@@ -19,15 +19,22 @@ void initialize_model(Model *model)
 
 
 
+
+
     /* Initialize platforms */
-    for (i = 1; i <=MAX_PLATFORMS; i++) {
-        model->platforms[i].x = i * 64;
+    for (i =0; i <MAX_PLATFORMS; i++) {
+        model->platforms[i].x = i * 128;
         model->platforms[i].y = SCREEN_HEIGHT - (i * 20);
 
         
         model->platforms[i].prev_x = -1;
         model->platforms[i].prev_y = -1;
     }
+    model->platforms[0].x = model->doodle.x;
+    model->platforms[0].y = model->doodle.y + DOODLE_HEIGHT*3;
+
+
+
 
     /* Initialize monster */
     model->monster.x = SCREEN_WIDTH / 2;
@@ -62,7 +69,7 @@ void move_platform_relative(Platform *platform, int displacement_x, int displace
 {
     UINT8 i;
 
-    for(i=0; i<=selected_platform;i++)
+    for(i=0; i<selected_platform;i++)
         platform++;
 
     platform->x = displacement_x + platform->x;
@@ -88,7 +95,7 @@ void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y, UINT8 selec
 {
     UINT8 i;
 
-    for(i=0; i<=selected_platform;i++)
+    for(i=0; i<selected_platform;i++)
         platforms++;
 
 

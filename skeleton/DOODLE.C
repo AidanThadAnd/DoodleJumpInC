@@ -98,8 +98,8 @@ int main() {
             if(useDoubleBuffer)
                 {
                     doodle_vertical_movement(modelPtr);
-                    /*
                     shift_screen_to_doodle(modelPtr);
+                    /*
                     */
                     syncModel(modelPtr, modelSnapshotOne);
                     
@@ -112,8 +112,8 @@ int main() {
                 else
                 {
                     doodle_vertical_movement(modelPtr);
-                    /*
                     shift_screen_to_doodle(modelPtr);
+                    /*
                     */
                     syncModel(modelPtr, modelSnapshotTwo);
                     double_buffer_render(modelSnapshotTwo, modelSnapshotOne,(UINT32*)page2);
