@@ -115,5 +115,7 @@ void plot_horizontal_line(UINT8 *base, int y);
 void clear_screen(UINT8 *base);
 void clear_horizontal_line_8(UINT8* base, int x, int y, int length);
 void print_string(UINT *base, char score, int x, int y);
+void print_char(UINT8 *base, char character, int x, int y);
+void print_num(UINT *base, UINT16 num, int x, int y);
 
 #endif
