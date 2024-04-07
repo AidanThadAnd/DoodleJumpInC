@@ -9,5 +9,10 @@ typedef unsigned char bool;
 #define true 1
 #define false 0
 
+typedef struct Note
+{ 
+    int tuning;     /*12-bit tuning*/
+    int duration;
+} Note;
 
 #endif
