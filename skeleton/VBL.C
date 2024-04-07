@@ -13,7 +13,7 @@ void do_vbl_isr()
 {
     int sndfx_on;
 
-    g_ticks += 1;
+    ticks += 1;
 
     /*increment timers*/
     TIMER_MUSIC++;
