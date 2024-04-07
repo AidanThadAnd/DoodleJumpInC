@@ -113,7 +113,7 @@ void monster_near()
 
     oldSsp = Super(0);
 
-    set_tone(1, 4)
+    set_tone(1, 4);
     set_noise(0x0F);
 
     enable_channel(1, 1, 1);
