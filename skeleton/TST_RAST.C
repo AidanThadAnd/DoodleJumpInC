@@ -50,9 +50,9 @@ int main()
 	plot_horizontal_line(base, SCREEN_HEIGHT/2 + 1);
     test_plot_bitmap_32(base, doodle_bitmap_right, DOODLE_HEIGHT);
 */
-	plot_bitmap_32(base, 0, SCREEN_HEIGHT/2, platform_bitmap, PLATFORM_HEIGHT);
+	plot_bitmap_32(base, 192, 55, platform_bitmap, PLATFORM_HEIGHT);
 
-	plot_bitmap_32(base, 58, (SCREEN_HEIGHT/2)-DOODLE_HEIGHT+5, doodle_bitmap_right, DOODLE_HEIGHT);
+	plot_bitmap_32(base, 192, 178, doodle_bitmap_right, DOODLE_HEIGHT);
 	
 	return 0;
 }

@@ -61,7 +61,7 @@ void move_doodle(Doodle *doodle, int displacement_x, int displacement_y, UINT16 
     if(doodle->x > SCREEN_WIDTH)
         doodle->x -= SCREEN_WIDTH;
     else 
-        if(doodle->x < SCREEN_WIDTH)
+        if(doodle->x < 0)
             doodle->x += SCREEN_WIDTH;
 
     doodle->facing = newFacing;
@@ -112,10 +112,14 @@ void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y)
     platforms->x = x;
     platforms->y = y;
 
+
     if(platforms->x > SCREEN_WIDTH)
     { 
         platforms->x -= SCREEN_WIDTH;
     }
+    else
+        if(platforms->x < 0)
+            platforms->x +=SCREEN_WIDTH;
 }
 
 
