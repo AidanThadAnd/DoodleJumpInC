@@ -43,6 +43,7 @@ int main() {
     int seed;
 
     bool useDoubleBuffer = true;
+    bool endGame = false;
 
     UINT32 timeThen, timeNow, timeElapsed;
 
@@ -52,6 +53,7 @@ int main() {
     Model *modelSnapshotTwo = &modelThree;
 
     char pressedKey = 0;
+
 
     seed = Random();
 
@@ -67,7 +69,7 @@ int main() {
     {
         move_platform_relative(modelPtr->platforms, 1, -60, i);
     }
-    move_monster(&(modelPtr->monster), 8, 8);
+    move_monster_relative(&(modelPtr->monster), 8, 8);
 
 
     /* prepering pages and models for main game loop*/
@@ -84,7 +86,7 @@ int main() {
     
 
     timeThen = get_time();
-    while (pressedKey != 'q') { /* Main game loop */
+    while (pressedKey != 'q' && !endGame) { /* Main game loop */
 
         input(modelPtr, &pressedKey);
 
@@ -98,33 +100,32 @@ int main() {
                 {
                     doodle_vertical_movement(modelPtr);
                     shift_screen_to_doodle(modelPtr);
-                    /*
-                    */
                     replace_off_screen(modelPtr, seed);
-                    seed = seed*3;
-                    syncModel(modelPtr, modelSnapshotOne);
+                    check_doodle_death(modelPtr, &endGame);
                     
+                    syncModel(modelPtr, modelSnapshotOne);
                     double_buffer_render(modelSnapshotOne, modelSnapshotTwo, (UINT32*)page1);
                     
                     Setscreen(-1, page1, -1);
-                    Vsync();
+                    
                     useDoubleBuffer = false;
                 }
                 else
                 {
                     doodle_vertical_movement(modelPtr);
                     shift_screen_to_doodle(modelPtr);
-                    /*
-                    */
                     replace_off_screen(modelPtr, seed);
-                    seed = seed*3;
+                    check_doodle_death(modelPtr, &endGame);
+                    
                     syncModel(modelPtr, modelSnapshotTwo);
                     double_buffer_render(modelSnapshotTwo, modelSnapshotOne,(UINT32*)page2);
                     
                     Setscreen(-1, page2, -1);
-                    Vsync();
+                    
                     useDoubleBuffer = true;
                 }
+                seed = seed*3;
+                Vsync();
         }
         timeThen = get_time();
     }

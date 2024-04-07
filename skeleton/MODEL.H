@@ -30,7 +30,7 @@ Purpose:
         - displacement_y: The displacement along the y-axis.
         - selected_platform: Index of the platform to be moved.
  
-    Function Name: move_monster
+    Function Name: move_monster_relative
       Purpose:
         - Moves the monster entity by the specified displacements.
       Input:
@@ -116,7 +116,8 @@ typedef struct {
 void initialize_model(Model *model);
 
 void move_doodle(Doodle *doodle, int displacement_x, int displacement_y, UINT16 newFacing);
-void move_monster(Monster *monster, int displacement_x, int displacement_y);
+void move_monster_relative(Monster *monster, int displacement_x, int displacement_y);
+void move_monster_absolute(Monster *monster, int x, int y);
 void move_platform_relative(Platform *platform, int displacement_x, int displacement_y, UINT8 selected_platform);
 void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y);
 

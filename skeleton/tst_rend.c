@@ -29,7 +29,7 @@ int main()
     Changing models 
     */
 
-    move_monster(&(model->monster), 8, 0);
+    move_monster_relative(&(model->monster), 8, 0);
 
    for(i=0; i <= 400; i++)
    {
@@ -41,7 +41,7 @@ int main()
 
    for(j=0; j <=400; j++)
    {
-        move_monster(&(model->monster), 8, -1);
+        move_monster_relative(&(model->monster), 8, -1);
         render(model,base);
         Vsync();
    }
