@@ -12,15 +12,43 @@
  
     Function Name: update_music
       Purpose:
-        - Updates the game music based on the elapsed time.
-      Input:
-        - time_elapsed: The time elapsed since the last update, in milliseconds.
- */
+        - Advances to the next note of the song as determined by the amount of time
+          that a note lasts.
 
+    Function Name: stop_music
+      Purpose:
+        - Stop all sounds that the music is playing
+ */
 #ifndef MUSIC_H
 #define MUSIC_H
 
+#include "psg.h"
+#include "vbl.h"
+#include "types.h"
+
+/*note: 1 beat = 32Hz = 0.45s*/
+#define WHOLE_NOTE 128     /*4 beats (1 full bar)*/
+#define HALF_NOTE 64        /*2 beats*/
+#define QUARTER_NOTE 32     /*1 beats*/
+
+/*no sound*/
+#define REST 0
+
+#define C_FLAT 478
+#define C_SHARP 451
+#define D_FLAT 426
+#define D_SHARP 402
+#define E_FLAT 379
+#define F_FLAT 358
+#define F_SHARP 338
+#define G_FLAT 319
+#define G_SHARP 301
+#define A_FLAT 284
+#define A_SHARP 268
+#define B_FLAT 253
+
 void start_music();
-void update_music(unsigned int time_elapsed);
+void update_music();
+void stop_music();
 
 #endif
