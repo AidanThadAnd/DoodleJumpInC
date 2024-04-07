@@ -117,5 +117,7 @@ void clear_horizontal_line_8(UINT8* base, int x, int y, int length);
 void print_string(UINT *base, char score, int x, int y);
 void print_char(UINT8 *base, char character, int x, int y);
 void print_num(UINT *base, UINT16 num, int x, int y);
+void clear_bitmap_8(UINT16 *base, int x, int y, const UINT8 *bitmap, unsigned int height);
+
 
 #endif

@@ -4,6 +4,7 @@
 #include "types.h"
 
 extern const UINT8 font[];     /* 8x8 system font */
+extern const UINT8 char_delete[];
 
 #define FONT_HEIGHT 8
 #define CHAR_BEL    7

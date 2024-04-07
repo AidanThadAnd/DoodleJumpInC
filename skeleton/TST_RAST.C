@@ -30,32 +30,42 @@ void test_plot_horizontal_line(UINT8 *base);
 void test_plot_bitmap_8(UINT16 *base, const UINT8 *bitmap, const unsigned int height);
 void test_plot_bitmap_16(UINT16 *base, const UINT16 *bitmap, const unsigned int height);
 void test_plot_bitmap_32(UINT32 *base, const UINT32 *bitmap, const unsigned int height);
+int log10_custom(UINT32 x);
+int countDigits(UINT32 number);
+int abs(int *num);
 
 int main()
 {
 	int i;
     UINT8 *base  = Physbase();
-	
-	const UINT8* glyph_A = GLYPH_START('A');
+	const UINT8* glyph_num = GLYPH_START(temp%10+ '0');
+	const UINT8* glyph_space = GLYPH_START(' ');
+
 
 
     clear_screen((UINT8*)base);
 /*
 	test_plot_horizontal_line((UINT8*)base);
-    test_plot_bitmap_8((UINT16*)base, glyph_A, FONT_HEIGHT);
 	test_plot_bitmap_32(base, monster_bitmap, MONSTER_HEIGHT);
     test_plot_bitmap_32(base, broken_platform_bitmap, PLATFORM_HEIGHT);
     test_plot_bitmap_32(base, doodle_bitmap_left, DOODLE_HEIGHT);
     test_plot_bitmap_32(base, platform_bitmap, PLATFORM_HEIGHT);
 	plot_horizontal_line(base, SCREEN_HEIGHT/2 + 1);
     test_plot_bitmap_32(base, doodle_bitmap_right, DOODLE_HEIGHT);
-*/
 	plot_bitmap_32(base, 192, 55, platform_bitmap, PLATFORM_HEIGHT);
-
 	plot_bitmap_32(base, 192, 178, doodle_bitmap_right, DOODLE_HEIGHT);
+    test_plot_bitmap_8((UINT16*)base, glyph_num, FONT_HEIGHT);
+	test_plot_bitmap_8((UINT16*)base, glyph_space, FONT_HEIGHT);
+*/
+
+		
+
+
+
 	
 	return 0;
 }
+
 
 /*
 Function Name: test_plot_horizontal_line
