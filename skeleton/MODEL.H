@@ -78,6 +78,7 @@ Purpose:
 #include "TYPES.H"
 #include "system.h"
 #include "BITMAP.H"
+#include <osbind.h>
 
 #define MAX_PLATFORMS 7
 #define DOODLE_HORIZONTAL_MOVEMENT 32
@@ -96,12 +97,14 @@ typedef struct
 {
     int prev_x, prev_y;
     int x, y; 
+    bool off_screen;
 } Monster;
 
 typedef struct 
 {
     int prev_x, prev_y;
     int x, y; 
+    bool off_screen;
 } Platform;
 
 typedef struct {
@@ -115,7 +118,7 @@ void initialize_model(Model *model);
 void move_doodle(Doodle *doodle, int displacement_x, int displacement_y, UINT16 newFacing);
 void move_monster(Monster *monster, int displacement_x, int displacement_y);
 void move_platform_relative(Platform *platform, int displacement_x, int displacement_y, UINT8 selected_platform);
-void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y, UINT8 selected_platform);
+void move_platform_absolute(Platform *platforms, UINT16 x, UINT16 y);
 
 bool has_doodle_moved(Doodle *doodle);
 bool has_monster_moved(Monster *monster);

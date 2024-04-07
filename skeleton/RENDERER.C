@@ -70,10 +70,8 @@ void render_doodle(Doodle *doodle, UINT32 *base)
 
 void render_monster(Monster *monster, UINT32 *base)
 {
-
-    plot_bitmap_32(base, monster->x, monster->y, monster_bitmap, MONSTER_HEIGHT);
-
-
+    if(monster->y > 0)
+        plot_bitmap_32(base, monster->x, monster->y, monster_bitmap, MONSTER_HEIGHT);
 }
 
 
@@ -81,4 +79,5 @@ void render_monster(Monster *monster, UINT32 *base)
 void render_platform(Platform *platforms, UINT32 *base)
 {
     plot_bitmap_32(base, platforms->x, platforms->y, platform_bitmap, PLATFORM_HEIGHT); 
+            
 }

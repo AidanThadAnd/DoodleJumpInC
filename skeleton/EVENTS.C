@@ -15,6 +15,26 @@ void doodle_input(Doodle *character, char key)
             break;
     }
 }
+
+void replace_off_screen(Model *model, int seed)
+{
+    UINT8 i;
+    UINT8 totalPlatformsMoved = 1;
+
+    seed = seed % 10;
+
+    for(i=0; i<MAX_PLATFORMS; i++)
+    {
+        if(model->platforms[i].off_screen)
+        {
+
+            move_platform_absolute(&(model->platforms[i]), (seed<<6), 0);
+            model->platforms[i].off_screen = false;
+
+            totalPlatformsMoved++;
+        }
+    }
+}
  
 bool check_collision_doodle_platform(Doodle *doodle, Platform *platform)
 {
@@ -25,16 +45,12 @@ bool check_collision_doodle_platform(Doodle *doodle, Platform *platform)
     
     for(i=0; i<MAX_PLATFORMS; i++)
     {
-        if (doodle->x + DOODLE_WIDTH > platform->x && doodle->x + 5 < platform->x+PLATFORM_WIDTH)
+        if (doodle->x + DOODLE_WIDTH > platform[i].x && doodle->x + 5 < platform[i].x+PLATFORM_WIDTH)
         {
-            heightDifference = platform->y - (doodle->y + DOODLE_HEIGHT);
+            heightDifference = platform[i].y - (doodle->y + DOODLE_HEIGHT);
             if(heightDifference < MAX_VELOCITY+10 && heightDifference > -(MAX_VELOCITY+10))
                 return true;
-
-        }
-        else
-            platform++;
-            
+        }   
     }
     return false;
 }
@@ -67,7 +83,7 @@ void shift_screen_to_doodle(Model *model)
         move_platform_relative(model->platforms, 0, model->doodle.velocity, i);
     }
 
-    move_doodle(&(model->doodle), 0, model->doodle.velocity, model->doodle.facing);
+    move_doodle(&(model->doodle), 0, model->doodle.velocity+1, model->doodle.facing);
 
 }
 
@@ -77,7 +93,7 @@ void doodle_vertical_movement(Model *model)
     Platform *platformsArray = model->platforms;
     Monster *monster = &(model->monster);
     
-    if(check_collision_doodle_platform(doodle, platformsArray))
+    if(check_collision_doodle_platform(doodle, platformsArray) && model->doodle.isFalling)
     {
         doodle->velocity = MAX_VELOCITY;
         doodle->isFalling = false;
