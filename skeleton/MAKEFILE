@@ -1,6 +1,6 @@
 #Creates main doodle game
-doodle: doodle.o renderer.o model.o raster.o bitmap.o events.o font.o
-	cc68x -g doodle.o renderer.o model.o raster.o bitmap.o events.o font.o -o doodle
+doodle: doodle.o renderer.o model.o raster.o bitmap.o events.o font.o MY_MATH.o
+	cc68x -g doodle.o renderer.o model.o raster.o bitmap.o events.o font.o MY_MATH.o -o doodle
 
 tst_v: tst_v.c
 	cc68x -g tst_v.c -o tst_v
@@ -48,12 +48,17 @@ model.o: model.c model.h
 events.o: events.c events.h
 	cc68x -g -c events.c
 
+
+#Utility
+MY_MATH.o: MY_MATH.c types.h MY_MATH.h
+	cc68x -g -c MY_MATH.c
+
 #Rendering
 tst_rend.o: tst_rend.c renderer.h
 	cc68x -g -c tst_rend.c
-
-renderer.o: renderer.c renderer.h model.h bitmap.h raster.h
+renderer.o: renderer.c renderer.h model.h bitmap.h raster.h MY_MATH.h
 	cc68x -g -c renderer.c
+
 
 clean:
 	$(RM) *.o *.tos

@@ -18,6 +18,23 @@ void plot_bitmap_8(UINT16 *base, int x, int y, const UINT8 *bitmap, unsigned int
     }
 }
 
+void clear_bitmap_8(UINT16 *base, int x, int y, const UINT8 *bitmap, unsigned int height)
+{
+    UINT16 *loc = base + (y * 40) + (x >> 4);
+    int row;
+       
+	if(y+height > SCREEN_HEIGHT)
+	{
+		height = SCREEN_HEIGHT-y-1;
+	}
+	
+    for (row = 0; row < height; row++)
+    {
+        *loc &= bitmap[row];
+        loc += 40;
+    }
+}
+
 void plot_bitmap_16(UINT16 *base, int x, int y, const UINT16 *bitmap, unsigned int height)
 {
     UINT16 *loc = base + (y * 40) + (x >> 4);

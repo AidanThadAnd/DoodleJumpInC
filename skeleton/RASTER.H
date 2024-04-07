@@ -114,5 +114,6 @@ void clear_bitmap_32(UINT32 *base, int x, int y, const UINT32 *bitmap, int heigh
 void plot_horizontal_line(UINT8 *base, int y);
 void clear_screen(UINT8 *base);
 void clear_horizontal_line_8(UINT8* base, int x, int y, int length);
+void clear_bitmap_8(UINT16 *base, int x, int y, const UINT8 *bitmap, unsigned int height);
 
 #endif

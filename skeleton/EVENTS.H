@@ -41,6 +41,7 @@ Functions:
 #include "system.h"
 #include "TYPES.H"
 #include "BITMAP.H"
+#include <math.h>
 #define MAX_VELOCITY 14
 
 
