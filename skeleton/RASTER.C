@@ -120,3 +120,39 @@ void clear_horizontal_line_8(UINT8* base, int x, int y, int length) {
 		*(clearLine++) &= 0x00;
 	}
 }
+
+void print_string(UINT8 *base, char score, int x, int y)
+{
+	int i = 0;
+	while(string[i] != '\0') 
+	{
+		print_char(base, string, x, y)
+		i++
+		x += 9;
+	}
+}
+
+void print_char(UINT8 *base, char character, int x, int y) {
+    
+	UINT8 *position = base + (y * SCREEN_WIDTH + x);
+    
+    /*Write the character to the calculated position*/
+    *position = character;
+}
+
+void print_num(UINT *base, UINT16 num, int x, int y)
+{
+	char first_dig, sec_dig, third_dig, fourth_dig;
+
+	fourth_dig = (num % 10) + '0';
+	num /= 10;
+
+	third_dig  = (num % 10) + '0';
+	num /= 10;
+
+	sec_dig	   = (num % 10) + '0';
+	num /= 10;
+
+	first_dig  = (num % 10) + '0';
+	num /= 10;
+}
