@@ -15,7 +15,7 @@
 
 
 extern const UINT32 doodle_bitmap_right []; 
-extern UINT32 doodle_bitmap_left[];
+extern const UINT32 doodle_bitmap_left[];
 extern const UINT32 monster_bitmap []; 
 extern const UINT32 platform_bitmap []; 
 extern const UINT32 broken_platform_bitmap []; 
