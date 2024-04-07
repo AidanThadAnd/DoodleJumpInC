@@ -89,6 +89,7 @@ typedef struct
     int velocity;
     int max_y;
     bool isFalling;
+    bool dead;
     UINT16 facing;
     UINT16 prev_facing;
 } Doodle;

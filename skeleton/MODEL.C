@@ -17,6 +17,7 @@ void initialize_model(Model *model)
     model->doodle.velocity = 0;
     model->doodle.isFalling = true;
     model->doodle.max_y = model->doodle.y;
+    model->doodle.dead = false;
 
 
     randomNumber = Random();
