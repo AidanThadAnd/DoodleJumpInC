@@ -48,6 +48,24 @@ model.o: model.c model.h
 events.o: events.c events.h
 	cc68x -g -c events.c
 
+#Music
+music.o: music.c music.h psg.h keys.h vbl.h
+	cc68x -g -c music.c
+#PSG
+psg.o: psg.c psg.h types.h
+	cc68x -g -c psg.c
+
+isr.o: isr.c isr.h 
+	cc68x -g -c isr.c
+
+effects.o: effects.c effects.h
+	cc68x -g -c effects.c
+
+vbl.o: vbl.c vbl.h
+	cc68x -g -c vbl.c
+
+israsm.o: israsm.s
+	gen -D -L2 israsm.s
 
 #Utility
 MY_MATH.o: MY_MATH.c types.h MY_MATH.h
