@@ -7,14 +7,12 @@ void check_doodle_death(Model *model, bool *endGame)
         *endGame = true;
     
     if(check_collision_monster(&(model->doodle), &(model->monster)))
-        model->doodle.dead = true;
+        *endGame = true;
+    return;
 }
 
 void doodle_input(Doodle *character, char key)
 {
-    if(character->dead)
-        return;
-    
     switch(key)
     {
         case 'a':
@@ -109,7 +107,7 @@ void doodle_vertical_movement(Model *model)
     Platform *platformsArray = model->platforms;
     Monster *monster = &(model->monster);
     
-    if(model->doodle.isFalling && !(model->doodle.dead) && check_collision_doodle_platform(doodle, platformsArray))
+    if(check_collision_doodle_platform(doodle, platformsArray) && model->doodle.isFalling)
     {
         doodle->velocity = MAX_VELOCITY;
         doodle->isFalling = false;
