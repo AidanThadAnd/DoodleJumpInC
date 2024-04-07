@@ -1,10 +1,10 @@
 #include "model.h"
 
 
-void initialize_model(Model *model)
+void initialize_model(Model *model, int seed)
 {
     int i;
-    int randomNumber;
+    int randomNum;
     /* Initialize Doodle character */
     model->doodle.x = SCREEN_WIDTH / 2;
     model->doodle.y = (SCREEN_HEIGHT-64) / 2;
@@ -19,20 +19,23 @@ void initialize_model(Model *model)
     model->doodle.max_y = model->doodle.y;
     model->doodle.dead = false;
 
-
-    randomNumber = Random();
-    randomNumber = randomNumber % 10;
+    model->score.digits = 1;
+    model->score.total = 1;
+    model->score.prev_total = 0;
 
 
     /* Initialize platforms */
     for (i=0; i <MAX_PLATFORMS; i++) {
-        model->platforms[i].x = i * 64;
-        model->platforms[i].y = (i * 60);
+        randomNum = seed % 7;
+        randomNum++;
 
         model->platforms[i].prev_x = -1;
         model->platforms[i].prev_y = -1;
+
+        move_platform_absolute(&(model->platforms[i]), randomNum*64, i*70);
         
         model->platforms[i].off_screen = false;
+        seed = seed * 3;
     }
     model->platforms[0].x = model->doodle.x;
     model->platforms[0].y = model->doodle.y + DOODLE_HEIGHT*3;

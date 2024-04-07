@@ -56,7 +56,34 @@ void double_buffer_render(Model *modelOld, Model *modelNew, UINT32 *base)
 
         render_doodle(&(modelNew->doodle), base);
     }
+/*
+    if(modelNew->score.prev_total != modelNew->score.total)
+        render_score(&(modelNew->score), base);
+*/
 }
+
+/* Will revist if I have time, doesn't work and makes the game quite slow
+void render_score(Score *score, UINT32 *base)
+{
+    UINT8 i;
+    int temp;
+    int currentDigits = score->total / (10*score->digits);
+
+    while(temp>0 && currentDigits > 0)
+    {
+        temp = currentDigits/10;
+        score->digits++;
+    }
+    
+    temp = score->total;
+    for(i=0; i < score->digits; i++)
+    {
+        plot_bitmap_8(base, score->digits<<3, 8, GLYPH_START(temp%10), FONT_HEIGHT);
+        temp = temp/10;
+    }
+}
+*/
+
 
 
 void render_doodle(Doodle *doodle, UINT32 *base)

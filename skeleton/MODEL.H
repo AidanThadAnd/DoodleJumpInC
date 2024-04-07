@@ -108,13 +108,22 @@ typedef struct
     bool off_screen;
 } Platform;
 
+typedef struct
+{
+  int total;
+  int digits;
+  int prev_total;
+} Score;
+
+
 typedef struct {
     Doodle doodle;
     Monster monster;
     Platform platforms[MAX_PLATFORMS];  
+    Score score;
 } Model;
 
-void initialize_model(Model *model);
+void initialize_model(Model *model, int seed);
 
 void move_doodle(Doodle *doodle, int displacement_x, int displacement_y, UINT16 newFacing);
 void move_monster_relative(Monster *monster, int displacement_x, int displacement_y);

@@ -17,4 +17,5 @@ extern const UINT8 font[];     /* 8x8 system font */
 #define IS_PRINTABLE(i) ((i) >= ' ' && (i) <= '~')
 #define GLYPH_START(i) (font + (((i) - ' ') << 3))
 
+
 #endif

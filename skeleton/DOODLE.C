@@ -1,28 +1,3 @@
-/*
-  Author: Aidan & Jacky
-  Date: March 15, 2024
- 
-  Purpose:
-    - The main function of the game, controlling animation, rendering, input, and event handling.
- 
-  Functions:
-    Function Name: input
-      Purpose:
-        - Handle keyboard input to update the game state.
-      Input:
-        - model: Pointer to the Model structure representing the game state.
-        - pressedKey: Pointer to the variable storing the pressed key.
- 
-    Function Name: get_time
-      Purpose:
-        - Get the current time in milliseconds.
-      Output:
-        - Returns the current time.
- 
-  Global Variables:
-    - double_buffer: Double buffer for smoother rendering.
- */
-
 #include "model.h"
 #include "events.h"
 #include "renderer.h"
@@ -34,6 +9,7 @@ UINT8 double_buffer[448][80] = {0};
 UINT32 get_time();
 void input(Model *model, char *pressedKey);
 void syncModel(Model *modelSrc, Model *modelDst);
+void process_synchronous_events(Model *model, bool *endGame, int seed);
 
 int main() {
     UINT8 *page1 = Physbase();
@@ -57,9 +33,9 @@ int main() {
 
     seed = Random();
 
-    initialize_model(modelPtr);
-    initialize_model(modelSnapshotOne);
-    initialize_model(modelSnapshotTwo);
+    initialize_model(modelPtr, seed);
+    initialize_model(modelSnapshotOne, seed);
+    initialize_model(modelSnapshotTwo, seed);
 
     page2 = (UINT8*)((size_t)page2 | 0xff ) + 1; /* finding page aligned address for second page*/
 
@@ -98,10 +74,7 @@ int main() {
             Vsync();
             if(useDoubleBuffer)
                 {
-                    doodle_vertical_movement(modelPtr);
-                    shift_screen_to_doodle(modelPtr);
-                    replace_off_screen(modelPtr, seed);
-                    check_doodle_death(modelPtr, &endGame);
+                    process_synchronous_events(modelPtr, &endGame, seed);
                     
                     syncModel(modelPtr, modelSnapshotOne);
                     double_buffer_render(modelSnapshotOne, modelSnapshotTwo, (UINT32*)page1);
@@ -112,11 +85,7 @@ int main() {
                 }
                 else
                 {
-                    doodle_vertical_movement(modelPtr);
-                    shift_screen_to_doodle(modelPtr);
-                    replace_off_screen(modelPtr, seed);
-                    check_doodle_death(modelPtr, &endGame);
-                    
+                    process_synchronous_events(modelPtr, &endGame, seed);
                     syncModel(modelPtr, modelSnapshotTwo);
                     double_buffer_render(modelSnapshotTwo, modelSnapshotOne,(UINT32*)page2);
                     
@@ -131,7 +100,6 @@ int main() {
     }
     Setscreen(-1, page1, -1);
     Vsync();
-
     return 0;
 }
 
@@ -149,6 +117,12 @@ void syncModel(Model *modelSrc, Model *modelDst)
     modelDst->doodle.velocity = modelSrc->doodle.velocity;
     modelDst->doodle.isFalling = modelSrc->doodle.isFalling;
     modelDst->doodle.max_y = modelSrc->doodle.max_y;
+    modelDst->doodle.dead = modelSrc->doodle.dead;
+
+    modelDst->score.total = modelSrc->score.total;
+    modelDst->score.prev_total = modelSrc->score.prev_total;
+    modelDst->score.digits = modelSrc->score.digits;
+    
 
     modelDst->monster.x = modelSrc->monster.x;
     modelDst->monster.y = modelSrc->monster.y;
@@ -182,6 +156,14 @@ void input(Model *model, char *pressedKey)
 
     doodle_input(&(model->doodle), *pressedKey);
     
+}
+
+void process_synchronous_events(Model *model, bool *endGame, int seed)
+{
+    doodle_vertical_movement(model);
+    shift_screen_to_doodle(model);
+    replace_off_screen(model, seed);
+    check_doodle_death(model, endGame);
 }
 
 /*

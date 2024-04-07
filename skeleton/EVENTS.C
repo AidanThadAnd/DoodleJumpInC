@@ -76,10 +76,10 @@ bool check_collision_doodle_platform(Doodle *doodle, Platform *platform)
 
 bool check_collision_monster(Doodle *doodle, Monster *monster)
 {
-    if (doodle->y+DOODLE_HEIGHT-10 > monster->y && 
-        doodle->y < monster->y +MONSTER_HEIGHT-10 &&
+    if (doodle->y+DOODLE_HEIGHT > monster->y && 
+        doodle->y < monster->y +MONSTER_HEIGHT &&
         doodle->x + DOODLE_WIDTH > monster->x &&
-        doodle->x + 5 < monster->x + MONSTER_WIDTH)   
+        doodle->x < monster->x + MONSTER_WIDTH)   
     {
         return true;
     }
@@ -99,6 +99,8 @@ void shift_screen_to_doodle(Model *model)
     for(i = 0; i < MAX_PLATFORMS; i++){
         move_platform_relative(model->platforms, 0, model->doodle.velocity, i);
     }
+    model->score.prev_total = model->score.total;
+    model->score.total = model->score.total + model->doodle.velocity+1;
 
     move_doodle(&(model->doodle), 0, model->doodle.velocity+1, model->doodle.facing);
 
