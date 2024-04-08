@@ -14,7 +14,6 @@ void process_synchronous_events(Model *model, bool *endGame, int seed);
 int main() {
     UINT8 *page1 = Physbase();
     UINT8 *page2 = &double_buffer[0][0];
-    UINT8 i;
     UINT8 confirmedInput;
     int seed;
 
@@ -39,23 +38,14 @@ int main() {
 
     page2 = (UINT8*)((size_t)page2 | 0xff ) + 1; /* finding page aligned address for second page*/
 
-    /*slight movement to all objects are required as the rendering optimzation requires some movement from initlization of objects 
-    to prevent redrawing of still objects  */
-    for(i=0; i<MAX_PLATFORMS;i++)
-    {
-        move_platform_relative(modelPtr->platforms, 1, -60, i);
-    }
-    move_monster_relative(&(modelPtr->monster), 8, 8);
-
-
-    /* prepering pages and models for main game loop*/
-    clear_screen(page1);
-    clear_screen(page2);
+    /* prepering models for main game loop*/
     syncModel(modelPtr, modelSnapshotOne);
     syncModel(modelPtr, modelSnapshotTwo);
 
-    render(modelPtr, (UINT32*)page1);  /* Render the initial state of the model */
-   
+    /* Preparing pages for main game loop*/
+    clear_screen(page1);
+    clear_screen(page2);
+    render(modelPtr, (UINT32*)page1);
     render(modelPtr, (UINT32*)page2);
 
     
@@ -77,7 +67,7 @@ int main() {
                     process_synchronous_events(modelPtr, &endGame, seed);
                     
                     syncModel(modelPtr, modelSnapshotOne);
-                    double_buffer_render(modelSnapshotOne, modelSnapshotTwo, (UINT32*)page1);
+                    double_buffer_render(modelSnapshotTwo, (UINT32*)page1);
                     
                     Setscreen(-1, page1, -1);
                     
@@ -86,8 +76,9 @@ int main() {
                 else
                 {
                     process_synchronous_events(modelPtr, &endGame, seed);
+
                     syncModel(modelPtr, modelSnapshotTwo);
-                    double_buffer_render(modelSnapshotTwo, modelSnapshotOne,(UINT32*)page2);
+                    double_buffer_render(modelSnapshotOne,(UINT32*)page2);
                     
                     Setscreen(-1, page2, -1);
                     
@@ -98,11 +89,25 @@ int main() {
         }
         timeThen = get_time();
     }
+
     Setscreen(-1, page1, -1);
     Vsync();
     return 0;
 }
 
+
+/***********************************************************************
+* Name: syncModel
+*
+* Purpose: Synchronizes the content of two game models.
+*
+* Details: Copies data from the source model to the destination model,
+*          ensuring consistency between the two models.
+*
+* Parameters:
+*     - modelSrc: Pointer to the source game model.
+*     - modelDst: Pointer to the destination game model.
+***********************************************************************/
 void syncModel(Model *modelSrc, Model *modelDst)
 {
     UINT8 i;
@@ -136,12 +141,27 @@ void syncModel(Model *modelSrc, Model *modelDst)
         dstPlatform->x = srcPlatform->x;
         dstPlatform->y = srcPlatform->y;
 
+
+        dstPlatform->is_broken = srcPlatform->is_broken;
+
         srcPlatform++;
         dstPlatform++;     
     }
 }
 
-
+/***********************************************************************
+* Name: input
+*
+* Purpose: Handles user input for the game.
+*
+* Details: Checks if keyboard input is available and reads the key.
+*          If the pressed key is 'a', 'd', or 'q', it updates the
+*          pressedKey variable accordingly.
+*
+* Parameters:
+*     - model: Pointer to the game model.
+*     - pressedKey: Pointer to the variable storing the pressed key.
+***********************************************************************/
 void input(Model *model, char *pressedKey)
 {
     if (Cconis()) /* Check if keyboard input is available */
@@ -158,6 +178,19 @@ void input(Model *model, char *pressedKey)
     
 }
 
+/***********************************************************************
+* Name: process_synchronous_events
+*
+* Purpose: Processes synchronous events for the game.
+*
+* Details: Calls functions to handle doodle movement, screen shifting,
+*          off-screen replacement, and doodle death checking.
+*
+* Parameters:
+*     - model: Pointer to the game model.
+*     - endGame: Pointer to a boolean indicating game end.
+*     - seed: Random seed for event generation.
+***********************************************************************/
 void process_synchronous_events(Model *model, bool *endGame, int seed)
 {
     doodle_vertical_movement(model);
@@ -167,7 +200,6 @@ void process_synchronous_events(Model *model, bool *endGame, int seed)
 }
 
 /*
-
 TODO: Investigate the weird slowdown issue with using Cconis in a wrapper function
 
 bool isKeyPressed()
@@ -178,6 +210,16 @@ bool isKeyPressed()
 }
 */
 
+/***********************************************************************
+* Name: get_time
+*
+* Purpose: Retrieves the current system time in milliseconds.
+*
+* Details: Gets the system time value stored at memory address 0x462,
+*
+* Returns:
+*     - UINT32: The current system time in milliseconds.
+***********************************************************************/
 UINT32 get_time() {
     UINT32 time;
     long old_ssp = Super(0); 

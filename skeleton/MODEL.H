@@ -3,73 +3,99 @@ Author: Aidan & Jacky
 Date: Feb 5, 2024
 
 Purpose:
-    - Defines structures for game objects in the model, including Doodle, Monster, Platform, and the overall Model.
-    - Provides functions to initialize and manipulate the game model.
- 
-  Functions:
+    - Defines functions for initializing the game model, moving game objects, and checking object movements.
+
+Functions:
     Function Name: initialize_model
-      Purpose:
-        - Initializes the game model with default values.
-      Output:
-        - Returns a pointer to the initialized Model structure.
- 
+        Purpose:
+            - Initializes the game model with default values.
+        Details:
+            - Initializes the doodle character, platforms, and monster with their initial positions, velocities, and other attributes.
+        Parameters:
+            - model: Pointer to the game model to be initialized.
+            - seed: Random seed for generating platform positions.
+
     Function Name: move_doodle
-      Purpose:
-        - Moves the doodle entity by the specified displacements.
-      Input:
-        - doodle: Pointer to the Doodle structure to be moved.
-        - displacement_x: The displacement along the x-axis.
-        - displacement_y: The displacement along the y-axis.
- 
+        Purpose:
+            - Moves the doodle character.
+        Details:
+            - Moves the doodle character horizontally and vertically based on the given displacement. Updates the previous position and facing direction.
+        Parameters:
+            - doodle: Pointer to the doodle object to be moved.
+            - displacement_x: Horizontal displacement.
+            - displacement_y: Vertical displacement.
+            - newFacing: New facing direction of the doodle.
+
     Function Name: move_platform_relative
-      Purpose:
-        - Moves the specified platform entity relative to its current position.
-      Input:
-        - platform: Pointer to the Platform structure to be moved.
-        - displacement_x: The displacement along the x-axis.
-        - displacement_y: The displacement along the y-axis.
-        - selected_platform: Index of the platform to be moved.
- 
+        Purpose:
+            - Moves a platform relative to its current position.
+        Details:
+            - Moves the platform horizontally and vertically relative to its current position. Updates the off-screen flag if the platform moves below the screen.
+        Parameters:
+            - platform: Pointer to the platform object to be moved.
+            - displacement_x: Horizontal displacement.
+            - displacement_y: Vertical displacement.
+            - selected_platform: Index of the platform to be moved.
+
     Function Name: move_monster_relative
-      Purpose:
-        - Moves the monster entity by the specified displacements.
-      Input:
-        - monster: Pointer to the Monster structure to be moved.
-        - displacement_x: The displacement along the x-axis.
-        - displacement_y: The displacement along the y-axis.
- 
+        Purpose:
+            - Moves the monster relative to its current position.
+        Details:
+            - Moves the monster horizontally and vertically relative to its current position. Updates the off-screen flag if the monster moves below the screen.
+        Parameters:
+            - monster: Pointer to the monster object to be moved.
+            - displacement_x: Horizontal displacement.
+            - displacement_y: Vertical displacement.
+
+    Function Name: move_monster_absolute
+        Purpose:
+            - Moves the monster to an absolute position.
+        Details:
+            - Moves the monster to the specified coordinates. Adjusts the position if it goes beyond the screen boundaries.
+        Parameters:
+            - monster: Pointer to the monster object to be moved.
+            - x: X-coordinate of the new position.
+            - y: Y-coordinate of the new position.
+
     Function Name: move_platform_absolute
-      Purpose:
-        - Moves the specified platform entity to the specified absolute position.
-      Input:
-        - platforms: Array of Platform structures.
-        - x: The new x-coordinate of the platform.
-        - y: The new y-coordinate of the platform.
-        - selected_platform: Index of the platform to be moved.
- 
+        Purpose:
+            - Moves a platform to an absolute position.
+        Details:
+            - Moves the platform to the specified coordinates. Adjusts the position if it goes beyond the screen boundaries.
+        Parameters:
+            - platforms: Pointer to the platform object to be moved.
+            - x: X-coordinate of the new position.
+            - y: Y-coordinate of the new position.
+
     Function Name: has_doodle_moved
-      Purpose:
-        - Checks if the doodle has moved from its previous position.
-      Input:
-        - doodle: Pointer to the Doodle structure to be checked.
-      Output:
-        - Returns 1 if the doodle has moved, 0 otherwise.
- 
+        Purpose:
+            - Checks if the doodle has moved.
+        Details:
+            - Compares the current doodle position and facing direction with the previous state to determine if there's movement.
+        Parameters:
+            - doodle: Pointer to the doodle object.
+        Returns:
+            - bool: True if the doodle has moved, false otherwise.
+
     Function Name: has_monster_moved
-      Purpose:
-        - Checks if the monster has moved from its previous position.
-      Input:
-        - monster: Pointer to the Monster structure to be checked.
-      Output:
-        - Returns 1 if the monster has moved, 0 otherwise.
- 
+        Purpose:
+            - Checks if the monster has moved.
+        Details:
+            - Compares the current monster position with the previous state to determine if there's movement.
+        Parameters:
+            - monster: Pointer to the monster object.
+        Returns:
+            - bool: True if the monster has moved, false otherwise.
+
     Function Name: has_platform_moved
-      Purpose:
-        - Checks if the specified platform has moved from its previous position.
-      Input:
-        - platform: Pointer to the Platform structure to be checked.
-      Output:
-        - Returns 1 if the platform has moved, 0 otherwise.
+        Purpose:
+            - Checks if a platform has moved.
+        Details:
+            - Compares the current platform position with the previous state to determine if there's movement.
+        Parameters:
+            - platform: Pointer to the platform object.
+        Returns:
+            - bool: True if the platform has moved, false otherwise.
  */
 
 #ifndef MODEL_H
@@ -80,7 +106,7 @@ Purpose:
 #include "BITMAP.H"
 #include <osbind.h>
 
-#define MAX_PLATFORMS 7
+#define MAX_PLATFORMS 9
 #define DOODLE_HORIZONTAL_MOVEMENT 32
 typedef struct 
 {
@@ -106,6 +132,7 @@ typedef struct
     int prev_x, prev_y;
     int x, y; 
     bool off_screen;
+    bool is_broken;
 } Platform;
 
 typedef struct

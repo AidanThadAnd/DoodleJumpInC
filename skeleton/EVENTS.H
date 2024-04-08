@@ -3,35 +3,73 @@ Author: Aidan & Jacky
 Date: Feb 5, 2024
 
 Purpose:
-    - Defines functions related to handling events in the game.
+    - Defines functions related to game events, such as doodle movement, collision detection, and game state updates.
 
 Functions:
-    Function Name: press_key
+    Function Name: check_doodle_death
         Purpose:
-            - Update the state of the Doodle character based on a key press.
-        Input:
-            - character: Pointer to the Doodle structure.
-            - key: The character representing the pressed key.
-        Output:
-            - The state of the Doodle character is updated based on the key press.
+            - Checks if the doodle has died.
+        Details:
+            - Checks if the doodle has fallen below the screen height or collided with the monster. Updates the endGame flag accordingly if the doodle is dead.
+        Parameters:
+            - model: Pointer to the game model.
+            - endGame: Pointer to a boolean indicating game end.
+
+    Function Name: doodle_input
+        Purpose:
+            - Handles user input for doodle movement.
+        Details:
+            - Moves the doodle left or right based on the pressed key. If the doodle is dead, no movement is allowed.
+        Parameters:
+            - character: Pointer to the doodle object.
+            - key: Character representing the pressed key.
+
+    Function Name: replace_off_screen
+        Purpose:
+            - Replaces off-screen platforms and the monster.
+        Details:
+            - Moves off-screen platforms and the monster to a new position horizontally based on a random seed.
+        Parameters:
+            - model: Pointer to the game model.
+            - seed: Random seed for platform replacement.
 
     Function Name: check_collision_doodle_platform
         Purpose:
-            - Check for collision between the Doodle and a Platform.
-        Input:
-            - doodle: Pointer to the Doodle structure.
-            - platform: Pointer to the Platform structure.
-        Output:
-            - Returns 1 if a collision is detected, 0 otherwise.
+            - Checks collision between doodle and platforms.
+        Details:
+            - Checks if the doodle collides with any of the platforms.
+        Parameters:
+            - doodle: Pointer to the doodle object.
+            - platform: Pointer to the array of platform objects.
+        Returns:
+            - bool: True if collision occurs, false otherwise.
 
     Function Name: check_collision_monster
         Purpose:
-            - Determine if there is a collision between the Doodle and a Monster.
-        Input:
-            - d: Pointer to the Doodle structure.
-            - m: Pointer to the Monster structure.
-        Output:
-            - Returns 1 if a collision is detected, 0 otherwise.
+            - Checks collision between doodle and monster.
+        Details:
+            - Checks if the doodle collides with the monster.
+        Parameters:
+            - doodle: Pointer to the doodle object.
+            - monster: Pointer to the monster object.
+        Returns:
+            - bool: True if collision occurs, false otherwise.
+
+    Function Name: shift_screen_to_doodle
+        Purpose:
+            - Shifts the screen based on doodle movement.
+        Details:
+            - Moves platforms and the monster vertically relative to the doodle's movement. Updates the game score accordingly.
+        Parameters:
+            - model: Pointer to the game model.
+
+    Function Name: doodle_vertical_movement
+        Purpose:
+            - Handles vertical movement of the doodle.
+        Details:
+            - Handles doodle's vertical movement, including falling, jumping, and collision detection with platforms.
+        Parameters:
+            - model: Pointer to the game model.
 */
 
 #ifndef EVENTS_H
