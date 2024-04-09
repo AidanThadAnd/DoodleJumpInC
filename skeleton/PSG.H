@@ -44,6 +44,8 @@ if noise bit = 0 AND tone bit = 1 then output noise signal
 if noise bit = 1 AND tone bit = 0 then output tone signal
 if noise bit = 1 AND tone bit = 1 then output nothing
 */
+#define MIXER_NONE 0x3F         
+
 #define TONE_A 0x3E    
 #define TONE_B 0x3D    
 #define TONE_C 0x3B    
