@@ -32,7 +32,7 @@ void doodle_lands()
     enable_channel(CHANNEL_A, 0, 1);
     enable_channel(CHANNEL_B, 0, 1);
 
-    set_envelope(CHANNEL_A, 0x1000);
+    set_envelope(CHANNEL_B, 0x1000);
     
     TIMER_SNDFX = 0;    /*start timer*/
     effects = 1;
