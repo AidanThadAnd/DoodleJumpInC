@@ -11,9 +11,6 @@ void doodle_lands();
 void platform_breaks();
 void monster_near();
 
-/*synchronous controller*/
-int update_sndfx();
-
 /*helper methods*/
 void stop_effects();
 
