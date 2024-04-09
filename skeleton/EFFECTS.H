@@ -6,7 +6,7 @@
 #include "vbl.h"
 #include "isr.h"
 
-/*asynchronously activated effects*/
+/*asynchronously effects*/
 void doodle_lands();
 void platform_breaks();
 void monster_near();
