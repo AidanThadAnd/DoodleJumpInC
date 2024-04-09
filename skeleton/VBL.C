@@ -5,9 +5,9 @@ int TIMER_MUSIC = 0;
 int TIMER_SNDFX = 0;
 int TIMER_LANDED = 0;
 
-int seconds;
-UINT32 ticks;
-int vbl_flag;
+int seconds = 0;
+UINT32 ticks = 0;
+int vbl_flag = 0;
 
 void do_vbl_isr()
 {
@@ -28,21 +28,4 @@ void do_vbl_isr()
         seconds++;
     }
     vbl_flag = 1;
-}
-
-UINT32 getTime()
-{
-    return ticks;
-}
-
-void set_vbl_flag() {
-    vbl_flag = 0;
-}
-
-void set_ticks() {
-    ticks = 0;
-}
-
-void set_seconds() {
-    seconds = 0;
 }
