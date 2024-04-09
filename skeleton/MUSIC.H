@@ -26,10 +26,9 @@
 #include "vbl.h"
 #include "types.h"
 
-/*note: 1 beat = 32Hz = 0.45s*/
-#define WHOLE_NOTE 128     /*4 beats (1 full bar)*/
-#define HALF_NOTE 64        /*2 beats*/
-#define QUARTER_NOTE 32     /*1 beats*/
+#define WHOLE_NOTE 128     
+#define HALF_NOTE 64        
+#define QUARTER_NOTE 32     
 
 /*no sound*/
 #define REST 0
