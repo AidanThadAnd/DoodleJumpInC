@@ -57,7 +57,6 @@ if noise bit = 1 AND tone bit = 1 then output nothing
 
 /*envelopes*/
 /*page 34 talks about how sound effects can be made using noise.
-envelopes aren't neccessarily required but are on pg.24*/
 #define ENV_FINE 0xB
 #define ENV_ROUGH 0xC
 #define ENV_SHAPE_CONTROL 0xD
