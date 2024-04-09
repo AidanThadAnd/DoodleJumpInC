@@ -26,7 +26,7 @@ void start_music()
 {
     long oldssp = Super(0);
 
-    write_psg(MIXER_REG, MIXER_NONE);   /*put mixer into default state*/
+    write_psg(MIXER_REG, 0);   /*put mixer into default state*/
     
     /*first note of the song*/
     set_tone(0, song[curr_note_a].tuning);
