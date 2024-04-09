@@ -11,16 +11,13 @@ int vbl_flag = 0;
 
 void do_vbl_isr()
 {
-    int sndfx_on;
-
     ticks += 1;
 
     /*increment timers*/
     TIMER_MUSIC++;
     TIMER_SNDFX++;
 
-    sndfx_on = update_sndfx();
-    update_music(sndfx_on);
+    update_music();
 
     /*increment seconds every 70 invocations of this function*/
     if (ticks % 70 == 0)
