@@ -44,9 +44,6 @@ if noise bit = 0 AND tone bit = 1 then output noise signal
 if noise bit = 1 AND tone bit = 0 then output tone signal
 if noise bit = 1 AND tone bit = 1 then output nothing
 */
-
-#define MIXER_NONE 0x3F         
-
 #define TONE_A 0x3E    
 #define TONE_B 0x3D    
 #define TONE_C 0x3B    
@@ -109,12 +106,11 @@ void set_noise(int tuning);
  * Purpose: Loads the PSG envelope control registers with the given envelope
  *          shape and 16-bit sustain
  * 
- * Inputs: shape - cont, att, alt, and hold bits to load into the shape
+ * Inputs: shape - hold bits to load into the shape
  *                 control register
  *         sustain - fine and rough sustain values to load into the envelope
  */
 void set_envelope(int shape, UINT16 sustain);
-
 
 /**
  * Function Name: enable_channel
