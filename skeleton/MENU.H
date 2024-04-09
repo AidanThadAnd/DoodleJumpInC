@@ -3,6 +3,6 @@
 
 #include "types.h"
 
-extern const main_menu_bitmap [];
+extern const UINT32 main_menu_bitmap [];
 
 #endif
