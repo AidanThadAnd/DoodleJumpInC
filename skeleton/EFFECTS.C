@@ -29,10 +29,10 @@ void doodle_lands()
 
     write_psg(MIXER_REG, MIXER_NONE);
 
-    enable_channel(1, 0, 1);
-    enable_channel(2, 0, 1);
+    enable_channel(CHANNEL_A, 0, 1);
+    enable_channel(CHANNEL_B, 0, 1);
 
-    set_envelope(0, 0x1000);
+    set_envelope(CHANNEL_A, 0x1000);
     
     TIMER_SNDFX = 0;    /*start timer*/
     effects = 1;
@@ -68,16 +68,16 @@ void platform_breaks()
 
     oldSsp = Super(0);
 
-    set_tone(2, 0x0AA5);
-    set_noise(0x0F);
+    set_tone(2, 4);
+    set_noise(16);
 
     write_psg(MIXER_REG, MIXER_NONE);
 
-    enable_channel(0, 1, 1);
-    enable_channel(1, 1, 1);
-    enable_channel(2, 1, 1);
+    enable_channel(CHANNEL_A, 1, 1);
+    enable_channel(CHANNEL_B, 1, 1);
+    enable_channel(CHANNEL_C, 1, 1);
 
-    set_envelope(0, 0x3800);
+    set_envelope(CHANNEL_A, 0x1000);
     
     TIMER_SNDFX = 0;    /*start timer*/
     effects = 1;
@@ -116,12 +116,12 @@ void monster_near()
     set_tone(1, 4);
     set_noise(0x0F);
 
-    enable_channel(1, 1, 1);
-    enable_channel(2, 1, 1);
+    enable_channel(CHANNEL_B, 1, 1);
+    enable_channel(CHANNEL_C, 1, 1);
 
     write_psg(MIXER_REG, MIXER_NONE);
 
-    set_envelope(0x0, 0x2000);
+    set_envelope(0x0, 0x1000);
 
     TIMER_SNDFX = 0;
     effects = 1;
@@ -143,7 +143,7 @@ void monster_near()
  * Inputs: None
  * Outputs: N/A
  *
- * Returns: A boolean indicating whether or not a sound effect is
+ * Returns: A int indicating whether or not a sound effect is
  *          currently playing
  ***********************************************************************/
 int update_sndfx()
@@ -170,13 +170,13 @@ int update_sndfx()
 void stop_effects()
 {
     /*disable b&c in mixer*/
-    set_volume(1, 0);
-    set_volume(2, 0);
+    set_volume(CHANNEL_B, 0);
+    set_volume(CHANNEL_C, 0);
 
     /*disable noise bits*/
     write_psg(NOISE_FREQ_REG, 0x00);
 
-    /*disable envelope bits remove this if envelopes are used for music too*/
+    /*disable envelope bits remove*/
     write_psg(ENV_FINE, 0x00);
     write_psg(ENV_ROUGH, 0x00);
     write_psg(ENV_SHAPE_CONTROL, 0x00);
