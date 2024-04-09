@@ -157,7 +157,7 @@ void stop_sound()
 {
     long oldssp = Super(0);
     /*turn all channels off in the mixer*/
-    write_psg(MIXER_REG, MIXER_NONE);  
+    write_psg(MIXER_REG, 0);  
 
     /*disable noise bits*/
     write_psg(NOISE_FREQ_REG, 0x00);
