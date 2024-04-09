@@ -46,6 +46,4 @@ _set_ipl:   move.w  sr,d0
             or.w    d1,2(sp)    ; insert it into sr on stack
             move.w  (sp)+,d1
 
-            rte                 ; trick: when returning,
-                                ; ... install modified sr
-                                ; ... from stack!
+            rte                 
