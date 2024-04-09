@@ -54,7 +54,6 @@ void update_music()
     }
     
     /* get the tone of the current note on each channel*/
-    /*only use channel C for music if it is not currently being used for sound effects*/
       set_tone(0, song[curr_note_a].tuning);
 
     /*only turn volume back on if a new note has begun*/
