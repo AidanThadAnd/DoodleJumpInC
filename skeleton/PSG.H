@@ -1,7 +1,6 @@
 /*
   Author: Aidan & Jacky
 */
-
 #ifndef PSG_H
 #define PSG_H
 
@@ -12,6 +11,11 @@
 is the YM2149's PSG(Programmable sound generator)*/
 
 /*according to page 7 of YM2149 documentation*/
+
+#define CHANNEL_A 0
+#define CHANNEL_B 1
+#define CHANNEL_C 2
+
 /*fine tune registers*/
 #define A_FINE 0x0
 #define B_FINE 0x2
@@ -128,6 +132,5 @@ void enable_channel(int channel, int tone_on, int noise_on);
  * Purpose: Silences all PSG sound production
  */
 void stop_sound();
-
 
 #endif
