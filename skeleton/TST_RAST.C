@@ -39,7 +39,7 @@ int main()
 {
 	int i;
     UINT8 *base  = Physbase();
-	const UINT8* glyph_num = GLYPH_START(temp%10+ '0');
+/*	const UINT8* glyph_num = GLYPH_START(temp%10+ '0'); */
 	const UINT8* glyph_space = GLYPH_START(' ');
 
 
