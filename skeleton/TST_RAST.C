@@ -59,7 +59,7 @@ int main()
 	test_plot_bitmap_8((UINT16*)base, glyph_space, FONT_HEIGHT);
 */
 
-	plot_bitmap_screen(base, main_menu_bitmap);
+	plot_bitmap_screen((UINT32*)base, main_menu_bitmap);
 
 
 
