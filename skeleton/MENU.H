@@ -1,0 +1,1 @@
+extern const main_menu_bitmap
