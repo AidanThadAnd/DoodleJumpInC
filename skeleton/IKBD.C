@@ -162,9 +162,6 @@ void do_ikbd_isr()
             {
                 ascii = getAscii(key_packet);
                 key_buff_enqueue(ascii); /*enqueue*/
-
-                /*TODO: make sure the current key is the same as the prev key*/
-                /*key_repeat = (ascii == key_buff_enqueue.buffer[key_buff_enqueue.head]) ? true : false;*/
                 key_repeat = true;
             }
             else if ((key_packet & 0x80) == BREAK_CODE) /*if the key is released (break code)*/
@@ -174,15 +171,9 @@ void do_ikbd_isr()
         }
         else
         {
-            key_buff_enqueue(key_packet); /*there is no ascii ?, throw the scancode on the queue*/
+            key_buff_enqueue(key_packet); 
             ikbdSM++;
         }
-    }
-    else
-    {
-        ikbdSM >= 2
-            ? (key_buff_enqueue.mY = min(max(key_buff_enqueue.mY + (char)key_packet, 0), 400), ikbdSM = 0)
-            : (key_buff_enqueue.mX = min(max(key_buff_enqueue.mX + (char)key_packet, 0), 640), ikbdSM++);
     }
 
     *IKBD_CONTROL = 0x96;
