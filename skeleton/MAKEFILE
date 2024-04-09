@@ -12,13 +12,17 @@ tst_vsync.o: tst_vsync.c
 tst_rend: tst_rend.o renderer.o model.o raster.o bitmap.o
 	cc68x -g tst_rend.o model.o raster.o bitmap.o renderer.o -o tst_rend
 
-#Creats the test model file
+#Creates the test model file
 tst_mod: tst_mod.o model.o events.o
 	cc68x -g tst_mod.o model.o events.o -o tst_mod
 
 #Creates the test rast file
 tst_rast: tst_rast.o raster.o font.o bitmap.o
 	cc68x -g tst_rast.o raster.o  font.o bitmap.o -o tst_rast
+
+#Creates the test song file
+tst_song: tst_song.o music.o psg.o effects.o isr.o vbl.o israsm.o
+	cc68x -g tst_song.o music.o psg.o effects.o isr.o vbl.o israsm.o -o tst_song
 
 #Main doodle game 
 doodle.o: doodle.c model.h renderer.h events.h bitmap.h
@@ -49,7 +53,10 @@ events.o: events.c events.h
 	cc68x -g -c events.c
 
 #Music
-music.o: music.c music.h psg.h keys.h vbl.h
+tst_song.o: tst_song.c music.h psg.h keys.h vbl.h effects.h 
+	cc68x -g -c tst_song.c
+
+music.o: music.c music.h psg.h vbl.h
 	cc68x -g -c music.c
 #PSG
 psg.o: psg.c psg.h types.h
