@@ -1,6 +1,6 @@
 #Creates main doodle game
-doodle: doodle.o renderer.o model.o raster.o bitmap.o events.o font.o MY_MATH.o
-	cc68x -g doodle.o renderer.o model.o raster.o bitmap.o events.o font.o MY_MATH.o -o doodle
+doodle: doodle.o renderer.o model.o raster.o bitmap.o menu.o events.o font.o MY_MATH.o
+	cc68x -g doodle.o renderer.o model.o raster.o bitmap.o menu.o events.o font.o MY_MATH.o -o doodle
 
 tst_v: tst_v.c
 	cc68x -g tst_v.c -o tst_v
@@ -17,8 +17,8 @@ tst_mod: tst_mod.o model.o events.o
 	cc68x -g tst_mod.o model.o events.o -o tst_mod
 
 #Creates the test rast file
-tst_rast: tst_rast.o raster.o font.o bitmap.o
-	cc68x -g tst_rast.o raster.o  font.o bitmap.o -o tst_rast
+tst_rast: tst_rast.o raster.o font.o bitmap.o menu.o
+	cc68x -g tst_rast.o raster.o  font.o bitmap.o menu.o -o tst_rast
 
 #Creates the test song file
 tst_song: tst_song.o music.o psg.o effects.o isr.o vbl.o israsm.o
@@ -41,6 +41,8 @@ font.o: font.c font.h
 bitmap.o: bitmap.c bitmap.h font.h
 	cc68x -g -c bitmap.c
 
+menu.o: menu.c menu.h
+	cc68x -g -c menu.c
 
 #Modeling/Events
 tst_mod.o: tst_mod.c model.h events.h
