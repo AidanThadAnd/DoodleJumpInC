@@ -1,19 +1,17 @@
 #include <osbind.h>
-#include "psg.h"
+#include <stdio.h>
+#include "isr.h"
+#include "vbl.h"
+#include "effects.h"
 #include "music.h"
 
 int main() {
-    long old_ssp = Super(0);
-        
+    Vector origVBL = installVector(VBL_ISR, vbl_isr);
+
     start_music();
+    update_music();
+     /*uninstall vectors for IKBD and VBL*/
+    installVector(VBL_ISR, origVBL);
 
-    while (!Cconis())		/* tone now playing, await key */
-		; 
-
-    stop_sound();
-    
-    Cnecin();
-
-    Super(old_ssp);
     return 0;
 }
