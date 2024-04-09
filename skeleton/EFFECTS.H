@@ -11,7 +11,6 @@ void doodle_lands();
 void platform_breaks();
 void monster_near();
 
-/*helper methods*/
 void stop_effects();
 
 #endif
