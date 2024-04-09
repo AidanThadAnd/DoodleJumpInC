@@ -17,11 +17,6 @@ UINT8 read_psg(int reg)
 {
     UINT8 val;  
 
-    /*default value if register is invalid; this way, if it
-    is combined with another value using bitwise &, the 
-    result won't be affected by this value*/
-    val = 0xFF;
-
     if(reg >= 0 && reg <= 15)
     {   
         *PSG_reg_select = reg;
@@ -38,17 +33,17 @@ void set_tone(int channel, int tuning)
 
     switch(channel)
     {
-        case 0:
+        case CHANNEL_A:
             write_psg(A_FINE, fine_tuning);
             write_psg(A_COARSE, coarse_tuning);
             break;
 
-        case 1:
+        case CHANNEL_B:
             write_psg(B_FINE, fine_tuning);
             write_psg(B_COARSE, coarse_tuning);
             break;
 
-        case 2:
+        case CHANNEL_C:
             write_psg(C_FINE, fine_tuning);
             write_psg(C_COARSE, coarse_tuning);
             break;
@@ -65,15 +60,15 @@ void set_volume(int channel, int vol)
 
     switch(channel)
     {
-        case 0:
+        case CHANNEL_A:
             write_psg(A_VOL, volume);
             break;
 
-        case 1:
+        case CHANNEL_B:
             write_psg(B_VOL, volume);
             break;
 
-        case 2:
+        case CHANNEL_C:
             write_psg(C_VOL, volume);
             break;
 
@@ -113,7 +108,7 @@ void enable_channel(int channel, int tone_on, int noise_on)
 
     switch (channel)
     {
-        case 0:
+        case CHANNEL_A:
 
             if(tone_on == 1 && noise_on == 1){
                 mixer_val &= TONE_A & NOISE_A;
@@ -127,7 +122,7 @@ void enable_channel(int channel, int tone_on, int noise_on)
             /*if both are false, do nothing since neither bit is set*/
             break;
 
-        case 1:
+        case CHANNEL_B:
 
             if(tone_on == 1 && noise_on == 1){
                 mixer_val &= TONE_B & NOISE_B;
@@ -141,7 +136,7 @@ void enable_channel(int channel, int tone_on, int noise_on)
             /*if both are false, do nothing since neither bit is set*/
             break;
 
-        case 2:
+        case CHANNEL_C:
 
             if(tone_on == 1 && noise_on == 1){
                 mixer_val &= TONE_C & NOISE_C;
@@ -177,9 +172,9 @@ void stop_sound()
     write_psg(ENV_SHAPE_CONTROL, 0x00);
 
     /*disable the volume of all channels*/
-    set_volume(0, 0);
-    set_volume(1, 0);
-    set_volume(2, 0);
+    set_volume(CHANNEL_A, 0);
+    set_volume(CHANNEL_B, 0);
+    set_volume(CHANNEL_C, 0);
 
     Super(oldssp);
 }
