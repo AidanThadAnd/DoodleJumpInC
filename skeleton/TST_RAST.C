@@ -25,6 +25,7 @@ Note:			- clear_screen is implicitly tested as each function relies on the scree
 #include "font.h"
 #include "bitmap.h"
 #include "system.h"
+#include "menu.h"
 
 void test_plot_horizontal_line(UINT8 *base);
 void test_plot_bitmap_8(UINT16 *base, const UINT8 *bitmap, const unsigned int height);
@@ -58,7 +59,8 @@ int main()
 	test_plot_bitmap_8((UINT16*)base, glyph_space, FONT_HEIGHT);
 */
 
-		
+	plot_bitmap_screen(base, main_menu_bitmap);
+
 
 
 
