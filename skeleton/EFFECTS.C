@@ -25,7 +25,7 @@ void doodle_lands()
 
     oldSsp = Super(0);
 
-    set_noise(0x0F);
+    set_noise(16);
 
     write_psg(MIXER_REG, MIXER_NONE);
 
@@ -77,7 +77,7 @@ void platform_breaks()
     enable_channel(CHANNEL_B, 1, 1);
     enable_channel(CHANNEL_C, 1, 1);
 
-    set_envelope(CHANNEL_A, 0x1000);
+    set_envelope(CHANNEL_B, 0x1000);
     
     TIMER_SNDFX = 0;    /*start timer*/
     effects = 1;
@@ -114,14 +114,14 @@ void monster_near()
     oldSsp = Super(0);
 
     set_tone(1, 4);
-    set_noise(0x0F);
+    set_noise(16);
 
     enable_channel(CHANNEL_B, 1, 1);
     enable_channel(CHANNEL_C, 1, 1);
 
     write_psg(MIXER_REG, MIXER_NONE);
 
-    set_envelope(0x0, 0x1000);
+    set_envelope(CHANNEL_B, 0x1000);
 
     TIMER_SNDFX = 0;
     effects = 1;
@@ -131,29 +131,6 @@ void monster_near()
     oldSsp = Super(0);
     set_ipl(oldIpl);
     Super(oldSsp);
-}
-
-/***********************************************************************
- * Name: updateSndfx
- * 
- * Purpose: Syncronously updates sound effects
- * 
- * Details: A timer to determine when a sound effects is completed
- * 
- * Inputs: None
- * Outputs: N/A
- *
- * Returns: A int indicating whether or not a sound effect is
- *          currently playing
- ***********************************************************************/
-int update_sndfx()
-{
-    if(TIMER_SNDFX >= 42 && effects == 1){
-        stop_effects();
-        effects = 0;
-    }
-
-    return effects;
 }
 
 /***********************************************************************
