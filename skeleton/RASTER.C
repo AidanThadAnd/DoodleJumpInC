@@ -145,7 +145,7 @@ void plot_bitmap_screen(UINT32 *base, UINT32* bitmap)
 
 	UINT32 *loc = base + (0 >> 5);
 
-	for (row = 0; row < counter; r++)
+	for (row = 0; row < counter; row++)
 	{
 		*loc |= *(bitmap++);
 		*(loc++) ^= 0xFFFFFFFF;
