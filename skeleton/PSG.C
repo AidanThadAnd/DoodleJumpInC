@@ -95,7 +95,6 @@ void set_envelope(int shape, UINT16 sustain)
     write_psg(ENV_FINE, sustain_fine);
     write_psg(ENV_ROUGH, sustain_rough);
 
-    /*get the cont, att, alt, and hold bits to control shape*/
     shape_bits = shape & 0x000F;
 
     write_psg(ENV_SHAPE_CONTROL, shape_bits);
@@ -103,7 +102,6 @@ void set_envelope(int shape, UINT16 sustain)
 
 void enable_channel(int channel, int tone_on, int noise_on)
 {
-    /*by default, keep the value that is currently in the mixer*/
     UINT8 mixer_val = read_psg(MIXER_REG);
 
     switch (channel)
@@ -133,7 +131,6 @@ void enable_channel(int channel, int tone_on, int noise_on)
             else if(tone_on == 0 && noise_on == 1){
                 mixer_val &= NOISE_B;
             }
-            /*if both are false, do nothing since neither bit is set*/
             break;
 
         case CHANNEL_C:
@@ -147,7 +144,6 @@ void enable_channel(int channel, int tone_on, int noise_on)
             else if(tone_on == 0 && noise_on == 1){
                 mixer_val &= NOISE_C;
             }
-            /*if both are false, do nothing since neither bit is set*/
             break;
 
         default:
@@ -161,7 +157,7 @@ void stop_sound()
 {
     long oldssp = Super(0);
     /*turn all channels off in the mixer*/
-    write_psg(MIXER_REG, MIXER_NONE);     /*should this be MIXER_NONE since 0's mean on*/
+    write_psg(MIXER_REG, MIXER_NONE);  
 
     /*disable noise bits*/
     write_psg(NOISE_FREQ_REG, 0x00);
