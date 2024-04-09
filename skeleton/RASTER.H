@@ -56,7 +56,15 @@ Functions:
              - height: Height of the bitmap.
         Output:
             - The bitmap is drawn to the screen
-
+	
+    Function Name: plot_bitmap_screen
+	Purpose:
+	     - Plot the main menu onto the frame buffer
+	Input:
+	     - Base: Pointer to the start of the frame buffer
+	     - Bitmap: Pointer to the bitmap data
+	Output
+	     - The bitmap is drawn to the screen
 
     Function Name: plot_horizontal_line
 
@@ -116,6 +124,6 @@ void clear_screen(UINT8 *base);
 void clear_horizontal_line_8(UINT8* base, int x, int y, int length);
 void print_char(UINT8 *base, char character, int x, int y);
 void clear_bitmap_8(UINT16 *base, int x, int y, const UINT8 *bitmap, unsigned int height);
-
+void plot_bitmap_screen(UINT32 *base, UINT32* bitmap);
 
 #endif
