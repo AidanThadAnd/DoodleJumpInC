@@ -1,4 +1,3 @@
-
 #include "music.h"
 
 int curr_note_a = 0;
