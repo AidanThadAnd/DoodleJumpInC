@@ -53,7 +53,7 @@ events.o: events.c events.h
 	cc68x -g -c events.c
 
 #Music
-tst_song.o: tst_song.c music.h psg.h keys.h vbl.h effects.h 
+tst_song.o: tst_song.c music.h psg.h vbl.h effects.h 
 	cc68x -g -c tst_song.c
 
 music.o: music.c music.h psg.h vbl.h
