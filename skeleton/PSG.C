@@ -117,7 +117,6 @@ void enable_channel(int channel, int tone_on, int noise_on)
             else if(tone_on == 0 && noise_on == 1){
                 mixer_val &= NOISE_A;
             }
-            /*if both are false, do nothing since neither bit is set*/
             break;
 
         case CHANNEL_B:
