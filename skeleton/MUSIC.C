@@ -1,3 +1,4 @@
+
 #include "music.h"
 
 int curr_note_a = 0;
@@ -41,27 +42,25 @@ void start_music()
 void update_music()
 {
     int new_note_a = 0;
-    /*
-    Move to the next note on each channel where applicable
-    */
+    /*Move to the next note on each channel where applicable*/
     if(TIMER_MUSIC >= song[curr_note_a].duration) {
         /*restart from the first note when the song finishes; otherwise, move on to the next note*/
-        curr_note_a = (curr_note_a >= SONG_A - 1) ? 0 : curr_note_a + 1;
+    if (curr_note_a >= SONG_A - 1)
+        curr_note_a = 0
+    else
+        curr_note_a += 1
+        
         TIMER_MUSIC = 0;
         new_note_a = 1;
     }
     
-    /*
-    get the tone of the current note on each channel
-    */
+    /* get the tone of the current note on each channel*/
     /*only use channel C for music if it is not currently being used for sound effects*/
       set_tone(0, song[curr_note_a].tuning);
-    /*
-    only turn volume back on if a new note has begun
-    */
-    /*only use channel C for music if it is not currently being used for sound effects*/
+
+    /*only turn volume back on if a new note has begun*/
         if(new_note_a == 1){
-            enable_channel(0, 1, 0);
+            enable_channel(CHANNEL_A, 1, 0);
     }
 }
 
@@ -72,5 +71,3 @@ void stop_music(){
     
 	Super(old_ssp);
 }
-
-
