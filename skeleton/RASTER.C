@@ -140,12 +140,12 @@ void clear_horizontal_line_8(UINT8* base, int x, int y, int length) {
 
 void plot_bitmap_screen(UINT32 *base, UINT32* bitmap)
 {
-	int r;
+	int row;
 	int counter = 8000;
 
 	UINT32 *loc = base + (0 >> 5);
 
-	for (r = 0; r < counter; r++)
+	for (row = 0; row < counter; r++)
 	{
 		*loc |= *(bitmap++);
 		*(loc++) ^= 0xFFFFFFFF;
