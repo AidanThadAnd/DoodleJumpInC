@@ -45,9 +45,9 @@ void update_music()
     if(TIMER_MUSIC >= song[curr_note_a].duration) {
         /*restart from the first note when the song finishes; otherwise, move on to the next note*/
     if (curr_note_a >= SONG_A - 1)
-        curr_note_a = 0
+        curr_note_a = 0;
     else
-        curr_note_a += 1
+        curr_note_a += 1;
         
         TIMER_MUSIC = 0;
         new_note_a = 1;
