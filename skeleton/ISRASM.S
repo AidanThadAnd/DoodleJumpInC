@@ -11,7 +11,7 @@ MFP_ISRB    equ     $FFFA11
 ;   Details:    This routine is called when the IKBD generates an interrupt.
 ;-----------------------------------------------------------------------------
 ;
-;_ikbd_isr:  movem.l d0-d2/a0-a2,-(sp)   ;refer to lab 7 (scratch space)
+;_ikbd_isr:  movem.l d0-d2/a0-a2,-(sp)   
 ;            jsr     _do_ikbd_isr
 ;            movem.l (sp)+,d0-d2/a0-a2
 ;            bclr.b  #6,MFP_ISRB
@@ -22,7 +22,7 @@ MFP_ISRB    equ     $FFFA11
 ;   Purpose:    Interrupt service routine for the VBL
 ;   Details:    This routine is called when the VBL generates an interrupt.
 ;-----------------------------------------------------------------------------
-_vbl_isr:   movem.l d0-d2/a0-a2,-(sp)   ;refer to lab 7 (scratch space)
+_vbl_isr:   movem.l d0-d2/a0-a2,-(sp)   
             jsr     _do_vbl_isr
             movem.l (sp)+,d0-d2/a0-a2
             rte
