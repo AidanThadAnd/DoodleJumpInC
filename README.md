@@ -5,4 +5,3 @@ Doodle Jump is a recreation of a popular mobile endless jumper game, I've recrea
 
 ## Example gameplay in STEEM (Atari ST Emulation program)
 https://github.com/AidanThadAnd/DoodleJumpInC/assets/78242226/5b88b47e-4796-4c8f-ae14-f6a42cd71d75
-Uploading Doodle Jump Gameplay.mp4…
